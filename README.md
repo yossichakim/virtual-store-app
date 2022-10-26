@@ -5,3 +5,4 @@ Welcome dotNet
 Stage0 is very easy
 line for Yossi
 what your name
+we are ready to start
