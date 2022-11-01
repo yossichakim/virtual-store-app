@@ -2,5 +2,5 @@
 
 public enum Category
 {
-    Screens = 1, Phones, Computers, Printers, TV
+    Screens , Phones, Computers, Printers, TV
 }
