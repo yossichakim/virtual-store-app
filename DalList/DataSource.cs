@@ -1,9 +1,14 @@
 ﻿using DO;
+using System.Diagnostics;
 
 namespace Dal;
 static class DataSource
 {
-    static DataSource() { s_Initialize(); } //ctor
+   
+    private static readonly Random _random = new Random();
+    internal static Product[] products = new Product[50];
+    internal static Order[] orders = new Order[100];
+    internal static OrderItem[] orderItems = new OrderItem[200];
 
     internal static class Config
     {
@@ -19,13 +24,7 @@ static class DataSource
         internal static int _orderIDGet => _orderID++;
     }
 
-
-    //static DataSource() { s_Initialize(); } //dtor
-
-    private static readonly Random _random = new Random();
-    internal static Product[] products = new Product[50];
-    internal static Order[] orders = new Order[100];
-    internal static OrderItem[] orderItems = new OrderItem[200];
+     static DataSource() { s_Initialize(); } //ctor
 
     private static void s_Initialize()
     {
@@ -33,8 +32,6 @@ static class DataSource
         initOrders();
         initOrderItems();
     }
-
-
 
     private static void initProducts()
     {
@@ -79,6 +76,7 @@ static class DataSource
             products[Config._indexProducts++] = product;
         }
     }
+
     private static void initOrders()
     {
         string[] _costumerName = {"Emlynn Devitt",
@@ -201,8 +199,8 @@ static class DataSource
     "cmollett11@time.com",
     "adarko12@usgs.gov",
     "edunsford13@marriott.com" };
-        DateTime _start = new DateTime(2021,1,1);
-        TimeSpan timeSpan = new TimeSpan(10,0,0,0);
+
+        DateTime _start = new DateTime(2021, 1, 1);
         int range = (DateTime.Now - _start).Days;
 
         for (int i = 0; i < 40; i++)
@@ -212,23 +210,45 @@ static class DataSource
                 OrderID = Config._orderIDGet,
                 CustomerName = _costumerName[i],
                 CustomerEmail = _costumerEmail[i],
-                CustomerAddress = _costumerAddress[i],
-                OrderDate = _start.AddDays(_random.Next(range)),
-                //ShipDate =
-                DeliveryDate = DateTime.Now
+                CustomerAddress = _costumerAddress[i]
             };
+
+            order.OrderDate = _start.AddDays(_random.Next(range - 30)).AddHours(_random.Next(0, 24))
+                .AddMinutes(_random.Next(0, 60)).AddSeconds(_random.Next(0, 60));
+            if (i < 32)
+                order.ShipDate = order.OrderDate.Add(new TimeSpan(10, 0, 0, 0));
+            else
+                order.ShipDate = DateTime.MinValue;
+
+            if (i < 24)
+                order.DeliveryDate = order.ShipDate.Add(new TimeSpan(3, 0, 0, 0));
+            else
+                order.DeliveryDate = DateTime.MinValue;
+
+            orders[Config._indexOrders++] = order;
+
         }
 
     }
 
-
-    //private List<string> getFirstName()
-    //{
-    //    return new List<string> { };
-    //}
-
     private static void initOrderItems()
     {
-
+        for (int i = 0; i < 50; i++)
+        {
+            OrderItem orderItem = new OrderItem
+            {
+                OrderItemID = Config._orderItemIDGet,
+                ProductID = products[_random.Next(0, 25)].ProductID,
+                OrderID = orders[_random.Next(0, 40)].OrderID,
+                Amount = _random.Next(1, 4)
+            };
+            for (int j = 0; j < 25; j++)
+            {
+                if (products[j].ProductID == orderItem.ProductID)
+                    orderItem.Price = products[j].Price;
+            }
+            orderItems[Config._indexOrdersItems++] = orderItem;
+        }
+     
     }
 }
