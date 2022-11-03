@@ -4,7 +4,6 @@ using System.Diagnostics;
 namespace Dal;
 static class DataSource
 {
-   
     private static readonly Random _random = new Random();
     internal static Product[] products = new Product[50];
     internal static Order[] orders = new Order[100];
@@ -12,20 +11,16 @@ static class DataSource
 
     internal static class Config
     {
-
         internal static int _indexProducts = 0;
         internal static int _indexOrders = 0;
         internal static int _indexOrdersItems = 0;
-
-        private static int _orderItemID = 0;
-        private static int _orderID = 0;
-
+        private static int _orderItemID = 100000;
+        private static int _orderID = 100000;
         internal static int _orderItemIDGet => _orderItemID++;
         internal static int _orderIDGet => _orderID++;
     }
 
-     static DataSource() { s_Initialize(); } //ctor
-
+    static DataSource() { s_Initialize(); } //ctor
     private static void s_Initialize()
     {
         initProducts();
@@ -49,7 +44,6 @@ static class DataSource
             Product product = new Product
             {
                 ProductID = _initProductID++,
-                //Category = (Category)_random.Next(0, 5),
                 InStock = i + (i % 5),//ask
             };
 
@@ -226,29 +220,30 @@ static class DataSource
                 order.DeliveryDate = DateTime.MinValue;
 
             orders[Config._indexOrders++] = order;
-
         }
-
     }
 
     private static void initOrderItems()
     {
-        for (int i = 0; i < 50; i++)
+        OrderItem orderItem = new OrderItem();
+        foreach (var _inOrders in orders)
         {
-            OrderItem orderItem = new OrderItem
+            orderItem.OrderItemID = Config._orderItemIDGet;
+            orderItem.OrderID = _inOrders.OrderID;
+
+            for (int i = 0; i < _random.Next(1, 5); i++)
             {
-                OrderItemID = Config._orderItemIDGet,
-                ProductID = products[_random.Next(0, 25)].ProductID,
-                OrderID = orders[_random.Next(0, 40)].OrderID,
-                Amount = _random.Next(1, 4)
-            };
-            for (int j = 0; j < 25; j++)
-            {
-                if (products[j].ProductID == orderItem.ProductID)
-                    orderItem.Price = products[j].Price;
+                orderItem.ProductID = products[_random.Next(Config._indexProducts)].ProductID;
+                orderItem.Amount = _random.Next(1, 11);
+
+                foreach (var _inProducts in products)
+                {
+                    if (_inProducts.ProductID == orderItem.ProductID)
+                        orderItem.Price = _inProducts.Price;
+                }
+
+                orderItems[Config._indexOrdersItems++] = orderItem;
             }
-            orderItems[Config._indexOrdersItems++] = orderItem;
         }
-     
     }
 }
