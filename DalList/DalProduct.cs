@@ -54,4 +54,20 @@ public class DalProduct
             }
         }
     }
+
+    public void UpdateProduct(Product updateProduct)
+    {
+        if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
+            throw new Exception("the product you try to update are not exist");
+
+
+        for (int i = 0; i < DataSource.Config._indexProducts; i++)
+        {
+            if (updateProduct.ProductID == DataSource.products[i].ProductID)
+            {
+                DataSource.products[i] = updateProduct;
+                return;
+            }
+        }
+    }
 }
