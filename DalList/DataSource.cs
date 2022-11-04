@@ -1,5 +1,4 @@
 ﻿using DO;
-using System.Diagnostics;
 
 namespace Dal;
 static class DataSource
@@ -230,17 +229,13 @@ static class DataSource
         {
             orderItem.OrderItemID = Config._orderItemIDGet;
             orderItem.OrderID = _inOrders.OrderID;
-
-            for (int i = 0; i < _random.Next(1, 5); i++)
+            int _rnd = _random.Next(1, 5);
+            for (int i = 0; i < _rnd; i++)
             {
-                orderItem.ProductID = products[_random.Next(Config._indexProducts)].ProductID;
+                Product tmpproduct = products[_random.Next(Config._indexProducts)];
+                orderItem.ProductID = tmpproduct.ProductID;
                 orderItem.Amount = _random.Next(1, 11);
-
-                foreach (var _inProducts in products)
-                {
-                    if (_inProducts.ProductID == orderItem.ProductID)
-                        orderItem.Price = _inProducts.Price;
-                }
+                orderItem.Price = (double)(tmpproduct.Price * orderItem.Amount);
 
                 orderItems[Config._indexOrdersItems++] = orderItem;
             }
