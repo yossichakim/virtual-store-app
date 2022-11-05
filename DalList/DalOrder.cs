@@ -17,7 +17,7 @@ public class DalOrder
 
     }
 
-    public Order GetProduct(int _order)
+    public Order GetOrder(int _order)
     {
         if (!Array.Exists(DataSource.orders, element => element.OrderID == _order))
             throw new Exception("the order you try to get are not exist");
@@ -38,7 +38,10 @@ public class DalOrder
 
     public Order[] GetAllorders()
     {
-        Order[] orders = DataSource.orders;
+        Order[] orders = new Order[DataSource.Config._indexOrders];
+
+        DataSource.orders.CopyTo(orders, 0);
+
         return orders;
     }
 

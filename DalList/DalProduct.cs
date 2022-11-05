@@ -35,8 +35,11 @@ public class DalProduct
 
     public Product[] GetAllProduct()
     {
-        Product[] products = DataSource.products;
-        //products = DataSource.products /*new Product[]*/;
+
+        Product[] products = new Product[DataSource.Config._indexProducts];
+
+        DataSource.products.CopyTo(products, 0);
+
         return products;
     }
 
