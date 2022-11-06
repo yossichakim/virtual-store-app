@@ -1,48 +1,58 @@
 ﻿using DO;
 
 namespace Dal;
+
+/// <summary>
+///  Structure for Date Source
+/// </summary>
 static class DataSource
 {
-    private static readonly Random _random = new Random();
+    private static readonly Random s_random = new Random();
     internal static Product[] products = new Product[50];
     internal static Order[] orders = new Order[100];
     internal static OrderItem[] orderItems = new OrderItem[200];
+    internal static int indexProducts = 0;
+    internal static int indexOrders = 0;
+    internal static int indexOrdersItems = 0;
+    private static int _orderItemID = 100000;
+    private static int _orderID = 100000;
+    internal static int GetOrderItemID => _orderItemID++;
+    internal static int GetOrderID => _orderID++;
 
-    internal static class Config
-    {
-        internal static int _indexProducts = 0;
-        internal static int _indexOrders = 0;
-        internal static int _indexOrdersItems = 0;
-        private static int _orderItemID = 100000;
-        private static int _orderID = 100000;
-        internal static int _orderItemIDGet => _orderItemID++;
-        internal static int _orderIDGet => _orderID++;
-    }
+    /// <summary>
+    /// constructor for data source
+    /// </summary>
+    static DataSource() { s_Initialize(); }
 
-    static DataSource() { s_Initialize(); } //ctor
+    /// <summary>
+    /// call to init function for any entity
+    /// </summary>
     private static void s_Initialize()
     {
-        initProducts();
-        initOrders();
-        initOrderItems();
+        InitProducts();
+        InitOrders();
+        InitOrderItems();
     }
 
-    private static void initProducts()
+    /// <summary>
+    /// Initializes the array of products
+    /// </summary>
+    private static void InitProducts()
     {
-        int _initProductID = 100000;
-        string[] _prodactName = { "LG 34\"", "SAMSUNG 22\"", "LENOVO 29\"", "BENQ 24\"", "DELL 21.5\"",
+        int initProductID = 100000;
+        string[] prodactName = { "LG 34\"", "SAMSUNG 22\"", "LENOVO 29\"", "BENQ 24\"", "DELL 21.5\"",
                                         "OPPO", "ONE PLUS", "HONOR", "SAMSUNG", "APPLE",
                                         "APPLE", "ASUS", "LENOVO", "DELL", "MSI",
                                         "HP", "CANON", "FUJIFILM", "AIMO", "EPSON",
                                          "SONY", "XIAOMI", "TCL", "AIWA", "TOSHIBA"
                                         };
-        int _indexName = 0;
+        int indexName = 0;
 
         for (int i = 0; i < 25; i++)
         {
             Product product = new Product
             {
-                ProductID = _initProductID++,
+                ProductID = initProductID++,
                 InStock = i + (i % 5),//ask
             };
 
@@ -56,23 +66,26 @@ static class DataSource
                 _ => throw new NotImplementedException()
             };
 
-            product.Name = _prodactName[_indexName++];
+            product.Name = prodactName[indexName++];
             product.Price = product.Category switch
             {
-                Category.Screens => _random.Next(699, 2999),
-                Category.Phones => _random.Next(499, 4999),
-                Category.Computers => _random.Next(999, 7999),
-                Category.Printers => _random.Next(399, 3999),
-                Category.TV => _random.Next(1999, 9999),
+                Category.Screens => s_random.Next(699, 2999),
+                Category.Phones => s_random.Next(499, 4999),
+                Category.Computers => s_random.Next(999, 7999),
+                Category.Printers => s_random.Next(399, 3999),
+                Category.TV => s_random.Next(1999, 9999),
                 _ => throw new NotImplementedException()
             };
-            products[Config._indexProducts++] = product;
+            products[indexProducts++] = product;
         }
     }
 
-    private static void initOrders()
+    /// <summary>
+    /// Initializes the array of orders
+    /// </summary>
+    private static void InitOrders()
     {
-        string[] _costumerName = {"Emlynn Devitt",
+        string[] costumerName = {"Emlynn Devitt",
     "Darill Aspray",
     "Gordie Jendrusch",
     "Glenna Ruppert",
@@ -112,7 +125,7 @@ static class DataSource
     "Dre Iveson",
     "Danyette Cohn",
     "Samantha De Freitas"};
-        string[] _costumerAddress = {"83712 Porter Drive",
+        string[] costumerAddress = {"83712 Porter Drive",
     "3643 Doe Crossing Court",
     "7 Luster Street",
     "00722 Corry Center",
@@ -152,7 +165,7 @@ static class DataSource
     "95220 Hazelcrest Place",
     "2912 Cordelia Alley",
     "6407 Knutson Drive"};
-        string[] _costumerEmail = {"jvaughan0@paginegialle.it",
+        string[] costumerEmail = {"jvaughan0@paginegialle.it",
     "gphalip1@tinypic.com",
     "klawrey2@sakura.ne.jp",
     "ktremblot3@alibaba.com",
@@ -193,21 +206,21 @@ static class DataSource
     "adarko12@usgs.gov",
     "edunsford13@marriott.com" };
 
-        DateTime _start = new DateTime(2021, 1, 1);
-        int range = (DateTime.Now - _start).Days;
+        DateTime start = new DateTime(2021, 1, 1);
+        int range = (DateTime.Now - start).Days;
 
         for (int i = 0; i < 40; i++)
         {
             Order order = new Order
             {
-                OrderID = Config._orderIDGet,
-                CustomerName = _costumerName[i],
-                CustomerEmail = _costumerEmail[i],
-                CustomerAddress = _costumerAddress[i]
+                OrderID = GetOrderID,
+                CustomerName = costumerName[i],
+                CustomerEmail = costumerEmail[i],
+                CustomerAddress = costumerAddress[i]
             };
 
-            order.OrderDate = _start.AddDays(_random.Next(range - 30)).AddHours(_random.Next(0, 24))
-                .AddMinutes(_random.Next(0, 60)).AddSeconds(_random.Next(0, 60));
+            order.OrderDate = start.AddDays(s_random.Next(range - 30)).AddHours(s_random.Next(0, 24))
+                .AddMinutes(s_random.Next(0, 60)).AddSeconds(s_random.Next(0, 60));
             if (i < 32)
                 order.ShipDate = order.OrderDate.Add(new TimeSpan(10, 0, 0, 0));
             else
@@ -218,26 +231,29 @@ static class DataSource
             else
                 order.DeliveryDate = DateTime.MinValue;
 
-            orders[Config._indexOrders++] = order;
+            orders[indexOrders++] = order;
         }
     }
 
-    private static void initOrderItems()
+    /// <summary>
+    /// Initializes the array of order items
+    /// </summary>
+    private static void InitOrderItems()
     {
         OrderItem orderItem = new OrderItem();
-        foreach (var _inOrders in orders)
+        foreach (var inOrders in orders)
         {
-            orderItem.OrderItemID = Config._orderItemIDGet;
-            orderItem.OrderID = _inOrders.OrderID;
-            int _rnd = _random.Next(1, 5);
-            for (int i = 0; i < _rnd; i++)
+            orderItem.OrderItemID = GetOrderID;
+            orderItem.OrderID = inOrders.OrderID;
+            int rnd = s_random.Next(1, 5);
+            for (int i = 0; i < rnd; i++)
             {
-                Product tmpproduct = products[_random.Next(Config._indexProducts)];
+                Product tmpproduct = products[s_random.Next(indexProducts)];
                 orderItem.ProductID = tmpproduct.ProductID;
-                orderItem.Amount = _random.Next(1, 11);
+                orderItem.Amount = s_random.Next(1, 11);
                 orderItem.Price = (double)(tmpproduct.Price * orderItem.Amount);
 
-                orderItems[Config._indexOrdersItems++] = orderItem;
+                orderItems[indexOrdersItems++] = orderItem;
             }
         }
     }

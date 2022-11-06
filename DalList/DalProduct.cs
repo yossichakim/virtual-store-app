@@ -9,42 +9,42 @@ public class DalProduct
     /// <summary>
     /// The function receives a new product and adds it
     /// </summary>
-    /// <param name="_addProduct"></param>
+    /// <param name="addProduct"></param>
     /// <returns> ID number of the added product </returns>
     /// <exception cref="Exception"> 1. if the product id already exist, 2. if the array of products are full </exception>
-    public int AddProduct(Product _addProduct)
+    public int AddProduct(Product addProduct)
     {
-        if (Array.Exists(DataSource.products, _element => _element.ProductID == _addProduct.ProductID))
+        if (Array.Exists(DataSource.products, element => element.ProductID == addProduct.ProductID))
             throw new Exception("the product you try to add already exist");
 
-        if (DataSource.Config._indexProducts == DataSource.products.Length)
+        if (DataSource.indexProducts == DataSource.products.Length)
             throw new Exception("no more space to add a new product");
 
-        DataSource.products[DataSource.Config._indexProducts++] = _addProduct;
+        DataSource.products[DataSource.indexProducts++] = addProduct;
 
-        return _addProduct.ProductID;
+        return addProduct.ProductID;
     }
 
     /// <summary>
     /// Gets an ID number of the product and returns the product object
     /// </summary>
-    /// <param name="_productID"></param>
+    /// <param name="productID"></param>
     /// <returns> returns the product object </returns>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public Product GetProduct(int _productID)
+    public Product GetProduct(int productID)
     {
-        if (!Array.Exists(DataSource.products, _element => _element.ProductID == _productID))
+        if (!Array.Exists(DataSource.products, element => element.ProductID == productID))
             throw new Exception("the product you try to get are not exist");
 
-        Product _returnProdcut = new Product();
-        foreach (var _tmpProduct in DataSource.products)
+        Product returnProdcut = new Product();
+        foreach (var tmpProduct in DataSource.products)
         {
-            if (_tmpProduct.ProductID == _productID)
+            if (tmpProduct.ProductID == productID)
             {
-                _returnProdcut = _tmpProduct;
+                returnProdcut = tmpProduct;
             }
         }
-        return _returnProdcut;
+        return returnProdcut;
     }
 
     /// <summary>
@@ -52,29 +52,29 @@ public class DalProduct
     /// </summary>
     public Product[] GetAllProduct()
     {
-        Product[] _products = new Product[DataSource.Config._indexProducts];
+        Product[] returnProducts = new Product[DataSource.indexProducts];
 
         //copy all the cells to the new array
-        DataSource.products.CopyTo(_products, 0);
+        DataSource.products.CopyTo(returnProducts, 0);
 
-        return _products;
+        return returnProducts;
     }
 
     /// <summary>
     /// Deletes the product whose ID number was received as a parameter
     /// </summary>
-    /// <param name="_productId"></param>
+    /// <param name="productId"></param>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public void RemoveProduct(int _productId)
+    public void RemoveProduct(int productId)
     {
-        if (!Array.Exists(DataSource.products, _element => _element.ProductID == _productId))
+        if (!Array.Exists(DataSource.products, element => element.ProductID == productId))
             throw new Exception("the product you try to delete are not exist");
 
-        for (int i = 0; i < DataSource.Config._indexProducts; i++)
+        for (int i = 0; i < DataSource.indexProducts; i++)
         {
-            if (DataSource.products[i].ProductID == _productId)
+            if (DataSource.products[i].ProductID == productId)
             {
-                DataSource.products[i] = DataSource.products[--DataSource.Config._indexProducts];
+                DataSource.products[i] = DataSource.products[--DataSource.indexProducts];
                 return;
             }
         }
@@ -83,18 +83,18 @@ public class DalProduct
     /// <summary>
     /// Update product details by the received object
     /// </summary>
-    /// <param name="_updateProduct"></param>
+    /// <param name="updateProduct"></param>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public void UpdateProduct(Product _updateProduct)
+    public void UpdateProduct(Product updateProduct)
     {
-        if (!Array.Exists(DataSource.products, _element => _element.ProductID == _updateProduct.ProductID))
+        if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
             throw new Exception("the product you try to update are not exist");
 
-        for (int i = 0; i < DataSource.Config._indexProducts; i++)
+        for (int i = 0; i < DataSource.indexProducts; i++)
         {
-            if (_updateProduct.ProductID == DataSource.products[i].ProductID)
+            if (updateProduct.ProductID == DataSource.products[i].ProductID)
             {
-                DataSource.products[i] = _updateProduct;
+                DataSource.products[i] = updateProduct;
                 return;
             }
         }
