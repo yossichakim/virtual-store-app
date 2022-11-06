@@ -5,7 +5,12 @@ namespace Dal;
 
 public class DalOrderItem
 {
-
+    /// <summary>
+    /// Adding order items to the list of order items
+    /// </summary>
+    /// <param name="addOrderItem"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int AddOrderItem(OrderItem addOrderItem)
     {
 
@@ -19,6 +24,12 @@ public class DalOrderItem
 
     }
 
+    /// <summary>
+    /// Find the order items by the ID number
+    /// </summary>
+    /// <param name="_orderItem"></param>
+    /// <returns> Returns the requested order item </returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem GetOrderItem(int _orderItem)
     {
         if (!Array.Exists(DataSource.orderItems, element => element.OrderItemID == _orderItem))
@@ -37,7 +48,10 @@ public class DalOrderItem
         return returnOrderItem;
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns> Returns the list of order items </returns>
     public OrderItem[] GetAllOrdersItems()
     {
         OrderItem[] orderItems = new OrderItem[DataSource.Config._indexOrdersItems];
@@ -47,6 +61,11 @@ public class DalOrderItem
         return orderItems;
     }
 
+    /// <summary>
+    /// Deletion of an order item by ID number of the order item
+    /// </summary>
+    /// <param name="_orderItemId"></param>
+    /// <exception cref="Exception"></exception>
     public void RemoveOrderItem(int _orderItemId)
     {
         if (!Array.Exists(DataSource.orderItems, element => element.OrderItemID == _orderItemId))
@@ -62,6 +81,11 @@ public class DalOrderItem
         }
     }
 
+    /// <summary>
+    /// Order item update of a requested product
+    /// </summary>
+    /// <param name="updateOrderItem"></param>
+    /// <exception cref="Exception"></exception>
     public void UpdateOrderItem(OrderItem updateOrderItem)
     {
         if (!Array.Exists(DataSource.orderItems, element => element.OrderItemID == updateOrderItem.OrderItemID))
@@ -78,6 +102,14 @@ public class DalOrderItem
         }
     }
 
+    /// <summary>
+    /// The function receives an ID number of the order and of a product
+    /// and returns the corresponding order item
+    /// </summary>
+    /// <param name="_prodID"></param>
+    /// <param name="_orderID"></param>
+    /// <returns> returns the corresponding order item </returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem FindOrderItem(int _prodID,int _orderID)
     {
         OrderItem _returnOrderItem = new OrderItem();
@@ -92,6 +124,12 @@ public class DalOrderItem
         throw new Exception("the item you search are not found");
     }
 
+    /// <summary>
+    /// Looking for all order items of an order
+    /// </summary>
+    /// <param name="_orderID"></param>
+    /// <returns> Returns all order items of the same order ID number </returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem[] GetByOrderID(int _orderID)
     {
         if (!Array.Exists(DataSource.orderItems, element => element.OrderID == _orderID))

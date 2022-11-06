@@ -4,6 +4,12 @@ namespace Dal;
 
 public class DalProduct
 {
+    /// <summary>
+    /// The function receives a new product and adds it if there is still room
+    /// </summary>
+    /// <param name="addProduct"></param>
+    /// <returns> ID number of the added product </returns>
+    /// <exception cref="Exception"></exception>
     public int AddProduct(Product addProduct)
     {
         if (Array.Exists(DataSource.products, element => element.ProductID == addProduct.ProductID))
@@ -17,6 +23,12 @@ public class DalProduct
         return addProduct.ProductID;
     }
 
+    /// <summary>
+    /// Gets an ID number of the product and returns the product object
+    /// </summary>
+    /// <param name="_productId"></param>
+    /// <returns> returns the product object </returns>
+    /// <exception cref="Exception"></exception>
     public Product GetProduct(int _productId)
     {
         if (!Array.Exists(DataSource.products, element => element.ProductID == _productId))
@@ -33,6 +45,10 @@ public class DalProduct
         return returnProdcut;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns> Returns the list of products </returns>
     public Product[] GetAllProduct()
     {
 
@@ -43,6 +59,11 @@ public class DalProduct
         return products;
     }
 
+    /// <summary>
+    /// Deletes the product whose ID number was received as a parameter
+    /// </summary>
+    /// <param name="_productId"></param>
+    /// <exception cref="Exception"></exception>
     public void RemoveProduct(int _productId)
     {
         if (!Array.Exists(DataSource.products, element => element.ProductID == _productId))
@@ -58,6 +79,11 @@ public class DalProduct
         }
     }
 
+    /// <summary>
+    /// Update product details by the received object
+    /// </summary>
+    /// <param name="updateProduct"></param>
+    /// <exception cref="Exception"></exception>
     public void UpdateProduct(Product updateProduct)
     {
         if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))

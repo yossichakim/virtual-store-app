@@ -4,6 +4,12 @@ namespace Dal;
 
 public class DalOrder
 {
+    /// <summary>
+    /// Receives an order as a parameter and adds it to the array of orders
+    /// </summary>
+    /// <param name="addOrder"></param>
+    /// <returns> Order ID number </returns>
+    /// <exception cref="Exception"></exception>
     public int AddOrder(Order addOrder)
     {
 
@@ -11,12 +17,19 @@ public class DalOrder
             throw new Exception("no more space to add a new orders");
 
 
-        DataSource.orders[DataSource.Config._indexOrders++] = addOrder;   
+        DataSource.orders[DataSource.Config._indexOrders++] = addOrder;
 
         return addOrder.OrderID;
 
     }
 
+    /// <summary>
+    /// The function receives an ID number of an order
+    /// and checks whether there is a matching order and returns the order
+    /// </summary>
+    /// <param name="_order"></param>
+    /// <returns> Returns the requested order </returns>
+    /// <exception cref="Exception"></exception>
     public Order GetOrder(int _order)
     {
         if (!Array.Exists(DataSource.orders, element => element.OrderID == _order))
@@ -36,6 +49,10 @@ public class DalOrder
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>  Returns the order list </returns>
     public Order[] GetAllorders()
     {
         Order[] orders = new Order[DataSource.Config._indexOrders];
@@ -45,6 +62,11 @@ public class DalOrder
         return orders;
     }
 
+    /// <summary>
+    /// Deleting the order from the array by deleting it and replacing it with the last place
+    /// </summary>
+    /// <param name="_orderId"></param>
+    /// <exception cref="Exception"></exception>
     public void RemoveOrder(int _orderId)
     {
         if (!Array.Exists(DataSource.orders, element => element.OrderID == _orderId))
@@ -60,7 +82,11 @@ public class DalOrder
         }
     }
 
-
+    /// <summary>
+    /// Updating an order whose details have changed
+    /// </summary>
+    /// <param name="updateOrder"></param>
+    /// <exception cref="Exception"></exception>
     public void UpdateOrder(Order updateOrder)
     {
         if (!Array.Exists(DataSource.orders, element => element.OrderID == updateOrder.OrderID))
