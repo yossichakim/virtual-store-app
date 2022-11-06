@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace DO;
+﻿namespace DO;
 
 /// <summary>
 /// Structure for Product
