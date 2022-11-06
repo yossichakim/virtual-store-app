@@ -82,19 +82,19 @@ public class DalProduct
     /// <summary>
     /// Update product details by the received object
     /// </summary>
-    /// <param name="updateProduct"></param>
+    /// <param name="_updateProduct"></param>
     /// <exception cref="Exception"></exception>
-    public void UpdateProduct(Product updateProduct)
+    public void UpdateProduct(Product _updateProduct)
     {
-        if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
+        if (!Array.Exists(DataSource.products, element => element.ProductID == _updateProduct.ProductID))
             throw new Exception("the product you try to update are not exist");
 
 
         for (int i = 0; i < DataSource.Config._indexProducts; i++)
         {
-            if (updateProduct.ProductID == DataSource.products[i].ProductID)
+            if (_updateProduct.ProductID == DataSource.products[i].ProductID)
             {
-                DataSource.products[i] = updateProduct;
+                DataSource.products[i] = _updateProduct;
                 return;
             }
         }
