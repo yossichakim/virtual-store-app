@@ -14,10 +14,10 @@ static class DataSource
     internal static int indexProducts = 0;
     internal static int indexOrders = 0;
     internal static int indexOrdersItems = 0;
-    private static int _orderItemID = 100000;
-    private static int _orderID = 100000;
-    internal static int GetOrderItemID => _orderItemID++;
-    internal static int GetOrderID => _orderID++;
+    private static int s_orderItemID = 100000;
+    private static int s_orderID = 100000;
+    internal static int GetOrderItemID => s_orderItemID++;
+    internal static int GetOrderID => s_orderID++;
 
     /// <summary>
     /// constructor for data source
@@ -251,7 +251,7 @@ static class DataSource
                 Product tmpproduct = products[s_random.Next(indexProducts)];
                 orderItem.ProductID = tmpproduct.ProductID;
                 orderItem.Amount = s_random.Next(1, 11);
-                orderItem.Price = (double)(tmpproduct.Price * orderItem.Amount);
+                orderItem.Price = tmpproduct.Price;
 
                 orderItems[indexOrdersItems++] = orderItem;
             }
