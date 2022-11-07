@@ -10,7 +10,7 @@ public class DalOrder
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
     /// </summary>
-    /// <param name="_addOrder"></param>
+    /// <param name="addOrder"></param>
     /// <returns> Order ID number </returns>
     /// <exception cref="Exception"> if the array of orders are full </exception>
     public int AddOrder(Order addOrder)
@@ -35,17 +35,17 @@ public class DalOrder
         if (!Array.Exists(DataSource.orders, element => element.OrderID == order))
             throw new Exception("the order you try to get are not exist");
 
-        Order _returnOrder = new Order();
+        Order returnOrder = new Order();
 
-        foreach (var _tmpOrder in DataSource.orders)
+        foreach (var tmpOrder in DataSource.orders)
         {
             if (tmpOrder.OrderID == order)
             {
-                _returnOrder = _tmpOrder;
+                returnOrder = tmpOrder;
             }
         }
 
-        return _returnOrder;
+        return returnOrder;
     }
 
     /// <summary>
@@ -87,14 +87,14 @@ public class DalOrder
     /// <exception cref="Exception"> if the order not exist </exception>
     public void UpdateOrder(Order updateOrder)
     {
-        if (!Array.Exists(DataSource.orders, _element => _element.OrderID == _updateOrder.OrderID))
+        if (!Array.Exists(DataSource.orders, element => element.OrderID == updateOrder.OrderID))
             throw new Exception("the order you try to update are not exist");
 
         for (int i = 0; i < DataSource.indexOrders; i++)
         {
-            if (_updateOrder.OrderID == DataSource.orders[i].OrderID)
+            if (updateOrder.OrderID == DataSource.orders[i].OrderID)
             {
-                DataSource.orders[i] = _updateOrder;
+                DataSource.orders[i] = updateOrder;
 
                 return;
             }
