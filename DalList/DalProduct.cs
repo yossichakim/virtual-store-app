@@ -87,14 +87,14 @@ public class DalProduct
     /// <exception cref="Exception"> if the product not exist </exception>
     public void UpdateProduct(Product updateProduct)
     {
-        if (!Array.Exists(DataSource.products, element => element.ProductID == _updateProduct.ProductID))
+        if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
             throw new Exception("the product you try to update are not exist");
 
         for (int i = 0; i < DataSource.indexProducts; i++)
         {
-            if (_updateProduct.ProductID == DataSource.products[i].ProductID)
+            if (updateProduct.ProductID == DataSource.products[i].ProductID)
             {
-                DataSource.products[i] = _updateProduct;
+                DataSource.products[i] = updateProduct;
                 return;
             }
         }

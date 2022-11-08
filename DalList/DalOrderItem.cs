@@ -129,18 +129,6 @@ public class DalOrderItem
         if (!Array.Exists(DataSource.orderItems, element => element.OrderID == orderID))
             throw new Exception("the order item you try to get are not exist");
 
-        int count = 0;
-        count = DataSource.orderItems.Count(element => element.OrderID == orderID);
-        OrderItem[] orderItemByID = new OrderItem[count];
-
-        for (int i = 0; i < DataSource.indexOrdersItems; i++)
-        {
-            if (DataSource.orderItems[i].OrderID == orderID)
-            {
-                orderItemByID[i] = DataSource.orderItems[i];
-            }
-        }
-
-        return orderItemByID;
+        return DataSource.orderItems.Where(element => element.OrderID == orderID).ToArray();
     }
 }
