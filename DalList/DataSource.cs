@@ -7,9 +7,18 @@ namespace Dal;
 /// </summary>
 static class DataSource
 {
+    /// <summary>
+    /// constructor for data source
+    /// </summary>
+    static DataSource() { s_Initialize(); }
+
+    /// <summary>
+    /// call to init function for any entity
+    /// </summary>
+
     private static readonly Random s_random = new Random();
     internal static Product[] products = new Product[50];
-    internal static Order[] orders = new Order[100];
+    internal static Order[] orders = new Order[50];
     internal static OrderItem[] orderItems = new OrderItem[200];
     internal static int indexProducts = 0;
     internal static int indexOrders = 0;
@@ -19,14 +28,7 @@ static class DataSource
     internal static int GetOrderItemID => s_orderItemID++;
     internal static int GetOrderID => s_orderID++;
 
-    /// <summary>
-    /// constructor for data source
-    /// </summary>
-    static DataSource() { s_Initialize(); }
 
-    /// <summary>
-    /// call to init function for any entity
-    /// </summary>
     private static void s_Initialize()
     {
         InitProducts();
@@ -47,14 +49,17 @@ static class DataSource
                                          "SONY", "XIAOMI", "TCL", "AIWA", "TOSHIBA"
                                         };
         int indexName = 0;
+        Product product = new Product();
 
         for (int i = 0; i < 25; i++)
         {
-            Product product = new Product
-            {
-                ProductID = initProductID++,
-                InStock = i + (i % 5),//ask
-            };
+            //Product product = new Product
+            //{
+            //    ProductID = initProductID++,
+            //    InStock = i + (i % 5),//ask
+            //};
+            product.ProductID = initProductID++;
+            product.InStock = i + (i % 5);//ask;
 
             product.Category = i switch
             {
@@ -241,7 +246,7 @@ static class DataSource
     private static void InitOrderItems()
     {
         OrderItem orderItem = new OrderItem();
-        foreach (var inOrders in orders)
+        foreach (var inOrders in orders.Take(indexOrders))
         {
             orderItem.OrderItemID = GetOrderID;
             orderItem.OrderID = inOrders.OrderID;
