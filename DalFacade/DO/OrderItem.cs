@@ -30,10 +30,9 @@ public struct OrderItem
     /// A function that overrides the existing function and prints the order item details
     /// </summary>
     /// <returns> Prints the order item details </returns>
-    public override string ToString() => $@"
-        Order Item ID: {OrderItemID}
-        Product ID: {ProductID}
-        Order ID: {OrderID}
-        Price: {Price}
-    	Amount in stock: {Amount}";
+    public override string ToString() => $"Order Item ID: {OrderItemID}\n" +
+                                         $"Product ID: {ProductID}\n" +
+                                         $"Order ID: {OrderID}\n" +
+                                         $"Price: {Price}\n" +
+    	                                 $"Amount in stock: {Amount}\n";
 }
