@@ -9,7 +9,7 @@ class Program
     }
     enum ProductMenu
     {
-        AddProduct, GetProduct, GetAllProduct, RemoveProduct, UpdateProduct
+        AddProduct = 1, GetProduct, GetAllProduct, RemoveProduct, UpdateProduct
     }
     enum OrderMenu
     {
@@ -29,8 +29,7 @@ class Program
         while (true)
         {
             printMainMenu();
-            int choice = tryParseInt();
-            MainMenu mainMenu = (MainMenu)choice;
+            MainMenu mainMenu = (MainMenu)tryParseInt();
 
             try
             {
@@ -46,6 +45,7 @@ class Program
                     case MainMenu.OrderItem:
                         break;
                     default:
+                        Console.WriteLine("\nenter a number between 0 - 3\n");
                         break;
                 }
             }
@@ -68,14 +68,19 @@ class Program
             case ProductMenu.AddProduct:
                 Product product = new Product();
                 addProduct(ref product);
-                _dalProduct.AddProduct(product);
+                Console.WriteLine(_dalProduct.AddProduct(product));
                 break;
             case ProductMenu.GetProduct:
                 Console.WriteLine("enter the product id to get:");
-                _dalProduct.GetProduct(tryParseInt());
+                Console.WriteLine(_dalProduct.GetProduct(tryParseInt()));
                 break;
             case ProductMenu.GetAllProduct:
-                _dalProduct.GetAllProduct();
+                Product[] printProducts = _dalProduct.GetAllProduct();
+                foreach (var item in printProducts)
+                {
+                    Console.WriteLine(item);
+                }
+
                 break;
             case ProductMenu.RemoveProduct:
                 Console.WriteLine("enter the product id to remove:");
@@ -94,14 +99,30 @@ class Program
         }
     }
 
+    #region print function
     private static void printMainMenu()
     {
-        Console.WriteLine(@"enter your choice:
-                            1 - Product Menu
-                            2 - Order Menu
-                            3 - Order Item Menu
-                            0 - Finish the program");
+        Console.WriteLine("enter your choice:\n" +
+                          "1 - Product Menu\n" +
+                          "2 - Order Menu\n" +
+                          "3 - Order Item Menu\n" +
+                          "0 - Finish the program");
     }
+
+    private static void printSubMenu(string entityName)
+    {
+        enterChoice();
+        Console.WriteLine($"enter 1 to add {entityName}\n" +
+                          $"enter 2 to get {entityName}\n" +
+                          $"enter 3 to get all {entityName}\n" +
+                          $"enter 4 to remove {entityName}\n" +
+                          $"enter 5 to update {entityName}");
+    }
+    private static void enterChoice()
+    {
+        Console.WriteLine("enter your choice:");
+    }
+    #endregion
 
     #region product actions
 
@@ -253,21 +274,5 @@ class Program
         }
 
         return number;
-    }
-
-    private static void enterChoice()
-    {
-        Console.WriteLine("enter your choice:");
-    }
-
-    private static void printSubMenu(string entityName)
-    {
-        //להמשיך ....
-        enterChoice();
-        Console.WriteLine(@$"enter 1 for add {entityName}
-                            enter 2 for ....
-
-
-                                        ");
     }
 }
