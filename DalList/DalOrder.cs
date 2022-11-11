@@ -55,7 +55,10 @@ public class DalOrder
     {
         Order[] returnOrdersArr = new Order[DataSource.indexOrders];
 
-        DataSource.orders.CopyTo(returnOrdersArr, 0);
+        for (int i = 0; i < returnOrdersArr.Length; i++)
+        {
+            returnOrdersArr[i] = DataSource.orders[i];
+        }
 
         return returnOrdersArr;
     }
@@ -74,6 +77,12 @@ public class DalOrder
         {
             if (DataSource.orders[i].OrderID == orderId)
             {
+                if (i == DataSource.indexOrders - 1)
+                {
+                    DataSource.orders[i] = new Order();
+                    --DataSource.indexOrders;
+                    return;
+                }
                 DataSource.orders[i] = DataSource.orders[--DataSource.indexOrders];
                 return;
             }

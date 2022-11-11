@@ -13,7 +13,7 @@ class Program
     }
     enum OrderMenu
     {
-        AddOrder, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
+        AddOrder = 1, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
     }
     enum OrderItemMenu
     {
@@ -41,6 +41,7 @@ class Program
                         productActions();
                         break;
                     case MainMenu.Order:
+                        orderActions();
                         break;
                     case MainMenu.OrderItem:
                         break;
@@ -118,6 +119,7 @@ class Program
                           $"enter 4 to remove {entityName}\n" +
                           $"enter 5 to update {entityName}");
     }
+
     private static void enterChoice()
     {
         Console.WriteLine("enter your choice:");
@@ -203,44 +205,7 @@ class Program
     }
 
 
-    Order SetOrder(Order order)
-    {
-        Console.WriteLine("enter order id: ");
-        order.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter customer name:");
-        order.CustomerName = Console.ReadLine();
-        Console.WriteLine("enter customer email:");
-        order.CustomerEmail = Console.ReadLine();
-        Console.WriteLine("enter customer address:");
-        order.CustomerAddress = Console.ReadLine();
-        Console.WriteLine("enter order date in format dd/mm/yy hh/mm/ss:");
-        order.OrderDate = Convert.ToDateTime(Console.ReadLine());
-        Console.WriteLine("enter ship date in format dd/mm/yy hh/mm/ss:");
-        order.ShipDate = Convert.ToDateTime(Console.ReadLine());
-        Console.WriteLine("enter delivery date in format dd/mm/yy hh/mm/ss:");
-        order.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
-
-        return order;
-    }
-
-    OrderItem SetOrderItem(OrderItem orderItem)
-    {
-        Console.WriteLine("enter order item id:");
-        orderItem.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter product id:");
-        orderItem.OrderItemID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter order id:");
-        orderItem.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter order item price:");
-        orderItem.Price = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("enter order item amount:");
-        orderItem.Price = Convert.ToInt32(Console.ReadLine());
-
-        return orderItem;
-    }
-
     #endregion
-
 
     private static int tryParseInt()
     {
@@ -252,7 +217,6 @@ class Program
 
         return number;
     }
-
     private static int tryParseCategoty()
     {
         int number;
@@ -264,7 +228,6 @@ class Program
 
         return number;
     }
-
     private static double tryParseDouble()
     {
         double number;
@@ -275,4 +238,130 @@ class Program
 
         return number;
     }
+
+    #region order actions
+
+    private static void orderActions()
+    {
+        printSubMenu("order");
+        OrderMenu orderMenu = (OrderMenu)tryParseInt();
+
+        switch (orderMenu)
+        {
+            case OrderMenu.AddOrder:
+                Order order = new Order();
+                addOrder(ref order);
+                Console.WriteLine(_dalOrder.AddOrder(order));
+
+                break;
+
+            case OrderMenu.GetOrder:
+                Console.WriteLine("enter the Order id to get:");
+                Console.WriteLine(_dalOrder.GetOrder(tryParseInt()));
+
+                break;
+
+            case OrderMenu.GetAllorders:
+                Order[] printOrder = _dalOrder.GetAllorders();
+                foreach (var item in printOrder)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case OrderMenu.RemoveOrder:
+                Console.WriteLine("enter the Order id to remove:");
+                _dalOrder.RemoveOrder(tryParseInt());
+
+                break;
+
+            case OrderMenu.UpdateOrder:
+
+                _dalOrder.UpdateOrder(updateOrder());
+
+                break;
+
+            default:
+                Console.WriteLine("error - enter a number between 0 - 4");
+
+                break;
+
+        }
+
+    }
+    private static void addOrder(ref Order order)
+    {
+        order.OrderID = entityID("order");
+
+        order.CustomerName = productName("customer name");
+
+        order.CustomerAddress = productName("customer address");
+
+        order.CustomerEmail = productName("customer email");
+
+        order.OrderDate = tryParseDate("order");
+
+        order.ShipDate = tryParseDate("ship");
+
+        order.DeliveryDate = tryParseDate("delivery");
+    }
+    private static DateTime tryParseDate(string entityName)
+    {
+
+        Console.WriteLine($"enter {entityName} date:");
+        DateTime date;
+        while (!DateTime.TryParse(Console.ReadLine(), out date))
+        {
+            Console.WriteLine("error - enter a valid date!");
+        }
+
+        return date;
+    }
+    private static Order updateOrder()
+    {
+        Order order = _dalOrder.GetOrder(entityID("order"));
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine(@"what do you want to update?
+                            1 - customer name 
+                            2 - customer address
+                            3 - costumer email
+                            4 - order date
+                            5 - ship date
+                            6 - delivery date
+                            0 - finish update");
+
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    order.CustomerName = productName("customer name");
+                    break;
+                case 2:
+                    order.CustomerAddress = productName("customer address");
+                    break;
+                case 3:
+                    order.CustomerEmail = productName("customer email");
+                    break;
+                case 4:
+                    order.OrderDate = tryParseDate("order");
+                    break;
+                case 5:
+                    order.ShipDate = tryParseDate("ship");
+                    break;
+                case 6:
+                    order.DeliveryDate = tryParseDate("delivery");
+                    break;
+                case 0:
+                    break;
+                default:
+                    Console.WriteLine("enter a number between 0 - 6");
+                    break;
+            }
+        }
+        return order;
+    }
+    #endregion  order actions
 }
