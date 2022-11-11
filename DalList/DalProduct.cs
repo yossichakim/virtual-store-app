@@ -52,20 +52,14 @@ public class DalProduct
     /// </summary>
     public Product[] GetAllProduct()
     {
-        //int i = 0;
         Product[] returnProducts = new Product[DataSource.indexProducts];
 
-        //copy all the cells to the new array
-        //DataSource.products.CopyTo(returnProducts, 25, 0);
-        //foreach (var item in DataSource.products.Select())
-        //{
-        //    returnProducts[i++] = item;
-        //}
         for (int i = 0; i < returnProducts.Length; i++)
         {
             returnProducts[i] = DataSource.products[i];
         }
-        return returnProducts.Select(product => product).ToArray();
+
+        return returnProducts;//.Select(product => product).ToArray();
     }
 
     /// <summary>
@@ -82,6 +76,12 @@ public class DalProduct
         {
             if (DataSource.products[i].ProductID == productId)
             {
+                if (i == DataSource.indexProducts - 1)
+                {
+                    DataSource.products[i] = new Product();
+                    DataSource.indexProducts--;
+                    return;
+                }
                 DataSource.products[i] = DataSource.products[--DataSource.indexProducts];
                 return;
             }

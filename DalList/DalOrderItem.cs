@@ -51,9 +51,13 @@ public class DalOrderItem
     {
         OrderItem[] returnOrderItemsArr = new OrderItem[DataSource.indexOrdersItems];
 
-        DataSource.orderItems.CopyTo(returnOrderItemsArr, 0);
+        //DataSource.orderItems.CopyTo(returnOrderItemsArr, 0);
+        for (int i = 0; i < returnOrderItemsArr.Length; i++)
+        {
+            returnOrderItemsArr[i] = DataSource.orderItems[i];
+        }
 
-        return returnOrderItemsArr;
+        return returnOrderItemsArr;//.Select();
     }
 
     /// <summary>
@@ -70,6 +74,12 @@ public class DalOrderItem
         {
             if (DataSource.orderItems[i].OrderItemID == orderItemId)
             {
+                if (i == DataSource.indexOrdersItems - 1)
+                {
+                    DataSource.orderItems[i] = new OrderItem();
+                    DataSource.indexOrdersItems--;
+                    return;
+                }
                 DataSource.orderItems[i] = DataSource.orderItems[--DataSource.indexOrdersItems];
                 return;
             }
