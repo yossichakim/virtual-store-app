@@ -248,7 +248,6 @@ static class DataSource
         OrderItem orderItem = new OrderItem();
         foreach (var inOrders in orders.Take(indexOrders))
         {
-            orderItem.OrderItemID = GetOrderID;
             orderItem.OrderID = inOrders.OrderID;
             int rnd = s_random.Next(1, 5);
             for (int i = 0; i < rnd; i++)
@@ -257,9 +256,12 @@ static class DataSource
                 orderItem.ProductID = tmpproduct.ProductID;
                 orderItem.Amount = s_random.Next(1, 11);
                 orderItem.Price = tmpproduct.Price;
-
+                orderItem.OrderItemID = GetOrderItemID;
                 orderItems[indexOrdersItems++] = orderItem;
+
+
             }
+
         }
     }
 }
