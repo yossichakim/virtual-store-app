@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Stage0": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Project"
+    }
+  }
+}

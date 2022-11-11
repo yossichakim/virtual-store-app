@@ -43,6 +43,7 @@ class Program
                         break;
 
                     case MainMenu.Order:
+                        orderActions();
                         break;
 
                     case MainMenu.OrderItem:
@@ -130,6 +131,34 @@ class Program
                 break;
         }
     }
+
+    #region print function
+    private static void printMainMenu()
+    {
+        Console.WriteLine("enter your choice:\n" +
+                          "1 - Product Menu\n" +
+                          "2 - Order Menu\n" +
+                          "3 - Order Item Menu\n" +
+                          "0 - Finish the program");
+    }
+
+    private static void printSubMenu(string entityName)
+    {
+        enterChoice();
+        Console.WriteLine($"enter 1 to add {entityName}\n" +
+                          $"enter 2 to get {entityName}\n" +
+                          $"enter 3 to get all {entityName}\n" +
+                          $"enter 4 to remove {entityName}\n" +
+                          $"enter 5 to update {entityName}");
+    }
+    private static void enterChoice()
+    {
+        Console.WriteLine("enter your choice:");
+    }
+    #endregion
+
+    #region product actions
+
     private static int entityID(string entityName)
     {
         Console.WriteLine($"enter {entityName} id:");
@@ -324,7 +353,6 @@ class Program
 
     #endregion item actions
 
-
     private static int tryParseInt()
     {
         int number;
@@ -335,7 +363,6 @@ class Program
 
         return number;
     }
-
     private static int tryParseCategoty()
     {
         int number;
@@ -347,7 +374,6 @@ class Program
 
         return number;
     }
-
     private static double tryParseDouble()
     {
         double number;
@@ -358,4 +384,130 @@ class Program
 
         return number;
     }
+
+    #region order actions
+
+    private static void orderActions()
+    {
+        printSubMenu("order");
+        OrderMenu orderMenu = (OrderMenu)tryParseInt();
+
+        switch (orderMenu)
+        {
+            case OrderMenu.AddOrder:
+                Order order = new Order();
+                addOrder(ref order);
+                Console.WriteLine(_dalOrder.AddOrder(order));
+
+                break;
+
+            case OrderMenu.GetOrder:
+                Console.WriteLine("enter the Order id to get:");
+                Console.WriteLine(_dalOrder.GetOrder(tryParseInt()));
+
+                break;
+
+            case OrderMenu.GetAllorders:
+                Order[] printOrder = _dalOrder.GetAllorders();
+                foreach (var item in printOrder)
+                {
+                    Console.WriteLine(item);
+                }
+                break;
+
+            case OrderMenu.RemoveOrder:
+                Console.WriteLine("enter the Order id to remove:");
+                _dalOrder.RemoveOrder(tryParseInt());
+
+                break;
+
+            case OrderMenu.UpdateOrder:
+
+                _dalOrder.UpdateOrder(updateOrder());
+
+                break;
+
+            default:
+                Console.WriteLine("error - enter a number between 0 - 4");
+
+                break;
+
+        }
+
+    }
+    private static void addOrder(ref Order order)
+    {
+        order.OrderID = entityID("order");
+
+        order.CustomerName = productName("customer name");
+
+        order.CustomerAddress = productName("customer address");
+
+        order.CustomerEmail = productName("customer email");
+
+        order.OrderDate = tryParseDate("order");
+
+        order.ShipDate = tryParseDate("ship");
+
+        order.DeliveryDate = tryParseDate("delivery");
+    }
+    private static DateTime tryParseDate(string entityName)
+    {
+
+        Console.WriteLine($"enter {entityName} date:");
+        DateTime date;
+        while (!DateTime.TryParse(Console.ReadLine(), out date))
+        {
+            Console.WriteLine("error - enter a valid date!");
+        }
+
+        return date;
+    }
+    private static Order updateOrder()
+    {
+        Order order = _dalOrder.GetOrder(entityID("order"));
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine(@"what do you want to update?
+                            1 - customer name 
+                            2 - customer address
+                            3 - costumer email
+                            4 - order date
+                            5 - ship date
+                            6 - delivery date
+                            0 - finish update");
+
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    order.CustomerName = productName("customer name");
+                    break;
+                case 2:
+                    order.CustomerAddress = productName("customer address");
+                    break;
+                case 3:
+                    order.CustomerEmail = productName("customer email");
+                    break;
+                case 4:
+                    order.OrderDate = tryParseDate("order");
+                    break;
+                case 5:
+                    order.ShipDate = tryParseDate("ship");
+                    break;
+                case 6:
+                    order.DeliveryDate = tryParseDate("delivery");
+                    break;
+                case 0:
+                    break;
+                default:
+                    Console.WriteLine("enter a number between 0 - 6");
+                    break;
+            }
+        }
+        return order;
+    }
+    #endregion  order actions
 }
