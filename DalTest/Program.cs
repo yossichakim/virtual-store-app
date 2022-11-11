@@ -13,11 +13,11 @@ class Program
     }
     enum OrderMenu
     {
-        AddOrder, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
+        AddOrder = 1, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
     }
     enum OrderItemMenu
     {
-        AddOrderItem, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
+        AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
     private static DalProduct _dalProduct = new DalProduct();
@@ -37,13 +37,18 @@ class Program
                 {
                     case MainMenu.Exit:
                         return;
+
                     case MainMenu.Product:
                         productActions();
                         break;
+
                     case MainMenu.Order:
                         break;
+
                     case MainMenu.OrderItem:
+                        orderItemtActions();
                         break;
+
                     default:
                         Console.WriteLine("\nenter a number between 0 - 3\n");
                         break;
@@ -55,9 +60,39 @@ class Program
                 throw;
             }
         }
-
-
     }
+
+    #region print function
+    private static void printMainMenu()
+    {
+        Console.WriteLine("enter your choice:\n" +
+                          "1 - Product Menu\n" +
+                          "2 - Order Menu\n" +
+                          "3 - Order Item Menu\n" +
+                          "0 - Finish the program\n");
+    }
+
+    private static void printSubMenu(string entityName)
+    {
+        enterChoice();
+        Console.WriteLine($"enter 1 to add {entityName}\n" +
+                          $"enter 2 to get {entityName}\n" +
+                          $"enter 3 to get all {entityName}s\n" +
+                          $"enter 4 to remove {entityName}\n" +
+                          $"enter 5 to update {entityName}");
+        if (entityName == "order item")
+        {
+            Console.WriteLine($"enter 6 to find {entityName}\n" +
+                              $"enter 7 to get all {entityName}s by order ID");
+        }
+    }
+    private static void enterChoice()
+    {
+        Console.WriteLine("enter your choice:");
+    }
+    #endregion
+
+    #region product actions
     private static void productActions()
     {
         printSubMenu("product");
@@ -70,62 +105,31 @@ class Program
                 addProduct(ref product);
                 Console.WriteLine(_dalProduct.AddProduct(product));
                 break;
+
             case ProductMenu.GetProduct:
                 Console.WriteLine("enter the product id to get:");
                 Console.WriteLine(_dalProduct.GetProduct(tryParseInt()));
                 break;
+
             case ProductMenu.GetAllProduct:
                 Product[] printProducts = _dalProduct.GetAllProduct();
-                foreach (var item in printProducts)
-                {
-                    Console.WriteLine(item);
-                }
-
+                foreach (var item in printProducts) Console.WriteLine(item);
                 break;
+
             case ProductMenu.RemoveProduct:
                 Console.WriteLine("enter the product id to remove:");
                 _dalProduct.RemoveProduct(tryParseInt());
                 break;
+
             case ProductMenu.UpdateProduct:
-                //Product product1 = new Product();
-                //updateProduct(ref product1);
-                //_dalProduct.UpdateProduct(product1);
-                //updateProduct();
                 _dalProduct.UpdateProduct(updateProduct());
                 break;
+
             default:
                 Console.WriteLine("error - enter a number between 0 - 4");
                 break;
         }
     }
-
-    #region print function
-    private static void printMainMenu()
-    {
-        Console.WriteLine("enter your choice:\n" +
-                          "1 - Product Menu\n" +
-                          "2 - Order Menu\n" +
-                          "3 - Order Item Menu\n" +
-                          "0 - Finish the program");
-    }
-
-    private static void printSubMenu(string entityName)
-    {
-        enterChoice();
-        Console.WriteLine($"enter 1 to add {entityName}\n" +
-                          $"enter 2 to get {entityName}\n" +
-                          $"enter 3 to get all {entityName}\n" +
-                          $"enter 4 to remove {entityName}\n" +
-                          $"enter 5 to update {entityName}");
-    }
-    private static void enterChoice()
-    {
-        Console.WriteLine("enter your choice:");
-    }
-    #endregion
-
-    #region product actions
-
     private static int entityID(string entityName)
     {
         Console.WriteLine($"enter {entityName} id:");
@@ -134,7 +138,7 @@ class Program
 
     private static string productName(string entityName)
     {
-        Console.WriteLine($"enter {entityName} name:");
+        Console.WriteLine($"enter {entityName}:");
         return Console.ReadLine();
     }
 
@@ -144,9 +148,9 @@ class Program
         return tryParseDouble();
     }
 
-    private static int entityStock(string entityName)
+    private static int entityUnit(string entityName)
     {
-        Console.WriteLine($"enter {entityName} stock:");
+        Console.WriteLine($"enter {entityName} units:");
         return tryParseInt();
     }
 
@@ -154,13 +158,13 @@ class Program
     {
         product.ProductID = entityID("product");
 
-        product.Name = productName("product");
+        product.Name = productName("product name");
 
         product.Category = (Category)tryParseCategoty();
 
         product.Price = entityPrice("product");
 
-        product.InStock = entityStock("product");
+        product.InStock = entityUnit("product");
     }
 
     private static Product updateProduct()
@@ -169,12 +173,12 @@ class Program
         int choice = 1;
         while (choice != 0)
         {
-            Console.WriteLine(@"what do you want to update?
-                            1 - product name
-                            2 - product category
-                            3 - product price
-                            4 - product stock
-                            0 - finish update");
+            Console.WriteLine("what do you want to update?" +
+                              "1 - product name\n" +
+                              "2 - product category\n" +
+                              "3 - product price\n" +
+                              "4 - product stock\n" +
+                              "0 - finish update");
 
             enterChoice();
             choice = tryParseInt();
@@ -183,17 +187,22 @@ class Program
                 case 1:
                     product.Name = productName("product");
                     break;
+
                 case 2:
                     product.Price = entityPrice("product");
                     break;
+
                 case 3:
-                    product.InStock = entityStock("product");
+                    product.InStock = entityUnit("product");
                     break;
+
                 case 4:
                     product.Category = (Category)tryParseCategoty();
                     break;
+
                 case 0:
                     break;
+
                 default:
                     Console.WriteLine("enter a number between 0 - 4");
                     break;
@@ -202,44 +211,118 @@ class Program
         return product;
     }
 
+    #endregion product actions
 
-    Order SetOrder(Order order)
+    #region order item actions
+    private static void orderItemtActions()
     {
-        Console.WriteLine("enter order id: ");
-        order.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter customer name:");
-        order.CustomerName = Console.ReadLine();
-        Console.WriteLine("enter customer email:");
-        order.CustomerEmail = Console.ReadLine();
-        Console.WriteLine("enter customer address:");
-        order.CustomerAddress = Console.ReadLine();
-        Console.WriteLine("enter order date in format dd/mm/yy hh/mm/ss:");
-        order.OrderDate = Convert.ToDateTime(Console.ReadLine());
-        Console.WriteLine("enter ship date in format dd/mm/yy hh/mm/ss:");
-        order.ShipDate = Convert.ToDateTime(Console.ReadLine());
-        Console.WriteLine("enter delivery date in format dd/mm/yy hh/mm/ss:");
-        order.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+        printSubMenu("order item");
+        OrderItemMenu orderItemMenu = (OrderItemMenu)tryParseInt();
 
-        return order;
+        switch (orderItemMenu)
+        {
+            case OrderItemMenu.AddOrderItem:
+                OrderItem orderItem = new OrderItem();
+                addOrderItem(ref orderItem);
+                Console.WriteLine(_dalOrderItem.AddOrderItem(orderItem));
+                break;
+
+            case OrderItemMenu.GetOrderItem:
+                Console.WriteLine("enter the order item id to get:");
+                Console.WriteLine(_dalOrderItem.GetOrderItem(tryParseInt()));
+                break;
+
+            case OrderItemMenu.GetAllOrdersItems:
+                OrderItem[] printOrdersItems = _dalOrderItem.GetAllOrdersItems();
+                foreach (var item in printOrdersItems) Console.WriteLine(item);
+                break;
+
+            case OrderItemMenu.RemoveOrderItem:
+                Console.WriteLine("enter the order item id to remove:");
+                _dalOrderItem.RemoveOrderItem(tryParseInt());
+                break;
+
+            case OrderItemMenu.UpdateOrderItem:
+                _dalOrderItem.UpdateOrderItem(updateOrderItem());
+                break;
+
+            case OrderItemMenu.FindOrderItem:
+                Console.WriteLine("enter the product id to find:");
+                int productID = tryParseInt();
+                Console.WriteLine("enter the order id to find:");
+                int orderID = tryParseInt();
+                OrderItem findOrderItem = _dalOrderItem.FindOrderItem(productID, orderID);
+                Console.WriteLine(findOrderItem);
+                break;
+
+            case OrderItemMenu.GetByOrderID:
+                Console.WriteLine("enter the order ids to find:");
+                int orderIDs = tryParseInt();
+                OrderItem[] printOrderIDs = _dalOrderItem.GetByOrderID(orderIDs);
+                foreach (var item in printOrderIDs) Console.WriteLine(item);
+                break;
+
+            default:
+                break;
+        }
+    }
+    private static void addOrderItem(ref OrderItem orderItem)
+    {
+        orderItem.OrderItemID = entityID("order item");
+
+        orderItem.OrderID = entityID("order");
+
+        orderItem.ProductID = entityID("product");
+
+        orderItem.Price = entityPrice("order item");
+
+        orderItem.Amount = entityUnit("product");
     }
 
-    OrderItem SetOrderItem(OrderItem orderItem)
+    private static OrderItem updateOrderItem()
     {
-        Console.WriteLine("enter order item id:");
-        orderItem.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter product id:");
-        orderItem.OrderItemID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter order id:");
-        orderItem.OrderID = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("enter order item price:");
-        orderItem.Price = Convert.ToDouble(Console.ReadLine());
-        Console.WriteLine("enter order item amount:");
-        orderItem.Price = Convert.ToInt32(Console.ReadLine());
+        OrderItem orderItem = _dalOrderItem.GetOrderItem(tryParseInt());
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine("what do you want to update?" +
+                              "1 - order id\n" +
+                              "2 - product id\n" +
+                              "3 - product price\n" +
+                              "4 - product amount\n" +
+                              "0 - finish update");
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    orderItem.OrderID = entityID("order");
+                    break;
 
+                case 2:
+                    orderItem.ProductID = entityID("product");
+                    break;
+
+                case 3:
+                    orderItem.Amount = entityUnit("product");
+                    break;
+
+                case 4:
+                    orderItem.Price = entityPrice("product");
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    Console.WriteLine("enter a number between 0 - 4");
+                    break;
+            }
+        }
         return orderItem;
     }
 
-    #endregion
+    #endregion item actions
 
 
     private static int tryParseInt()
