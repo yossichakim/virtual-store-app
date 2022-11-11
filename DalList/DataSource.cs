@@ -258,10 +258,7 @@ static class DataSource
                 orderItem.Price = tmpproduct.Price;
                 orderItem.OrderItemID = GetOrderItemID;
                 orderItems[indexOrdersItems++] = orderItem;
-
-
             }
-
         }
     }
 }
