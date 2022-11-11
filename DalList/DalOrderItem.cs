@@ -51,13 +51,12 @@ public class DalOrderItem
     {
         OrderItem[] returnOrderItemsArr = new OrderItem[DataSource.indexOrdersItems];
 
-        //DataSource.orderItems.CopyTo(returnOrderItemsArr, 0);
         for (int i = 0; i < returnOrderItemsArr.Length; i++)
         {
             returnOrderItemsArr[i] = DataSource.orderItems[i];
         }
 
-        return returnOrderItemsArr;//.Select();
+        return returnOrderItemsArr;
     }
 
     /// <summary>

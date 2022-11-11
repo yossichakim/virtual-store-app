@@ -1,20 +1,38 @@
 ﻿using Dal;
 using DO;
 
+/// <summary>
+/// Prints and updates in arrays according to the user's request 
+/// </summary>
 class Program
 {
+    /// <summary>
+    /// The main menu of user's request
+    /// </summary>
     enum MainMenu
     {
         Exit, Product, Order, OrderItem
     }
+
+    /// <summary>
+    /// The product menu of user's request
+    /// </summary>
     enum ProductMenu
     {
         AddProduct = 1, GetProduct, GetAllProduct, RemoveProduct, UpdateProduct
     }
+
+    /// <summary>
+    /// The order menu of user's request
+    /// </summary>
     enum OrderMenu
     {
         AddOrder = 1, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
     }
+
+    /// <summary>
+    /// The order item menu of user's request
+    /// </summary>
     enum OrderItemMenu
     {
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
@@ -64,6 +82,10 @@ class Program
     }
 
     #region print function
+
+    /// <summary>
+    /// Printing the main menu to the user
+    /// </summary>
     private static void printMainMenu()
     {
         Console.WriteLine("enter your choice:\n" +
@@ -73,6 +95,10 @@ class Program
                           "0 - Finish the program\n");
     }
 
+    /// <summary>
+    /// Printing the sub menu to the user
+    /// </summary>
+    /// <param name="entityName"></param>
     private static void printSubMenu(string entityName)
     {
         enterChoice();
@@ -87,6 +113,10 @@ class Program
                               $"enter 7 to get all {entityName}s by order ID");
         }
     }
+
+    /// <summary>
+    /// Request a choice from the user
+    /// </summary>
     private static void enterChoice()
     {
         Console.WriteLine("enter your choice:");
@@ -95,6 +125,10 @@ class Program
 
     #region general actions
 
+    /// <summary>
+    /// Input a valid number
+    /// </summary>
+    /// <returns>int</returns>
     private static int tryParseInt()
     {
         int number;
@@ -105,6 +139,11 @@ class Program
 
         return number;
     }
+
+    /// <summary>
+    /// Input a valid Categoty
+    /// </summary>
+    /// <returns>int</returns>
     private static int tryParseCategoty()
     {
         int number;
@@ -116,6 +155,11 @@ class Program
 
         return number;
     }
+
+    /// <summary>
+    /// Input a valid double number
+    /// </summary>
+    /// <returns>double</returns>
     private static double tryParseDouble()
     {
         double number;
@@ -126,90 +170,58 @@ class Program
 
         return number;
     }
+
+    /// <summary>
+    /// Input a valid ID
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns></returns>
     private static int entityID(string entityName)
     {
         Console.WriteLine($"enter {entityName} id:");
         return tryParseInt();
     }
 
-    private static string productName(string entityName)
+    /// <summary>
+    /// Input a valid name
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>string</returns>
+    private static string entityName(string entityName)
     {
         Console.WriteLine($"enter {entityName}:");
         return Console.ReadLine();
     }
 
+    /// <summary>
+    /// Input a valid price
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>double</returns>
     private static double entityPrice(string entityName)
     {
         Console.WriteLine($"enter {entityName} price:");
         return tryParseDouble();
     }
 
+    /// <summary>
+    /// Input a valid unit
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>int</returns>
     private static int entityUnit(string entityName)
     {
         Console.WriteLine($"enter {entityName} units:");
         return tryParseInt();
     }
 
-    private static void addProduct(ref Product product)
-    {
-        product.ProductID = entityID("product");
-
-        product.Name = productName("product name");
-
-        product.Category = (Category)tryParseCategoty();
-
-        product.Price = entityPrice("product");
-
-        product.InStock = entityUnit("product");
-    }
-
-    private static Product updateProduct()
-    {
-        Product product = _dalProduct.GetProduct(entityID("product"));
-        int choice = 1;
-        while (choice != 0)
-        {
-            Console.WriteLine("what do you want to update?" +
-                              "1 - product name\n" +
-                              "2 - product category\n" +
-                              "3 - product price\n" +
-                              "4 - product stock\n" +
-                              "0 - finish update");
-
-            enterChoice();
-            choice = tryParseInt();
-            switch (choice)
-            {
-                case 1:
-                    product.Name = productName("product");
-                    break;
-
-                case 2:
-                    product.Price = entityPrice("product");
-                    break;
-
-                case 3:
-                    product.InStock = entityUnit("product");
-                    break;
-
-                case 4:
-                    product.Category = (Category)tryParseCategoty();
-                    break;
-
-                case 0:
-                    break;
-
-                default:
-                    Console.WriteLine("enter a number between 0 - 4");
-                    break;
-            }
-        }
-        return product;
-    }
-
-    #endregion product actions
+    #endregion general actions
 
     #region product actions
+
+    /// <summary>
+    /// Printing a menu of product and carrying out the user's request
+    /// </summary>
     private static void productActions()
     {
         printSubMenu("product");
@@ -248,9 +260,78 @@ class Program
         }
     }
 
+    /// <summary>
+    /// Creates an product by receiving from the user
+    /// </summary>
+    /// <param name="product"></param>
+    private static void addProduct(ref Product product)
+    {
+        product.ProductID = entityID("product");
+
+        product.Name = entityName("product name");
+
+        product.Category = (Category)tryParseCategoty();
+
+        product.Price = entityPrice("product");
+
+        product.InStock = entityUnit("product");
+    }
+
+    /// <summary>
+    /// update product according to the user's request
+    /// </summary>
+    /// <returns>Product</returns>
+    private static Product updateProduct()
+    {
+        Product product = _dalProduct.GetProduct(entityID("product"));
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine("what do you want to update?" +
+                              "1 - product name\n" +
+                              "2 - product category\n" +
+                              "3 - product price\n" +
+                              "4 - product stock\n" +
+                              "0 - finish update");
+
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    product.Name = entityName("product");
+                    break;
+
+                case 2:
+                    product.Price = entityPrice("product");
+                    break;
+
+                case 3:
+                    product.InStock = entityUnit("product");
+                    break;
+
+                case 4:
+                    product.Category = (Category)tryParseCategoty();
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    Console.WriteLine("enter a number between 0 - 4");
+                    break;
+            }
+        }
+        return product;
+    }
+
     #endregion
 
     #region order item actions
+
+    /// <summary>
+    /// Printing a menu of order item and carrying out the user's request
+    /// </summary>
     private static void orderItemtActions()
     {
         printSubMenu("order item");
@@ -303,6 +384,11 @@ class Program
                 break;
         }
     }
+
+    /// <summary>
+    /// Creates an order item by receiving from the user
+    /// </summary>
+    /// <param name="orderItem"></param>
     private static void addOrderItem(ref OrderItem orderItem)
     {
         orderItem.OrderItemID = entityID("order item");
@@ -316,6 +402,10 @@ class Program
         orderItem.Amount = entityUnit("product");
     }
 
+    /// <summary>
+    /// Order item update according to the user's request
+    /// </summary>
+    /// <returns>OrderItem</returns>
     private static OrderItem updateOrderItem()
     {
         OrderItem orderItem = _dalOrderItem.GetOrderItem(tryParseInt());
@@ -363,6 +453,9 @@ class Program
 
     #region order actions
 
+    /// <summary>
+    /// Printing a menu of order and carrying out the user's request
+    /// </summary>
     private static void orderActions()
     {
         printSubMenu("order");
@@ -411,15 +504,20 @@ class Program
         }
 
     }
+
+    /// <summary>
+    /// Creates an order by receiving from the user
+    /// </summary>
+    /// <param name="order"></param>
     private static void addOrder(ref Order order)
     {
         order.OrderID = entityID("order");
 
-        order.CustomerName = productName("customer name");
+        order.CustomerName = entityName("customer name");
 
-        order.CustomerAddress = productName("customer address");
+        order.CustomerAddress = entityName("customer address");
 
-        order.CustomerEmail = productName("customer email");
+        order.CustomerEmail = entityName("customer email");
 
         order.OrderDate = tryParseDate("order");
 
@@ -427,6 +525,12 @@ class Program
 
         order.DeliveryDate = tryParseDate("delivery");
     }
+
+    /// <summary>
+    /// Input of a valid date
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns> DateTime </returns>
     private static DateTime tryParseDate(string entityName)
     {
 
@@ -439,6 +543,11 @@ class Program
 
         return date;
     }
+
+    /// <summary>
+    /// Order update according to the user's request
+    /// </summary>
+    /// <returns> Order </returns>
     private static Order updateOrder()
     {
         Order order = _dalOrder.GetOrder(entityID("order"));
@@ -459,13 +568,13 @@ class Program
             switch (choice)
             {
                 case 1:
-                    order.CustomerName = productName("customer name");
+                    order.CustomerName = entityName("customer name");
                     break;
                 case 2:
-                    order.CustomerAddress = productName("customer address");
+                    order.CustomerAddress = entityName("customer address");
                     break;
                 case 3:
-                    order.CustomerEmail = productName("customer email");
+                    order.CustomerEmail = entityName("customer email");
                     break;
                 case 4:
                     order.OrderDate = tryParseDate("order");
