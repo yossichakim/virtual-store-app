@@ -2,7 +2,7 @@
 using DO;
 
 /// <summary>
-/// Prints and updates in arrays according to the user's request 
+/// Prints and updates in arrays according to the user's request
 /// </summary>
 class Program
 {
@@ -327,130 +327,6 @@ class Program
 
     #endregion
 
-    #region order item actions
-
-    /// <summary>
-    /// Printing a menu of order item and carrying out the user's request
-    /// </summary>
-    private static void orderItemtActions()
-    {
-        printSubMenu("order item");
-        OrderItemMenu orderItemMenu = (OrderItemMenu)tryParseInt();
-
-        switch (orderItemMenu)
-        {
-            case OrderItemMenu.AddOrderItem:
-                OrderItem orderItem = new OrderItem();
-                addOrderItem(ref orderItem);
-                Console.WriteLine(_dalOrderItem.AddOrderItem(orderItem));
-                break;
-
-            case OrderItemMenu.GetOrderItem:
-                Console.WriteLine("enter the order item id to get:");
-                Console.WriteLine(_dalOrderItem.GetOrderItem(tryParseInt()));
-                break;
-
-            case OrderItemMenu.GetAllOrdersItems:
-                OrderItem[] printOrdersItems = _dalOrderItem.GetAllOrdersItems();
-                foreach (var item in printOrdersItems) Console.WriteLine(item);
-                break;
-
-            case OrderItemMenu.RemoveOrderItem:
-                Console.WriteLine("enter the order item id to remove:");
-                _dalOrderItem.RemoveOrderItem(tryParseInt());
-                break;
-
-            case OrderItemMenu.UpdateOrderItem:
-                _dalOrderItem.UpdateOrderItem(updateOrderItem());
-                break;
-
-            case OrderItemMenu.FindOrderItem:
-                Console.WriteLine("enter the product id to find:");
-                int productID = tryParseInt();
-                Console.WriteLine("enter the order id to find:");
-                int orderID = tryParseInt();
-                OrderItem findOrderItem = _dalOrderItem.FindOrderItem(productID, orderID);
-                Console.WriteLine(findOrderItem);
-                break;
-
-            case OrderItemMenu.GetByOrderID:
-                Console.WriteLine("enter the order ids to find:");
-                int orderIDs = tryParseInt();
-                OrderItem[] printOrderIDs = _dalOrderItem.GetByOrderID(orderIDs);
-                foreach (var item in printOrderIDs) Console.WriteLine(item);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Creates an order item by receiving from the user
-    /// </summary>
-    /// <param name="orderItem"></param>
-    private static void addOrderItem(ref OrderItem orderItem)
-    {
-        orderItem.OrderItemID = entityID("order item");
-
-        orderItem.OrderID = entityID("order");
-
-        orderItem.ProductID = entityID("product");
-
-        orderItem.Price = entityPrice("order item");
-
-        orderItem.Amount = entityUnit("product");
-    }
-
-    /// <summary>
-    /// Order item update according to the user's request
-    /// </summary>
-    /// <returns>OrderItem</returns>
-    private static OrderItem updateOrderItem()
-    {
-        OrderItem orderItem = _dalOrderItem.GetOrderItem(tryParseInt());
-        int choice = 1;
-        while (choice != 0)
-        {
-            Console.WriteLine("what do you want to update?" +
-                              "1 - order id\n" +
-                              "2 - product id\n" +
-                              "3 - product price\n" +
-                              "4 - product amount\n" +
-                              "0 - finish update");
-            enterChoice();
-            choice = tryParseInt();
-            switch (choice)
-            {
-                case 1:
-                    orderItem.OrderID = entityID("order");
-                    break;
-
-                case 2:
-                    orderItem.ProductID = entityID("product");
-                    break;
-
-                case 3:
-                    orderItem.Amount = entityUnit("product");
-                    break;
-
-                case 4:
-                    orderItem.Price = entityPrice("product");
-                    break;
-
-                case 0:
-                    break;
-
-                default:
-                    Console.WriteLine("enter a number between 0 - 4");
-                    break;
-            }
-        }
-        return orderItem;
-    }
-
-    #endregion item actions
-
     #region order actions
 
     /// <summary>
@@ -595,4 +471,128 @@ class Program
         return order;
     }
     #endregion  order actions
+
+    #region order item actions
+
+    /// <summary>
+    /// Printing a menu of order item and carrying out the user's request
+    /// </summary>
+    private static void orderItemtActions()
+    {
+        printSubMenu("order item");
+        OrderItemMenu orderItemMenu = (OrderItemMenu)tryParseInt();
+
+        switch (orderItemMenu)
+        {
+            case OrderItemMenu.AddOrderItem:
+                OrderItem orderItem = new OrderItem();
+                addOrderItem(ref orderItem);
+                Console.WriteLine(_dalOrderItem.AddOrderItem(orderItem));
+                break;
+
+            case OrderItemMenu.GetOrderItem:
+                Console.WriteLine("enter the order item id to get:");
+                Console.WriteLine(_dalOrderItem.GetOrderItem(tryParseInt()));
+                break;
+
+            case OrderItemMenu.GetAllOrdersItems:
+                OrderItem[] printOrdersItems = _dalOrderItem.GetAllOrdersItems();
+                foreach (var item in printOrdersItems) Console.WriteLine(item);
+                break;
+
+            case OrderItemMenu.RemoveOrderItem:
+                Console.WriteLine("enter the order item id to remove:");
+                _dalOrderItem.RemoveOrderItem(tryParseInt());
+                break;
+
+            case OrderItemMenu.UpdateOrderItem:
+                _dalOrderItem.UpdateOrderItem(updateOrderItem());
+                break;
+
+            case OrderItemMenu.FindOrderItem:
+                Console.WriteLine("enter the product id to find:");
+                int productID = tryParseInt();
+                Console.WriteLine("enter the order id to find:");
+                int orderID = tryParseInt();
+                OrderItem findOrderItem = _dalOrderItem.FindOrderItem(productID, orderID);
+                Console.WriteLine(findOrderItem);
+                break;
+
+            case OrderItemMenu.GetByOrderID:
+                Console.WriteLine("enter the order ids to find:");
+                int orderIDs = tryParseInt();
+                OrderItem[] printOrderIDs = _dalOrderItem.GetByOrderID(orderIDs);
+                foreach (var item in printOrderIDs) Console.WriteLine(item);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Creates an order item by receiving from the user
+    /// </summary>
+    /// <param name="orderItem"></param>
+    private static void addOrderItem(ref OrderItem orderItem)
+    {
+        orderItem.OrderItemID = entityID("order item");
+
+        orderItem.OrderID = entityID("order");
+
+        orderItem.ProductID = entityID("product");
+
+        orderItem.Price = entityPrice("order item");
+
+        orderItem.Amount = entityUnit("product");
+    }
+
+    /// <summary>
+    /// Order item update according to the user's request
+    /// </summary>
+    /// <returns>OrderItem</returns>
+    private static OrderItem updateOrderItem()
+    {
+        OrderItem orderItem = _dalOrderItem.GetOrderItem(tryParseInt());
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine("what do you want to update?" +
+                              "1 - order id\n" +
+                              "2 - product id\n" +
+                              "3 - product price\n" +
+                              "4 - product amount\n" +
+                              "0 - finish update");
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    orderItem.OrderID = entityID("order");
+                    break;
+
+                case 2:
+                    orderItem.ProductID = entityID("product");
+                    break;
+
+                case 3:
+                    orderItem.Amount = entityUnit("product");
+                    break;
+
+                case 4:
+                    orderItem.Price = entityPrice("product");
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    Console.WriteLine("enter a number between 0 - 4");
+                    break;
+            }
+        }
+        return orderItem;
+    }
+
+    #endregion item actions
 }
