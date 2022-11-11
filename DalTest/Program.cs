@@ -132,29 +132,6 @@ class Program
         }
     }
 
-    #region print function
-    private static void printMainMenu()
-    {
-        Console.WriteLine("enter your choice:\n" +
-                          "1 - Product Menu\n" +
-                          "2 - Order Menu\n" +
-                          "3 - Order Item Menu\n" +
-                          "0 - Finish the program");
-    }
-
-    private static void printSubMenu(string entityName)
-    {
-        enterChoice();
-        Console.WriteLine($"enter 1 to add {entityName}\n" +
-                          $"enter 2 to get {entityName}\n" +
-                          $"enter 3 to get all {entityName}\n" +
-                          $"enter 4 to remove {entityName}\n" +
-                          $"enter 5 to update {entityName}");
-    }
-    private static void enterChoice()
-    {
-        Console.WriteLine("enter your choice:");
-    }
     #endregion
 
     #region product actions
