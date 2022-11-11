@@ -30,9 +30,8 @@ public struct Product
     /// A function that overrides the existing function and prints the product details
     /// </summary>
     /// <returns> Prints the product details </returns>
-    public override string ToString() => $@"
-        Product ID: {ProductID}: {Name}
-        Category: {Category}
-        Price: {Price}
-    	Amount in stock: {InStock}";
+    public override string ToString() => $"Product ID: {ProductID}: {Name}\n" +
+                                         $"Category: {Category}\n" +
+                                         $"Price: {Price}\n" +
+    	                                 $"Amount in stock: {InStock}\n";
 }

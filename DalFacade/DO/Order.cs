@@ -38,12 +38,11 @@ public struct Order
     /// A function that overrides the existing function and prints the Order details
     /// </summary>
     /// <returns> Prints the order details </returns>
-    public override string ToString() => $@"
-        Product ID: {OrderID}
-        Customer Name: {CustomerName}
-        Customer Email: {CustomerEmail}
-        Customer Address: {CustomerAddress}
-        Order Date: {OrderDate}
-        Ship Date: {ShipDate}
-        Delivery Date: {DeliveryDate}";
+    public override string ToString() => $"Product ID: {OrderID}\n" +
+                                         $"Customer Name: {CustomerName}\n" +
+                                         $"Customer Email: {CustomerEmail}\n" +
+                                         $"Customer Address: {CustomerAddress}\n" +
+                                         $"Order Date: {OrderDate}\n" +
+                                         $"Ship Date: {ShipDate}\n" +
+                                         $"Delivery Date: {DeliveryDate}\n";
 }
