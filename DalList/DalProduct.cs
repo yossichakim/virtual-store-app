@@ -59,7 +59,7 @@ public class DalProduct
             returnProducts[i] = DataSource.products[i];
         }
 
-        return returnProducts;//.Select(product => product).ToArray();
+        return returnProducts;
     }
 
     /// <summary>
