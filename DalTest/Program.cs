@@ -93,49 +93,39 @@ class Program
     }
     #endregion
 
-    #region product actions
-    private static void productActions()
+    #region general actions
+
+    private static int tryParseInt()
     {
-        printSubMenu("product");
-        ProductMenu productMenu = (ProductMenu)tryParseInt();
-
-        switch (productMenu)
+        int number;
+        while (!int.TryParse(Console.ReadLine(), out number))
         {
-            case ProductMenu.AddProduct:
-                Product product = new Product();
-                addProduct(ref product);
-                Console.WriteLine(_dalProduct.AddProduct(product));
-                break;
-
-            case ProductMenu.GetProduct:
-                Console.WriteLine("enter the product id to get:");
-                Console.WriteLine(_dalProduct.GetProduct(tryParseInt()));
-                break;
-
-            case ProductMenu.GetAllProduct:
-                Product[] printProducts = _dalProduct.GetAllProduct();
-                foreach (var item in printProducts) Console.WriteLine(item);
-                break;
-
-            case ProductMenu.RemoveProduct:
-                Console.WriteLine("enter the product id to remove:");
-                _dalProduct.RemoveProduct(tryParseInt());
-                break;
-
-            case ProductMenu.UpdateProduct:
-                _dalProduct.UpdateProduct(updateProduct());
-                break;
-
-            default:
-                Console.WriteLine("error - enter a number between 0 - 4");
-                break;
+            Console.WriteLine("error - enter a number!");
         }
+
+        return number;
     }
+    private static int tryParseCategoty()
+    {
+        int number;
+        do
+        {
+            Console.WriteLine("enter product category: a number between 0 - 4");
+            number = tryParseInt();
+        } while (number < 0 || number > 4);
 
-    #endregion
+        return number;
+    }
+    private static double tryParseDouble()
+    {
+        double number;
+        while (!double.TryParse(Console.ReadLine(), out number))
+        {
+            Console.WriteLine("error - enter a number!");
+        }
 
-    #region product actions
-
+        return number;
+    }
     private static int entityID(string entityName)
     {
         Console.WriteLine($"enter {entityName} id:");
@@ -218,6 +208,47 @@ class Program
     }
 
     #endregion product actions
+
+    #region product actions
+    private static void productActions()
+    {
+        printSubMenu("product");
+        ProductMenu productMenu = (ProductMenu)tryParseInt();
+
+        switch (productMenu)
+        {
+            case ProductMenu.AddProduct:
+                Product product = new Product();
+                addProduct(ref product);
+                Console.WriteLine(_dalProduct.AddProduct(product));
+                break;
+
+            case ProductMenu.GetProduct:
+                Console.WriteLine("enter the product id to get:");
+                Console.WriteLine(_dalProduct.GetProduct(tryParseInt()));
+                break;
+
+            case ProductMenu.GetAllProduct:
+                Product[] printProducts = _dalProduct.GetAllProduct();
+                foreach (var item in printProducts) Console.WriteLine(item);
+                break;
+
+            case ProductMenu.RemoveProduct:
+                Console.WriteLine("enter the product id to remove:");
+                _dalProduct.RemoveProduct(tryParseInt());
+                break;
+
+            case ProductMenu.UpdateProduct:
+                _dalProduct.UpdateProduct(updateProduct());
+                break;
+
+            default:
+                Console.WriteLine("error - enter a number between 0 - 4");
+                break;
+        }
+    }
+
+    #endregion
 
     #region order item actions
     private static void orderItemtActions()
@@ -329,38 +360,6 @@ class Program
     }
 
     #endregion item actions
-
-    private static int tryParseInt()
-    {
-        int number;
-        while (!int.TryParse(Console.ReadLine(), out number))
-        {
-            Console.WriteLine("error - enter a number!");
-        }
-
-        return number;
-    }
-    private static int tryParseCategoty()
-    {
-        int number;
-        do
-        {
-            Console.WriteLine("enter product category: a number between 0 - 4");
-            number = tryParseInt();
-        } while (number < 0 || number > 4);
-
-        return number;
-    }
-    private static double tryParseDouble()
-    {
-        double number;
-        while (!double.TryParse(Console.ReadLine(), out number))
-        {
-            Console.WriteLine("error - enter a number!");
-        }
-
-        return number;
-    }
 
     #region order actions
 
