@@ -54,7 +54,7 @@ class Program
                 switch (mainMenu)
                 {
                     case MainMenu.Exit:
-                        Console.WriteLine("you choose to finish - bye-bye \n");
+                        Console.WriteLine("You choose to finish bye-bye \n");
                         return;
 
                     case MainMenu.Product:
