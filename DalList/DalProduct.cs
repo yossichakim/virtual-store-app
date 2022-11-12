@@ -1,6 +1,6 @@
 ﻿using DO;
-
 namespace Dal;
+
 /// <summary>
 /// class for menage product
 /// </summary>

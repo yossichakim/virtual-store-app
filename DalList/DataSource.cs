@@ -1,5 +1,4 @@
 ﻿using DO;
-
 namespace Dal;
 
 /// <summary>
@@ -12,10 +11,6 @@ static class DataSource
     /// </summary>
     static DataSource() { s_Initialize(); }
 
-    /// <summary>
-    /// call to init function for any entity
-    /// </summary>
-
     private static readonly Random s_random = new Random();
     internal static Product[] products = new Product[50];
     internal static Order[] orders = new Order[50];
@@ -25,10 +20,20 @@ static class DataSource
     internal static int indexOrdersItems = 0;
     private static int s_orderItemID = 100000;
     private static int s_orderID = 100000;
+
+    /// <summary>
+    /// The function is responsible for the running number of an order item
+    /// </summary>
     internal static int GetOrderItemID => s_orderItemID++;
+
+    /// <summary>
+    /// The function is responsible for the running number of an order
+    /// </summary>
     internal static int GetOrderID => s_orderID++;
 
-
+    /// <summary>
+    /// call to init function for any entity
+    /// </summary>
     private static void s_Initialize()
     {
         InitProducts();
