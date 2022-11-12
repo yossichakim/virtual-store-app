@@ -112,7 +112,7 @@ public class DalOrderItem
     /// <param name="orderID"></param>
     /// <returns> returns the corresponding order item </returns>
     /// <exception cref="Exception"> if the order item not exist </exception>
-    public OrderItem FindOrderItem(int prodID,int orderID)
+    public OrderItem FindOrderItem(int prodID, int orderID)
     {
         OrderItem returnOrderItem = new OrderItem();
         for (int i = 0; i < DataSource.indexOrdersItems; i++)

@@ -54,6 +54,7 @@ class Program
                 switch (mainMenu)
                 {
                     case MainMenu.Exit:
+                        Console.WriteLine("you choose to finish - bye-bye \n");
                         return;
 
                     case MainMenu.Product:
@@ -287,11 +288,11 @@ class Program
         int choice = 1;
         while (choice != 0)
         {
-            Console.WriteLine("what do you want to update?" +
+            Console.WriteLine("what do you want to update?\n" +
                               "1 - product name\n" +
-                              "2 - product category\n" +
-                              "3 - product price\n" +
-                              "4 - product stock\n" +
+                              "2 - product price\n" +
+                              "3 - product stock\n" +
+                              "4 - product category\n" +
                               "0 - finish update");
 
             enterChoice();
@@ -299,7 +300,7 @@ class Program
             switch (choice)
             {
                 case 1:
-                    product.Name = entityName("product");
+                    product.Name = entityName("product name");
                     break;
 
                 case 2:
@@ -430,14 +431,14 @@ class Program
         int choice = 1;
         while (choice != 0)
         {
-            Console.WriteLine(@"what do you want to update?
-                            1 - customer name 
-                            2 - customer address
-                            3 - costumer email
-                            4 - order date
-                            5 - ship date
-                            6 - delivery date
-                            0 - finish update");
+            Console.WriteLine($"what do you want to update?\n" +
+                                $"1 - customer name \n" +
+                                $"2 - customer address\n" +
+                                $"3 - costumer email\n" +
+                                $"4 - order date\n" +
+                                $"5 - ship date\n" +
+                                $"6 - delivery date\n" +
+                                $"0 - finish update\n");
 
             enterChoice();
             choice = tryParseInt();
@@ -557,7 +558,7 @@ class Program
         int choice = 1;
         while (choice != 0)
         {
-            Console.WriteLine("what do you want to update?" +
+            Console.WriteLine("what do you want to update?\n" +
                               "1 - order id\n" +
                               "2 - product id\n" +
                               "3 - product price\n" +
