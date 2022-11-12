@@ -126,7 +126,7 @@ class Program
     #region general actions
 
     /// <summary>
-    /// Input a valid number
+    /// Input a valid int number
     /// </summary>
     /// <returns>int</returns>
     private static int tryParseInt()
@@ -141,7 +141,7 @@ class Program
     }
 
     /// <summary>
-    /// Input a valid Categoty
+    /// Input a valid Category
     /// </summary>
     /// <returns>int</returns>
     private static int tryParseCategoty()
@@ -175,7 +175,7 @@ class Program
     /// Input a valid ID
     /// </summary>
     /// <param name="entityName"></param>
-    /// <returns></returns>
+    /// <returns>int</returns>
     private static int entityID(string entityName)
     {
         Console.WriteLine($"enter {entityName} id:");
