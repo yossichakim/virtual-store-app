@@ -190,8 +190,17 @@ class Program
     /// <returns>string</returns>
     private static string entityName(string entityName)
     {
+        string? str;
         Console.WriteLine($"enter {entityName}:");
-        return Console.ReadLine();
+        str = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(str))
+        {
+            Console.WriteLine("enter a not empty string");
+            str = Console.ReadLine();
+        }
+
+        return str;
     }
 
     /// <summary>
