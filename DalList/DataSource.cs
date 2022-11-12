@@ -32,7 +32,7 @@ static class DataSource
     internal static int GetOrderID => s_orderID++;
 
     /// <summary>
-    /// call to init function for any entity
+    /// call to initialize function for any entity
     /// </summary>
     private static void s_Initialize()
     {
@@ -58,14 +58,8 @@ static class DataSource
 
         for (int i = 0; i < 25; i++)
         {
-            //Product product = new Product
-            //{
-            //    ProductID = initProductID++,
-            //    InStock = i + (i % 5),//ask
-            //};
             product.ProductID = initProductID++;
-            product.InStock = i + (i % 5);//ask;
-
+            product.InStock = i + (i % 5);
             product.Category = i switch
             {
                 < 5 => Category.Screens,
