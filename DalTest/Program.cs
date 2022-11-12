@@ -353,42 +353,32 @@ class Program
                 Order order = new Order();
                 addOrder(ref order);
                 Console.WriteLine(_dalOrder.AddOrder(order));
-
                 break;
 
             case OrderMenu.GetOrder:
                 Console.WriteLine("enter the Order id to get:");
                 Console.WriteLine(_dalOrder.GetOrder(tryParseInt()));
-
                 break;
 
             case OrderMenu.GetAllorders:
                 Order[] printOrder = _dalOrder.GetAllorders();
-                foreach (var item in printOrder)
-                {
-                    Console.WriteLine(item);
-                }
+                foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
             case OrderMenu.RemoveOrder:
                 Console.WriteLine("enter the Order id to remove:");
                 _dalOrder.RemoveOrder(tryParseInt());
-
                 break;
 
             case OrderMenu.UpdateOrder:
 
                 _dalOrder.UpdateOrder(updateOrder());
-
                 break;
 
             default:
                 Console.WriteLine("error - enter a number between 0 - 4");
-
                 break;
-
         }
-
     }
 
     /// <summary>
