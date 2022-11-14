@@ -1,6 +1,6 @@
 ﻿using Dal;
+using DalApi;
 using DO;
-using System.Data.Common;
 
 /// <summary>
 /// Prints and updates in arrays according to the user's request
@@ -39,7 +39,10 @@ class Program
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
-   
+    private IDal Dal = new DalList();
+
+
+
     private static DalProduct _dalProduct = new DalProduct();
     private static DalOrder _dalOrder = new DalOrder();
     private static DalOrderItem _dalOrderItem = new DalOrderItem();
@@ -364,7 +367,7 @@ class Program
                 break;
 
             case OrderMenu.GetAllorders:
-                IEnumerable<Order>  printOrder = _dalOrder.GetAllorders();
+                IEnumerable<Order> printOrder = _dalOrder.GetAllorders();
                 foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
@@ -499,7 +502,7 @@ class Program
                 break;
 
             case OrderItemMenu.GetAllOrdersItems:
-                OrderItem[] printOrdersItems = _dalOrderItem.GetAllOrdersItems();
+                IEnumerable<OrderItem> printOrdersItems = _dalOrderItem.GetAllOrdersItems();
                 foreach (var item in printOrdersItems) Console.WriteLine(item);
                 break;
 
@@ -524,7 +527,7 @@ class Program
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
                 int orderIDs = tryParseInt();
-                OrderItem[] printOrderIDs = _dalOrderItem.GetByOrderID(orderIDs);
+                IEnumerable<OrderItem> printOrderIDs = _dalOrderItem.GetByOrderID(orderIDs);
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 
