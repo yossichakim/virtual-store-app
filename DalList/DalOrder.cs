@@ -1,10 +1,11 @@
 ﻿using DO;
+using DalApi;
 namespace Dal;
 
 /// <summary>
 /// class for menage order
 /// </summary>
-public class DalOrder
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
@@ -12,12 +13,12 @@ public class DalOrder
     /// <param name="addOrder"></param>
     /// <returns> Order ID number </returns>
     /// <exception cref="Exception"> if the array of orders are full </exception>
-    public int AddOrder(Order addOrder)
+    public int Add(Order addOrder)
     {
-        if (DataSource.indexOrders == DataSource.orders.Length)
-            throw new Exception("no more space to add a new orders");
+        if (DataSource.orders.Exists(element => element.OrderID == addOrder.OrderID))
+            throw new AddIsExists("order");
 
-        DataSource.orders[DataSource.indexOrders++] = addOrder;
+        DataSource.orders.Add(addOrder);
 
         return addOrder.OrderID;
     }
@@ -26,19 +27,19 @@ public class DalOrder
     /// The function receives an ID number of an order
     /// and checks whether there is a matching order and returns the order
     /// </summary>
-    /// <param name="order"></param>
+    /// <param name="orderID"></param>
     /// <returns> Returns the requested order </returns>
     /// <exception cref="Exception"> if the order not exist </exception>
-    public Order GetOrder(int order)
+    public Order Get(int orderID)
     {
-        if (!Array.Exists(DataSource.orders, element => element.OrderID == order))
-            throw new Exception("the order you try to get are not exist");
+        if (!DataSource.orders.Exists(element => element.OrderID == orderID))
+            throw new EntityOrIDNoFound("order");
 
         Order returnOrder = new Order();
 
         foreach (var tmpOrder in DataSource.orders)
         {
-            if (tmpOrder.OrderID == order)
+            if (tmpOrder.OrderID == orderID)
             {
                 returnOrder = tmpOrder;
             }
@@ -50,42 +51,31 @@ public class DalOrder
     /// <summary>
     /// <returns>  Returns the order list </returns>
     /// </summary>
-    public Order[] GetAllorders()
+    public IEnumerable <Order> GetAll()
     {
-        Order[] returnOrdersArr = new Order[DataSource.indexOrders];
+        List<Order> returnOrders = new();
 
-        for (int i = 0; i < returnOrdersArr.Length; i++)
+        foreach (var item in DataSource.orders)
         {
-            returnOrdersArr[i] = DataSource.orders[i];
+            returnOrders.Add(item);
         }
 
-        return returnOrdersArr;
+        return returnOrders;
     }
 
     /// <summary>
     /// Deleting the order from the array by deleting it and replacing it with the last place
     /// </summary>
-    /// <param name="orderId"></param>
+    /// <param name="orderID"></param>
     /// <exception cref="Exception"> if the order not exist </exception>
-    public void RemoveOrder(int orderId)
+    public void Delete(int orderID)
     {
-        if (!Array.Exists(DataSource.orders, element => element.OrderID == orderId))
-            throw new Exception("the order you try to delete are not exist");
+        if (!DataSource.orders.Exists(element => element.OrderID == orderID))
+            throw new EntityOrIDNoFound("order");
 
-        for (int i = 0; i < DataSource.indexOrders; i++)
-        {
-            if (DataSource.orders[i].OrderID == orderId)
-            {
-                if (i == DataSource.indexOrders - 1)
-                {
-                    DataSource.orders[i] = new Order();
-                    --DataSource.indexOrders;
-                    return;
-                }
-                DataSource.orders[i] = DataSource.orders[--DataSource.indexOrders];
-                return;
-            }
-        }
+        DataSource.orders.RemoveAll(element => element.OrderID == orderID);
+
+        //return;
     }
 
     /// <summary>
@@ -93,19 +83,23 @@ public class DalOrder
     /// </summary>
     /// <param name="updateOrder"></param>
     /// <exception cref="Exception"> if the order not exist </exception>
-    public void UpdateOrder(Order updateOrder)
+    public void Update(Order updateOrder)
     {
-        if (!Array.Exists(DataSource.orders, element => element.OrderID == updateOrder.OrderID))
-            throw new Exception("the order you try to update are not exist");
+        if (!DataSource.orders.Exists(element => element.OrderID == updateOrder.OrderID))
+            throw new EntityOrIDNoFound("order");
 
-        for (int i = 0; i < DataSource.indexOrders; i++)
+        //int index = DataSource.orders.FindIndex(updateOrder);
+        //DataSource.orders.ElementAt(0);
+
+        int index = 0;
+        foreach (var item in DataSource.orders)
         {
-            if (updateOrder.OrderID == DataSource.orders[i].OrderID)
+            if (updateOrder.OrderID == item.OrderID)
             {
-                DataSource.orders[i] = updateOrder;
-
+                DataSource.orders[index] = updateOrder;
                 return;
             }
+            index++;
         }
     }
 }
