@@ -12,12 +12,9 @@ static class DataSource
     static DataSource() { s_Initialize(); }
 
     private static readonly Random s_random = new Random();
-    internal static Product[] products = new Product[50];
-    internal static Order[] orders = new Order[50];
-    internal static OrderItem[] orderItems = new OrderItem[200];
-    internal static int indexProducts = 0;
-    internal static int indexOrders = 0;
-    internal static int indexOrdersItems = 0;
+    internal static List<Product> products = new ();
+    internal static List<Order> orders = new ();
+    internal static List<OrderItem> orderItems = new ();
     private static int s_orderItemID = 100000;
     private static int s_orderID = 100000;
 
@@ -80,7 +77,7 @@ static class DataSource
                 Category.TV => s_random.Next(1999, 9999),
                 _ => throw new NotImplementedException()
             };
-            products[indexProducts++] = product;
+            products.Add(product) ;
         }
     }
 
@@ -235,7 +232,7 @@ static class DataSource
             else
                 order.DeliveryDate = DateTime.MinValue;
 
-            orders[indexOrders++] = order;
+            orders.Add(order);
         }
     }
 
@@ -245,18 +242,20 @@ static class DataSource
     private static void InitOrderItems()
     {
         OrderItem orderItem = new OrderItem();
-        foreach (var inOrders in orders.Take(indexOrders))
+        int countProducts = products.Count();
+
+        foreach (var inOrders in orders.Take(orders.Count()))
         {
             orderItem.OrderID = inOrders.OrderID;
             int rnd = s_random.Next(1, 5);
             for (int i = 0; i < rnd; i++)
             {
-                Product tmpproduct = products[s_random.Next(indexProducts)];
-                orderItem.ProductID = tmpproduct.ProductID;
+                Product tmpProduct = products[s_random.Next(countProducts)];
+                orderItem.ProductID = tmpProduct.ProductID;
                 orderItem.Amount = s_random.Next(1, 11);
-                orderItem.Price = tmpproduct.Price;
+                orderItem.Price = tmpProduct.Price;
                 orderItem.OrderItemID = GetOrderItemID;
-                orderItems[indexOrdersItems++] = orderItem;
+                orderItems.Add(orderItem);
             }
         }
     }

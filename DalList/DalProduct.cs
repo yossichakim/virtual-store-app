@@ -1,10 +1,12 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 /// <summary>
 /// class for menage product
 /// </summary>
-public class DalProduct
+internal class DalProduct : IProduct
 {
     /// <summary>
     /// The function receives a new product and adds it
@@ -12,15 +14,17 @@ public class DalProduct
     /// <param name="addProduct"></param>
     /// <returns> ID number of the added product </returns>
     /// <exception cref="Exception"> 1. if the product id already exist, 2. if the array of products are full </exception>
-    public int AddProduct(Product addProduct)
+    public int Add(Product addProduct)
     {
-        if (Array.Exists(DataSource.products, element => element.ProductID == addProduct.ProductID))
-            throw new Exception("the product you try to add already exist");
 
-        if (DataSource.indexProducts == DataSource.products.Length)
-            throw new Exception("no more space to add a new product");
+        if (DataSource.products.Exists(element => element.ProductID == addProduct.ProductID))
+            throw new AddIsExists("product");
 
-        DataSource.products[DataSource.indexProducts++] = addProduct;
+
+        //if (DataSource.indexProducts == DataSource.products.Length)
+        //    throw new Exception("no more space to add a new product");
+
+        DataSource.products.Add(addProduct);
 
         return addProduct.ProductID;
     }
@@ -31,10 +35,10 @@ public class DalProduct
     /// <param name="productID"></param>
     /// <returns> returns the product object </returns>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public Product GetProduct(int productID)
+    public Product Get(int productID)
     {
-        if (!Array.Exists(DataSource.products, element => element.ProductID == productID))
-            throw new Exception("the product you try to get are not exist");
+        if (!DataSource.products.Exists(element => element.ProductID == productID))
+            throw new EntityOrIDNoFound("product ID");
 
         Product returnProdcut = new Product();
         foreach (var tmpProduct in DataSource.products)
@@ -50,7 +54,7 @@ public class DalProduct
     /// <summary>
     /// <returns> Returns the list of all products </returns>
     /// </summary>
-    public Product[] GetAllProduct()
+    public Product[] GetAll()
     {
         Product[] returnProducts = new Product[DataSource.indexProducts];
 
@@ -67,7 +71,7 @@ public class DalProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public void RemoveProduct(int productId)
+    public void Remove(int productId)
     {
         if (!Array.Exists(DataSource.products, element => element.ProductID == productId))
             throw new Exception("the product you try to delete are not exist");
@@ -93,7 +97,7 @@ public class DalProduct
     /// </summary>
     /// <param name="updateProduct"></param>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public void UpdateProduct(Product updateProduct)
+    public void Update(Product updateProduct)
     {
         if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
             throw new Exception("the product you try to update are not exist");
