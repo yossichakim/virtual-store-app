@@ -20,10 +20,6 @@ internal class DalProduct : IProduct
         if (DataSource.products.Exists(element => element.ProductID == addProduct.ProductID))
             throw new AddIsExists("product");
 
-
-        //if (DataSource.indexProducts == DataSource.products.Length)
-        //    throw new Exception("no more space to add a new product");
-
         DataSource.products.Add(addProduct);
 
         return addProduct.ProductID;
@@ -54,13 +50,13 @@ internal class DalProduct : IProduct
     /// <summary>
     /// <returns> Returns the list of all products </returns>
     /// </summary>
-    public Product[] GetAll()
+    public IEnumerable<Product> GetAll()
     {
-        Product[] returnProducts = new Product[DataSource.indexProducts];
+        List<Product> returnProducts = new();
 
-        for (int i = 0; i < returnProducts.Length; i++)
+        foreach (var item in DataSource.products)
         {
-            returnProducts[i] = DataSource.products[i];
+            returnProducts.Add(item);
         }
 
         return returnProducts;
@@ -71,25 +67,13 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <exception cref="Exception"> if the product not exist </exception>
-    public void Remove(int productId)
+    public void Delete(int productId)
     {
-        if (!Array.Exists(DataSource.products, element => element.ProductID == productId))
-            throw new Exception("the product you try to delete are not exist");
+        if (!DataSource.products.Exists(element => element.ProductID == productId))
+            throw new EntityOrIDNoFound("product Id");
 
-        for (int i = 0; i < DataSource.indexProducts; i++)
-        {
-            if (DataSource.products[i].ProductID == productId)
-            {
-                if (i == DataSource.indexProducts - 1)
-                {
-                    DataSource.products[i] = new Product();
-                    DataSource.indexProducts--;
-                    return;
-                }
-                DataSource.products[i] = DataSource.products[--DataSource.indexProducts];
-                return;
-            }
-        }
+        DataSource.products.RemoveAll(element => element.ProductID == productId);
+
     }
 
     /// <summary>
@@ -99,10 +83,11 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
-        if (!Array.Exists(DataSource.products, element => element.ProductID == updateProduct.ProductID))
-            throw new Exception("the product you try to update are not exist");
+        if (!DataSource.products.Exists(element => element.ProductID == updateProduct.ProductID))
+            throw new EntityOrIDNoFound("Product");
 
-        for (int i = 0; i < DataSource.indexProducts; i++)
+
+        for (int i = 0; i < DataSource.products.Count(); i++)
         {
             if (updateProduct.ProductID == DataSource.products[i].ProductID)
             {

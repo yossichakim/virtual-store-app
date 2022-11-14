@@ -1,5 +1,6 @@
 ﻿using Dal;
 using DO;
+using System.Data.Common;
 
 /// <summary>
 /// Prints and updates in arrays according to the user's request
@@ -38,6 +39,7 @@ class Program
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
+   
     private static DalProduct _dalProduct = new DalProduct();
     private static DalOrder _dalOrder = new DalOrder();
     private static DalOrderItem _dalOrderItem = new DalOrderItem();
@@ -252,7 +254,7 @@ class Program
                 break;
 
             case ProductMenu.GetAllProduct:
-                Product[] printProducts = _dalProduct.GetAllProduct();
+                 IEnumerable<Product> printProducts = _dalProduct.GetAllProduct();
                 foreach (var item in printProducts) Console.WriteLine(item);
                 break;
 
@@ -362,7 +364,7 @@ class Program
                 break;
 
             case OrderMenu.GetAllorders:
-                Order[] printOrder = _dalOrder.GetAllorders();
+                IEnumerable<Order>  printOrder = _dalOrder.GetAllorders();
                 foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
