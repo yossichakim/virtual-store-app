@@ -1,6 +1,4 @@
-﻿using DO;
-
-namespace DalApi;
+﻿namespace DalApi;
 
 public interface ICrud<T>
 {
@@ -10,4 +8,3 @@ public interface ICrud<T>
     public void Delete(int id);
     public void Update(T update);
 }
-
