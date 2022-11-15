@@ -1,9 +1,6 @@
 ﻿using Dal;
 using DalApi;
 using DO;
-using DalApi;
-using System.Collections.Generic;
-
 
 /// <summary>
 /// Prints and updates in arrays according to the user's request
