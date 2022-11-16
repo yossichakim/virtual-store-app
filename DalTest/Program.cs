@@ -39,10 +39,10 @@ class Program
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
+    static IDal dal = new DalList();
+   
     static void Main(string[] args)
     {
-
-        IDal dal = new DalList();
 
         while (true)
         {
@@ -58,15 +58,15 @@ class Program
                         return;
 
                     case MainMenu.Product:
-                        productActions(dal);
+                        productActions();
                         break;
 
                     case MainMenu.Order:
-                        orderActions(dal);
+                        orderActions();
                         break;
 
                     case MainMenu.OrderItem:
-                        orderItemtActions(dal);
+                        orderItemtActions();
                         break;
 
                     default:
@@ -232,7 +232,7 @@ class Program
     /// <summary>
     /// Printing a menu of product and carrying out the user's request
     /// </summary>
-    private static void productActions(IDal dal)
+    private static void productActions()
     {
         printSubMenu("product");
         ProductMenu productMenu = (ProductMenu)tryParseInt();
@@ -261,7 +261,7 @@ class Program
                 break;
 
             case ProductMenu.UpdateProduct:
-                dal.Product.Update(updateProduct(dal));
+                dal.Product.Update(updateProduct());
                 break;
 
             default:
@@ -291,7 +291,7 @@ class Program
     /// update product according to the user's request
     /// </summary>
     /// <returns>Product</returns>
-    private static Product updateProduct(IDal dal)
+    private static Product updateProduct()
     {
         Product product = dal.Product.Get(entityID("product"));
         int choice = 1;
@@ -342,7 +342,7 @@ class Program
     /// <summary>
     /// Printing a menu of order and carrying out the user's request
     /// </summary>
-    private static void orderActions(IDal dal)
+    private static void orderActions()
     {
         printSubMenu("order");
         OrderMenu orderMenu = (OrderMenu)tryParseInt();
@@ -372,7 +372,7 @@ class Program
 
             case OrderMenu.UpdateOrder:
 
-                dal.Order.Update(updateOrder(dal));
+                dal.Order.Update(updateOrder());
                 break;
 
             default:
@@ -424,7 +424,7 @@ class Program
     /// Order update according to the user's request
     /// </summary>
     /// <returns> Order </returns>
-    private static Order updateOrder(IDal dal)
+    private static Order updateOrder()
     {
         Order order = dal.Order.Get(entityID("order"));
         int choice = 1;
@@ -477,7 +477,7 @@ class Program
     /// <summary>
     /// Printing a menu of order item and carrying out the user's request
     /// </summary>
-    private static void orderItemtActions(IDal dal)
+    private static void orderItemtActions()
     {
         printSubMenu("order item");
         OrderItemMenu orderItemMenu = (OrderItemMenu)tryParseInt();
@@ -506,7 +506,7 @@ class Program
                 break;
 
             case OrderItemMenu.UpdateOrderItem:
-                dal.OrderItem.Update(updateOrderItem(dal));
+                dal.OrderItem.Update(updateOrderItem());
                 break;
 
             case OrderItemMenu.FindOrderItem:
@@ -551,7 +551,7 @@ class Program
     /// Order item update according to the user's request
     /// </summary>
     /// <returns>OrderItem</returns>
-    private static OrderItem updateOrderItem(IDal dal)
+    private static OrderItem updateOrderItem()
     {
         OrderItem orderItem = dal.OrderItem.Get(tryParseInt());
         int choice = 1;
