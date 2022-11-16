@@ -1,17 +1,16 @@
 ﻿using DO;
 namespace DalApi;
 
-public class AddIsExists : Exception
+public class AddException : Exception
 {
-    public AddIsExists(string massage) :base($"the {massage} you try to add already exist")
+    public AddException(string massage) :base($"the {massage} you try to add already exist")
     { }
 
 }
 
-public class EntityOrIDNoFound : Exception
+public class NoFoundException : Exception
 {
-    public EntityOrIDNoFound(string massage) : base($"the {massage} is not found")
+    public NoFoundException(string massage) : base($"the {massage} is not found")
     { }
 
 }
-

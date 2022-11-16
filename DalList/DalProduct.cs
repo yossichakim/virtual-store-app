@@ -13,12 +13,12 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="addProduct"></param>
     /// <returns> ID number of the added product </returns>
-    /// <exception cref="Exception"> 1. if the product id already exist, 2. if the array of products are full </exception>
+    /// <exception cref="AddException"> if the product id already exist </exception>
     public int Add(Product addProduct)
     {
 
         if (DataSource.products.Exists(element => element.ProductID == addProduct.ProductID))
-            throw new AddIsExists("product");
+            throw new AddException("product");
 
         DataSource.products.Add(addProduct);
 
@@ -30,11 +30,11 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="productID"></param>
     /// <returns> returns the product object </returns>
-    /// <exception cref="Exception"> if the product not exist </exception>
+    /// <exception cref="NoFoundException"> if the product not exist </exception>
     public Product Get(int productID)
     {
         if (!DataSource.products.Exists(element => element.ProductID == productID))
-            throw new EntityOrIDNoFound("product ID");
+            throw new NoFoundException("product ID");
 
         Product returnProdcut = new Product();
         foreach (var tmpProduct in DataSource.products)
@@ -66,11 +66,11 @@ internal class DalProduct : IProduct
     /// Deletes the product whose ID number was received as a parameter
     /// </summary>
     /// <param name="productId"></param>
-    /// <exception cref="Exception"> if the product not exist </exception>
+    /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Delete(int productId)
     {
         if (!DataSource.products.Exists(element => element.ProductID == productId))
-            throw new EntityOrIDNoFound("product Id");
+            throw new NoFoundException("product Id");
 
         DataSource.products.RemoveAll(element => element.ProductID == productId);
 
@@ -80,11 +80,11 @@ internal class DalProduct : IProduct
     /// Update product details by the received object
     /// </summary>
     /// <param name="updateProduct"></param>
-    /// <exception cref="Exception"> if the product not exist </exception>
+    /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
         if (!DataSource.products.Exists(element => element.ProductID == updateProduct.ProductID))
-            throw new EntityOrIDNoFound("Product");
+            throw new NoFoundException("Product");
 
 
         for (int i = 0; i < DataSource.products.Count(); i++)

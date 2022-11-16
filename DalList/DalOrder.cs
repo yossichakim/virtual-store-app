@@ -12,11 +12,11 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="addOrder"></param>
     /// <returns> Order ID number </returns>
-    /// <exception cref="Exception"> if the array of orders are full </exception>
+    /// <exception cref="AddException"> if the array of orders are full </exception>
     public int Add(Order addOrder)
     {
         if (DataSource.orders.Exists(element => element.OrderID == addOrder.OrderID))
-            throw new AddIsExists("order");
+            throw new AddException("order");
 
         DataSource.orders.Add(addOrder);
 
@@ -29,11 +29,11 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns> Returns the requested order </returns>
-    /// <exception cref="Exception"> if the order not exist </exception>
+    /// <exception cref="NoFoundException"> if the order not exist </exception>
     public Order Get(int orderID)
     {
         if (!DataSource.orders.Exists(element => element.OrderID == orderID))
-            throw new EntityOrIDNoFound("order");
+            throw new NoFoundException("order");
 
         Order returnOrder = new Order();
 
@@ -67,11 +67,11 @@ internal class DalOrder : IOrder
     /// Deleting the order from the array by deleting it and replacing it with the last place
     /// </summary>
     /// <param name="orderID"></param>
-    /// <exception cref="Exception"> if the order not exist </exception>
+    /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Delete(int orderID)
     {
         if (!DataSource.orders.Exists(element => element.OrderID == orderID))
-            throw new EntityOrIDNoFound("order");
+            throw new NoFoundException("order");
 
         DataSource.orders.RemoveAll(element => element.OrderID == orderID);
 
@@ -82,11 +82,11 @@ internal class DalOrder : IOrder
     /// Updating an order whose details have changed
     /// </summary>
     /// <param name="updateOrder"></param>
-    /// <exception cref="Exception"> if the order not exist </exception>
+    /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Update(Order updateOrder)
     {
         if (!DataSource.orders.Exists(element => element.OrderID == updateOrder.OrderID))
-            throw new EntityOrIDNoFound("order");
+            throw new NoFoundException("order");
 
         //int index = DataSource.orders.FindIndex(updateOrder);
         //DataSource.orders.ElementAt(0);
