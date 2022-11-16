@@ -17,5 +17,4 @@ public class OrderItem
                                          $"Product Price: {ProductPrice}\n" +
                                          $"Amount: {Amount}\n"+
                                          $"Total Price: {TotalPrice}\n";
-                                      
 }

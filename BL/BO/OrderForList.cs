@@ -11,6 +11,6 @@ internal class OrderForList
     public override string ToString() => $"OrderID: {OrderID}\n" +
                                          $"Customer Name: {CustomerName}\n" +
                                          $"Status: {Status}\n" +
-                                         $"Amount Of Items: {AmountOfItems}\n" +                                  
+                                         $"Amount Of Items: {AmountOfItems}\n" +
                                          $"Total Price: {TotalPrice}\n";
 }

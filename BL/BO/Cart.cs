@@ -1,13 +1,11 @@
-﻿using DO;
-
-namespace BO;
+﻿namespace BO;
 
 public class Cart
 {
     public string? CustomerName { get; set; }
     public string? CustomerEmail { get; set; }
     public string? CustomerAddress { get; set; }
-    public OrderItem? ItemsList { get; set; }
+    public List<OrderItem>? ItemsList { get; set; }
     public double TotalPriceInCart { get; set; }
 
     public override string ToString() => $"Customer Name: {CustomerName}\n" +

@@ -2,10 +2,10 @@
 
 public class OrderTracking
 {
-    public int ID  { get; set; }
-    public OrderStatus Name { get; set; }
-    public List<Tuple<OrderStatus, DateTime>>? DateAndStatus { get; set; }
-    public override string ToString() => $"ID: {ID}\n" +
-                                         $"Name: {Name}\n" +
+    public int OrderTrackingID { get; set; }
+    public OrderStatus Status { get; set; }
+    public List<Tuple<DateTime, OrderStatus>>? DateAndStatus { get; set; }
+    public override string ToString() => $"Order Tracking ID: {OrderTrackingID}\n" +
+                                         $"Status: {Status}\n" +
                                          $"Date And Status: {DateAndStatus}\n";
 }
