@@ -7,3 +7,11 @@ public enum Category
 {
     Screens, Phones, Computers, Printers, TV
 }
+
+/// <summary>
+/// types of order status
+/// </summary>
+public enum OrderStatus
+{
+    ConfirmedOrder, OrderSent, OrderProvided
+}
