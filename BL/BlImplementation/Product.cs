@@ -1,18 +1,16 @@
 ﻿using BLApi;
-using BO;
-using Dal;
 using DalApi;
-
+using Dal;
 namespace BlImplementation;
 
-internal class Product : IProduct
+internal class Product : BLApi.IProduct
 {
     private IDal Dal = new DalList();
 
-    public IEnumerable<ProductForList> GetProductList()
+    public IEnumerable<BO.ProductForList> GetProductList()
     {
 
-        List<ProductForList> productForLists = new();
+        List<BO.ProductForList> productForLists = new();
 
         for (int i = 0; i < Dal.Product.GetAll().Count(); i++)
         {
@@ -20,7 +18,7 @@ internal class Product : IProduct
             productForLists[i].ProductID = temp.ProductID;
             productForLists[i].ProductName = temp.Name;
             productForLists[i].ProductPrice = temp.Price;
-            productForLists[i].Category = (Category)temp.Category;
+            productForLists[i].Category = (BO.Category)temp.Category;
         }
 
         return productForLists;
@@ -36,7 +34,7 @@ internal class Product : IProduct
         retProduct.ProductID = temp.ProductID;
         retProduct.ProductName = temp.Name;
         retProduct.ProductPrice = temp.Price;
-        retProduct.Category = (Category)temp.Category;
+        retProduct.Category = (BO.Category)temp.Category;
         retProduct.InStock = temp.InStock;
         return retProduct;
     }
@@ -65,9 +63,57 @@ internal class Product : IProduct
         return retProduct;
 
     }
-    public void AddProduct(Product productTOAdd) { }
-    public void RemoveProduct(int productID) { }
-    public void UpdateProduct(Product productTOUpdate) { }
+    public void AddProduct(BO.Product productTOAdd) 
+    {
+        if (productTOAdd.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOAdd.ProductName) 
+            && productTOAdd.ProductPrice > 0 && productTOAdd.InStock >= 0)
+        {
+            DO.Product product = new();
+            product.ProductID = productTOAdd.ProductID;
+            product.Name = productTOAdd.ProductName;    
+            product.Price = productTOAdd.ProductPrice;
+            product.InStock = productTOAdd.InStock; 
+            Dal.Product.Add(product);
+            return;
+        }
+        else { throw new Exception("no valid"); }
+
+    }
+
+
+
+    public void RemoveProduct(int productID) 
+    {
+        for (int i = 0; i < Dal.OrderItem.GetAll().Count(); i++)
+        {
+            if (Dal.OrderItem.GetAll().ElementAt(i).ProductID == productID)
+            {
+                throw new Exception("IS EXISST IN ORDER");
+            }
+        }
+
+        Dal.Product.Delete(productID);
+
+    }
+
+
+    public void UpdateProduct(BO.Product productTOUpdate)
+    {
+        if (productTOUpdate.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOUpdate.ProductName)
+          && productTOUpdate.ProductPrice > 0 && productTOUpdate.InStock >= 0)
+        {
+            DO.Product product = new();
+            product.ProductID = productTOUpdate.ProductID;
+            product.Name = productTOUpdate.ProductName;
+            product.Price = productTOUpdate.ProductPrice;
+            product.InStock = productTOUpdate.InStock;
+            Dal.Product.Update(product);
+        }
+        else
+        {
+            throw new Exception("no valid");
+        }
+    }
 }
 
 
