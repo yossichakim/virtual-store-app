@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using SeviceFunction;
+
+namespace BlImplementation;
 
 internal class Cart : BLApi.ICart
 {
@@ -6,7 +8,7 @@ internal class Cart : BLApi.ICart
 
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
-        DO.Product product = new ();  
+        DO.Product product = new();
 
         try
         {
@@ -19,7 +21,7 @@ internal class Cart : BLApi.ICart
         }
         catch (Exception)
         {
-            throw new Exception ("error");
+            throw new Exception("error");
         }
 
         BO.OrderItem item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
@@ -45,13 +47,17 @@ internal class Cart : BLApi.ICart
 
     public void ConfirmedOrder(BO.Cart cart)
     {
-        if (string.IsNullOrWhiteSpace(cart.CustomerName)&&
+        if (string.IsNullOrWhiteSpace(cart.CustomerName) &&
             string.IsNullOrWhiteSpace(cart.CustomerEmail) &&
             string.IsNullOrWhiteSpace(cart.CustomerAddress))
         {
             throw new Exception("one of the values are empty");
         }
-        //בדיקת תקינות מייל - להוסיף
+
+        if (!cart.CustomerEmail.IsValidEmail())
+        {
+            throw new Exception("the email address are not valid");
+        }
 
         foreach (var item in cart.ItemsList)
         {
@@ -64,23 +70,22 @@ internal class Cart : BLApi.ICart
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 if (item.Amount > product.InStock)
                 {
-                    throw new Exception("not enogh in stock");
+                    throw new Exception("not enough in stock");
                 }
-
             }
             catch (Exception)
             {
-                throw new Exception("erroe");
+                throw new Exception("error");
             }
         }
 
         DO.Order order = new()
         {
-            CustomerAddress= cart.CustomerAddress,
-            CustomerEmail= cart.CustomerEmail,
-            CustomerName   = cart.CustomerName,
+            CustomerAddress = cart.CustomerAddress,
+            CustomerEmail = cart.CustomerEmail,
+            CustomerName = cart.CustomerName,
             DeliveryDate = null,
-            ShipDate= null,
+            ShipDate = null,
             OrderDate = DateTime.Now
         };
 
@@ -103,6 +108,23 @@ internal class Cart : BLApi.ICart
 
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
+        //לבדוק כמות חדשה חיובית
+        BO.OrderItem orderItem = cart.ItemsList.First(orderItem => orderItem.ProductID == productID);
+
+            if (orderItem is not null)
+            {
+                if (orderItem.Amount > newAmount)
+                {
+                    //לבדוק האם יש מספיק להוסיף
+                }
+                else if (orderItem.Amount < newAmount)
+                {
+                    //להחסיר מהכמות
+                    //לבדוק בנוסף אם הכמות השתנתנה ל0
+                }
+
+            }
+            //לעדכן כמות של מוצר בדאל
 
         throw new NotImplementedException();
     }

@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using SeviceFunction;
+
+namespace BlImplementation;
 
 internal class Product : BLApi.IProduct
 {
@@ -79,26 +81,30 @@ internal class Product : BLApi.IProduct
         }
 
     }
-    public void AddProduct(BO.Product productTOAdd)
+
+    public void AddProduct(BO.Product productToAdd)
     {
-        if (productTOAdd.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOAdd.ProductName)
-            && productTOAdd.ProductPrice > 0 && productTOAdd.InStock >= 0)
+        productToAdd.ProductID.CheckPositiveNumber();
+        //לזרוק חריגה לכל מקרה בנפרד
+        if (productToAdd.ProductID.ToString().Length == 6 && !string.IsNullOrWhiteSpace(productToAdd.ProductName)
+            && productToAdd.ProductPrice > 0 && productToAdd.InStock >= 0)
         {
             DO.Product product = new()
             {
-                ProductID = productTOAdd.ProductID,
-                Name = productTOAdd.ProductName,
-                Price = productTOAdd.ProductPrice,
-                InStock = productTOAdd.InStock,
+                ProductID = productToAdd.ProductID,
+                Name = productToAdd.ProductName,
+                Price = productToAdd.ProductPrice,
+                InStock = productToAdd.InStock,
+                Category = (DO.Category)productToAdd.Category
             };
 
             try
             {
                 Dal.Product.Add(product);
             }
-            catch (Exception)
+            catch (DalApi.AddException ex)
             {
-                throw new Exception("the product id is already exist");
+                throw new BO.AddException(ex);
             }
         }
         else
