@@ -109,22 +109,32 @@ internal class Cart : BLApi.ICart
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
         //לבדוק כמות חדשה חיובית
+        if (newAmount <= 0)
+        {
+            throw new Exception("the new amount cannot be negative or zero");
+        }
+
+        DO.Product product = new();
+
         BO.OrderItem orderItem = cart.ItemsList.First(orderItem => orderItem.ProductID == productID);
 
-            if (orderItem is not null)
+        if (orderItem is not null)
+        {
+            if (orderItem.Amount < newAmount)
             {
-                if (orderItem.Amount > newAmount)
+                if (product.InStock < newAmount)
                 {
-                    //לבדוק האם יש מספיק להוסיף
+                    throw new Exception("not enough item to add");
                 }
-                else if (orderItem.Amount < newAmount)
-                {
-                    //להחסיר מהכמות
-                    //לבדוק בנוסף אם הכמות השתנתנה ל0
-                }
-
+                //לבדוק האם יש מספיק להוסיף
             }
-            //לעדכן כמות של מוצר בדאל
+            else if (orderItem.Amount > newAmount)
+            {
+                //להחסיר מהכמות
+                //לבדוק בנוסף אם הכמות השתנתנה ל0
+            }
+        }
+        //לעדכן כמות של מוצר בדאל
 
         throw new NotImplementedException();
     }
