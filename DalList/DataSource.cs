@@ -223,14 +223,14 @@ static class DataSource
             order.OrderDate = start.AddDays(s_random.Next(range - 30)).AddHours(s_random.Next(0, 24))
                 .AddMinutes(s_random.Next(0, 60)).AddSeconds(s_random.Next(0, 60));
             if (i < 32)
-                order.ShipDate = order.OrderDate.Add(new TimeSpan(10, 0, 0, 0));
+                order.ShipDate = order.OrderDate?.Add(new TimeSpan(10, 0, 0, 0));
             else
-                order.ShipDate = DateTime.MinValue;
+                order.ShipDate = null;
 
             if (i < 24)
-                order.DeliveryDate = order.ShipDate.Add(new TimeSpan(3, 0, 0, 0));
+                order.DeliveryDate = order.ShipDate?.Add(new TimeSpan(3, 0, 0, 0));
             else
-                order.DeliveryDate = DateTime.MinValue;
+                order.DeliveryDate = null;
 
             orders.Add(order);
         }
