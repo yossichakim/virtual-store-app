@@ -129,6 +129,7 @@ internal class DalOrderItem : IOrderItem
         if (!DataSource.orderItems.Exists( element => element.OrderID == orderID))
             throw new NoFoundException("order id");
 
-        return DataSource.orderItems.Where(element => element.OrderID == orderID).ToList();
+        return DataSource.orderItems.Where(element => element.OrderID == orderID);
+
     }
 }
