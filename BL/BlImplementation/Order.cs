@@ -1,27 +1,24 @@
-﻿using BO;
-using DO;
-
-namespace BlImplementation;
+﻿namespace BlImplementation;
 
 internal class Order : BLApi.IOrder
 {
     private DalApi.IDal Dal = new Dal.DalList();
 
-    private OrderStatus GetStatus(DO.Order item)
+    private BO.OrderStatus GetStatus(DO.Order item)
     {
-        OrderStatus status = new();
+        BO.OrderStatus status = new();
 
         if (item.DeliveryDate < DateTime.Now)
         {
-            status = OrderStatus.OrderProvided;
+            status = BO.OrderStatus.OrderProvided;
         }
         else if (item.ShipDate < DateTime.Now)
         {
-            status = OrderStatus.OrderSent;
+            status = BO.OrderStatus.OrderSent;
         }
         else if (item.OrderDate < DateTime.Now)
         {
-            status = OrderStatus.ConfirmedOrder;
+            status = BO.OrderStatus.ConfirmedOrder;
         }
 
         return status;
@@ -57,7 +54,7 @@ internal class Order : BLApi.IOrder
         return (amount, totalPrice);
     }
 
-    public IEnumerable<OrderForList> GetOrderList()
+    public IEnumerable<BO.OrderForList> GetOrderList()
     {
         List<BO.OrderForList> returnOrderList = new();
 
@@ -120,7 +117,7 @@ internal class Order : BLApi.IOrder
         throw new NotImplementedException();
     }
 
-    public OrderTracking OrderTrackingManger(int orderID)
+    public BO.OrderTracking OrderTrackingManger(int orderID)
     {
         throw new NotImplementedException();
     }
