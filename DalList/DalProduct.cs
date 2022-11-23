@@ -52,14 +52,16 @@ internal class DalProduct : IProduct
     /// </summary>
     public IEnumerable<Product> GetAll()
     {
-        List<Product> returnProducts = new();
+        //List<Product> returnProducts = new();
 
-        foreach (var item in DataSource.products)
-        {
-            returnProducts.Add(item);
-        }
+        //foreach (var item in DataSource.products)
+        //{
+        //    returnProducts.Add(item);
+        //}
 
-        return returnProducts;
+        //return returnProducts;
+
+        return DataSource.products.Select(item => item);
     }
 
     /// <summary>
