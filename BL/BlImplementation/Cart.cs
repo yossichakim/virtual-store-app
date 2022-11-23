@@ -6,19 +6,20 @@ internal class Cart : BLApi.ICart
 
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
+        DO.Product product = new ();  
+
         try
         {
-            Dal.Product.Get(productID);
+            product = Dal.Product.Get(productID);
+
+            if (product.InStock <= 0)
+            {
+                throw new Exception("not in stock");
+            }
         }
         catch (Exception)
         {
             throw new Exception ("error");
-        }
-
-        DO.Product product = Dal.Product.Get(productID);
-        if (product.InStock <= 0)
-        {
-            throw new Exception("not in stock");
         }
 
         BO.OrderItem item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
@@ -27,7 +28,6 @@ internal class Cart : BLApi.ICart
             item.Amount++;
             item.TotalPrice += item.ProductPrice;
         }
-
         else
         {
             cart.ItemsList.Add(new BO.OrderItem()
@@ -39,14 +39,15 @@ internal class Cart : BLApi.ICart
             });
         }
         cart.TotalPriceInCart += item.ProductPrice;
+
         return cart;
     }
 
-    public void ConfirmedOrder(BO.Cart cart, string costumerName, string costumerEmail, string costumerAddress)
+    public void ConfirmedOrder(BO.Cart cart)
     {
-        if (string.IsNullOrWhiteSpace(costumerName)&&
-            string.IsNullOrWhiteSpace(costumerEmail) &&
-            string.IsNullOrWhiteSpace(costumerAddress))
+        if (string.IsNullOrWhiteSpace(cart.CustomerName)&&
+            string.IsNullOrWhiteSpace(cart.CustomerEmail) &&
+            string.IsNullOrWhiteSpace(cart.CustomerAddress))
         {
             throw new Exception("one of the values are empty");
         }
@@ -75,13 +76,14 @@ internal class Cart : BLApi.ICart
 
         DO.Order order = new()
         {
-            CustomerAddress= costumerAddress,
-            CustomerEmail= costumerEmail,
-            CustomerName   = costumerName,
+            CustomerAddress= cart.CustomerAddress,
+            CustomerEmail= cart.CustomerEmail,
+            CustomerName   = cart.CustomerName,
             DeliveryDate = null,
             ShipDate= null,
-            OrderDate= DateTime.Now
+            OrderDate = DateTime.Now
         };
+
         int orderID = Dal.Order.Add(order);
 
         foreach (var item in cart.ItemsList)
