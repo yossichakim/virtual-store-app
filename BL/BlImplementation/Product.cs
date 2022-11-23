@@ -1,27 +1,20 @@
-﻿using BLApi;
-using DalApi;
-using Dal;
-namespace BlImplementation;
+﻿namespace BlImplementation;
 
 internal class Product : BLApi.IProduct
 {
-    private IDal Dal = new DalList();
+    private DalApi.IDal Dal = new Dal.DalList();
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
+        return from item in Dal.Product.GetAll()
+               select new BO.ProductForList()
+               {
+                   ProductID = item.ProductID,
+                   ProductName = item.Name,
+                   Category = (BO.Category)item.Category,
+                   ProductPrice = item.Price,
+               };
 
-        List<BO.ProductForList> productForLists = new();
-
-        for (int i = 0; i < Dal.Product.GetAll().Count(); i++)
-        {
-            DO.Product temp = Dal.Product.GetAll().ElementAt(i);
-            productForLists[i].ProductID = temp.ProductID;
-            productForLists[i].ProductName = temp.Name;
-            productForLists[i].ProductPrice = temp.Price;
-            productForLists[i].Category = (BO.Category)temp.Category;
-        }
-
-        return productForLists;
     }
     public BO.Product GetProductManger(int productID)
     {
@@ -29,50 +22,57 @@ internal class Product : BLApi.IProduct
         {
             throw new Exception("product id not found");
         }
+
         DO.Product temp = Dal.Product.Get(productID);
-        BO.Product retProduct = new();
-        retProduct.ProductID = temp.ProductID;
-        retProduct.ProductName = temp.Name;
-        retProduct.ProductPrice = temp.Price;
-        retProduct.Category = (BO.Category)temp.Category;
-        retProduct.InStock = temp.InStock;
-        return retProduct;
+        return new BO.Product()
+        {
+            ProductPrice= temp.Price,
+             Category = (BO.Category)temp.Category,
+             ProductName = temp.Name,
+             ProductID = productID,
+             InStock = temp.InStock
+        };
+
     }
 
-    public BO.ProductItem GetProductCostumer(int productID,BO.Cart cart)
+    public BO.ProductItem GetProductCostumer(int productID, BO.Cart cart)
     {
         if (productID <= 0)
         {
             throw new Exception("product id not found");
         }
         DO.Product temp = Dal.Product.Get(productID);
-        BO.ProductItem retProduct = new();
-        retProduct.ProductID = temp.ProductID;
-        retProduct.ProductName = temp.Name;
-        retProduct.ProductPrice = temp.Price;
 
+        int amount = 0;
         foreach (var item in cart.ItemsList)
         {
             if (item.ProductID == productID)
             {
-                retProduct.AmountInCart += item.Amount;
+                amount = item.Amount;
             }
         }
-
-        retProduct.InStock= (temp.InStock > 0)?true:false;
-        return retProduct;
+        return new BO.ProductItem()
+        {
+            ProductID = temp.ProductID,
+            ProductName = temp.Name,
+            ProductPrice = temp.Price,
+            Categoty = (BO.Category)temp.Category,
+            InStock = (temp.InStock > 0) ? true : false,
+            AmountInCart = amount
+        };
 
     }
-    public void AddProduct(BO.Product productTOAdd) 
+    public void AddProduct(BO.Product productTOAdd)
     {
-        if (productTOAdd.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOAdd.ProductName) 
+        if (productTOAdd.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOAdd.ProductName)
             && productTOAdd.ProductPrice > 0 && productTOAdd.InStock >= 0)
         {
+            //אתחול מהיר
             DO.Product product = new();
             product.ProductID = productTOAdd.ProductID;
-            product.Name = productTOAdd.ProductName;    
+            product.Name = productTOAdd.ProductName;
             product.Price = productTOAdd.ProductPrice;
-            product.InStock = productTOAdd.InStock; 
+            product.InStock = productTOAdd.InStock;
             Dal.Product.Add(product);
             return;
         }
@@ -82,18 +82,26 @@ internal class Product : BLApi.IProduct
 
 
 
-    public void RemoveProduct(int productID) 
+    public void RemoveProduct(int productID)
     {
-        for (int i = 0; i < Dal.OrderItem.GetAll().Count(); i++)
+        //for (int i = 0; i < Dal.OrderItem.GetAll().Count(); i++)
+        //{
+        //    if (Dal.OrderItem.GetAll().ElementAt(i).ProductID == productID)
+        //    {
+        //    }
+        //}
+        if (Dal.OrderItem.GetAll().ToList().FindIndex(item => item.ProductID == productID) != -1)
         {
-            if (Dal.OrderItem.GetAll().ElementAt(i).ProductID == productID)
-            {
-                throw new Exception("IS EXISST IN ORDER");
-            }
+            throw new Exception("IS EXISST IN ORDER");
         }
-
-        Dal.Product.Delete(productID);
-
+        try
+        {
+            Dal.Product.Delete(productID);
+        }
+        catch
+        {
+            throw new Exception("ERROER");
+        }
     }
 
 
