@@ -1,11 +1,137 @@
-﻿using BLApi;
-using Dal;
-using DalApi;
+﻿using BO;
+using DO;
 
 namespace BlImplementation;
 
-internal class Order : IOrder
+internal class Order : BLApi.IOrder
 {
-    private IDal Dal = new DalList();
+    private DalApi.IDal Dal = new Dal.DalList();
 
+    private OrderStatus GetStatus(DO.Order item)
+    {
+        OrderStatus status = new();
+
+        if (item.DeliveryDate < DateTime.Now)
+        {
+            status = OrderStatus.OrderProvided;
+        }
+        else if (item.ShipDate < DateTime.Now)
+        {
+            status = OrderStatus.OrderSent;
+        }
+        else if (item.OrderDate < DateTime.Now)
+        {
+            status = OrderStatus.ConfirmedOrder;
+        }
+
+        return status;
+    }
+
+    private IEnumerable<BO.OrderItem> ReturnItemsList(DO.Order item)
+    {
+        List<BO.OrderItem> items = new ();
+
+        foreach (var orderItem in Dal.OrderItem.GetByOrderID(item.OrderID))
+        {
+            BO.OrderItem temp = new()
+            {
+                OrderItemID = orderItem.OrderItemID,
+                ProductID = orderItem.ProductID,
+                Amount = orderItem.Amount,
+                ProductPrice = orderItem.Price,
+                TotalPrice = orderItem.Amount * orderItem.Price
+            };
+            items.Add(temp);
+        }
+        return items;
+    }
+
+    private (int, double) AmountPriceOrder(DO.Order item)
+    {
+        List<DO.OrderItem> items = new();
+        items = Dal.OrderItem.GetByOrderID(item.OrderID).ToList();
+
+        double totalPrice = items.Sum(element => element.Amount * element.Price);
+        int amount = items.Sum(element => element.Amount);
+
+        return (amount, totalPrice);
+    }
+
+    public IEnumerable<OrderForList> GetOrderList()
+    {
+        List<BO.OrderForList> returnOrderList = new();
+
+        foreach (var item in Dal.Order.GetAll())
+        {
+            (int amount, double totalPrice) = AmountPriceOrder(item);
+            BO.OrderForList order = new()
+            {
+                OrderID = item.OrderID,
+                CustomerName = item.CustomerName,
+                AmountOfItems = amount,
+                TotalPrice = totalPrice,
+                Status = GetStatus(item)
+            };
+
+            returnOrderList.Add(order);
+        }
+
+        return returnOrderList;
+    }
+
+    public BO.Order GetOrderDetails(int orderID)
+    {
+        if (orderID > 0)
+        {
+          
+            foreach (var item in Dal.Order.GetAll())
+            {
+                if (orderID == item.OrderID)
+                {
+                    (_, double totalPrice) = AmountPriceOrder(item);
+                    BO.Order order = new()
+                    {
+                        OrderID = item.OrderID,
+                        CustomerName = item.CustomerName,
+                        CustomerEmail = item.CustomerEmail,
+                        CustomerAddress = item.CustomerAddress,
+                        OrderDate = item.OrderDate,
+                        ShipDate = item.ShipDate,
+                        DeliveryDate = item.DeliveryDate,
+                        ItemsList = ReturnItemsList(item).ToList(),
+                        Status = GetStatus(item),
+                        TotalPrice = totalPrice,
+                    };
+                    return order;
+
+                }
+            }
+
+            
+            
+        }
+
+        throw new Exception("error");
+    }
+
+    //
+    public BO.Order DeliveryUpdate(int orderID)
+    {
+        throw new NotImplementedException();
+    }
+
+    public OrderTracking OrderTrackingManger(int orderID)
+    {
+        throw new NotImplementedException();
+    }
+
+    public BO.Order ShippingUpdate(int orderID)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateOrder(int orderID)
+    {
+        throw new NotImplementedException();
+    }
 }
