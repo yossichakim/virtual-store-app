@@ -5,5 +5,5 @@
 /// </summary>
 public enum Category
 {
-    Screens , Phones, Computers, Printers, TV
+    Screens, Phones, Computers, Printers, TV
 }

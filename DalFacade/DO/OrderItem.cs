@@ -9,18 +9,22 @@ public struct OrderItem
     /// Unique ID of Order Item
     /// </summary>
     public int OrderItemID { get; set; }
+
     /// <summary>
     /// Unique ID of Product
     /// </summary>
     public int ProductID { get; set; }
+
     /// <summary>
     /// Unique ID of Order
     /// </summary>
     public int OrderID { get; set; }
+
     /// <summary>
     /// Price of Product
     /// </summary>
     public double Price { get; set; }
+
     /// <summary>
     /// Product quantity in order
     /// </summary>
@@ -34,5 +38,5 @@ public struct OrderItem
                                          $"Product ID: {ProductID}\n" +
                                          $"Order ID: {OrderID}\n" +
                                          $"Price: {Price}\n" +
-    	                                 $"Amount in stock: {Amount}\n";
+                                         $"Amount in stock: {Amount}\n";
 }

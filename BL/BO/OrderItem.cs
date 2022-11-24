@@ -15,6 +15,6 @@ public class OrderItem
     public override string ToString() => $"Order Item ID: {OrderItemID}\n" +
                                          $"Product ID: {ProductID}\n" +
                                          $"Product Price: {ProductPrice}\n" +
-                                         $"Amount: {Amount}\n"+
+                                         $"Amount: {Amount}\n" +
                                          $"Total Price: {TotalPrice}\n";
 }

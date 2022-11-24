@@ -14,15 +14,21 @@ public class NoFoundException : Exception
 
 public class NoValidException : Exception
 {
-    public NoValidException(string massage) : base($"the {massage} are not valid") { }
+    public NoValidException(string massage) : base($"the {massage} are not valid")
+    {
+    }
 }
 
 public class ErrorDeleteException : Exception
 {
-    public ErrorDeleteException(string massage) : base($"You are trying to delete a {massage}") { }
+    public ErrorDeleteException(string massage) : base($"You are trying to delete a {massage}")
+    {
+    }
 }
 
 public class ErrorUpdateException : Exception
 {
-    public ErrorUpdateException(string massage) : base($"the order as been {massage}") { }
+    public ErrorUpdateException(string massage) : base($"the order as been {massage}")
+    {
+    }
 }

@@ -8,6 +8,7 @@ public class ProductItem
     public Category Categoty { get; set; }
     public int AmountInCart { get; set; }
     public bool InStock { get; set; }
+
     public override string ToString() => $"Product ID: {ProductID}\n" +
                                          $"Product Name: {ProductName}\n" +
                                          $"Product Price: {ProductPrice}\n" +

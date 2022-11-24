@@ -1,5 +1,6 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 internal class DalOrderItem : IOrderItem
@@ -126,10 +127,9 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public IEnumerable<OrderItem> GetByOrderID(int orderID)
     {
-        if (!DataSource.orderItems.Exists( element => element.OrderID == orderID))
+        if (!DataSource.orderItems.Exists(element => element.OrderID == orderID))
             throw new NoFoundException("order id");
 
         return DataSource.orderItems.Where(element => element.OrderID == orderID);
-
     }
 }

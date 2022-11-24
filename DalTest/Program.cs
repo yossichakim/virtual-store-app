@@ -5,12 +5,12 @@ using DO;
 /// <summary>
 /// Prints and updates in arrays according to the user's request
 /// </summary>
-class Program
+internal class Program
 {
     /// <summary>
     /// The main menu of user's request
     /// </summary>
-    enum MainMenu
+    private enum MainMenu
     {
         Exit, Product, Order, OrderItem
     }
@@ -18,7 +18,7 @@ class Program
     /// <summary>
     /// The product menu of user's request
     /// </summary>
-    enum ProductMenu
+    private enum ProductMenu
     {
         AddProduct = 1, GetProduct, GetAllProduct, RemoveProduct, UpdateProduct
     }
@@ -26,7 +26,7 @@ class Program
     /// <summary>
     /// The order menu of user's request
     /// </summary>
-    enum OrderMenu
+    private enum OrderMenu
     {
         AddOrder = 1, GetOrder, GetAllorders, RemoveOrder, UpdateOrder
     }
@@ -34,16 +34,15 @@ class Program
     /// <summary>
     /// The order item menu of user's request
     /// </summary>
-    enum OrderItemMenu
+    private enum OrderItemMenu
     {
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
-    static IDal dal = new DalList();
-   
-    static void Main(string[] args)
-    {
+    private static IDal dal = new DalList();
 
+    private static void Main(string[] args)
+    {
         while (true)
         {
             printMainMenu();
@@ -122,7 +121,8 @@ class Program
     {
         Console.WriteLine("enter your choice:");
     }
-    #endregion
+
+    #endregion print function
 
     #region general actions
 
@@ -236,11 +236,11 @@ class Program
     {
         printSubMenu("product");
         ProductMenu productMenu = (ProductMenu)tryParseInt();
-        
+
         switch (productMenu)
         {
             case ProductMenu.AddProduct:
-                Product product = new Product();             
+                Product product = new Product();
                 addProduct(ref product);
                 Console.WriteLine(dal.Product.Add(product));
                 break;
@@ -251,7 +251,7 @@ class Program
                 break;
 
             case ProductMenu.GetAllProduct:
-                 IEnumerable<Product> printProducts = dal.Product.GetAll();
+                IEnumerable<Product> printProducts = dal.Product.GetAll();
                 foreach (var item in printProducts) Console.WriteLine(item);
                 break;
 
@@ -335,7 +335,7 @@ class Program
         return product;
     }
 
-    #endregion
+    #endregion product actions
 
     #region order actions
 
@@ -361,7 +361,7 @@ class Program
                 break;
 
             case OrderMenu.GetAllorders:
-                IEnumerable<Order>  printOrder = dal.Order.GetAll();
+                IEnumerable<Order> printOrder = dal.Order.GetAll();
                 foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
@@ -409,7 +409,6 @@ class Program
     /// <returns> DateTime </returns>
     private static DateTime tryParseDate(string entityName)
     {
-
         Console.WriteLine($"enter {entityName} date:");
         DateTime date;
         while (!DateTime.TryParse(Console.ReadLine(), out date))
@@ -446,23 +445,30 @@ class Program
                 case 1:
                     order.CustomerName = entityName("customer name");
                     break;
+
                 case 2:
                     order.CustomerAddress = entityName("customer address");
                     break;
+
                 case 3:
                     order.CustomerEmail = entityName("customer email");
                     break;
+
                 case 4:
                     order.OrderDate = tryParseDate("order");
                     break;
+
                 case 5:
                     order.ShipDate = tryParseDate("ship");
                     break;
+
                 case 6:
                     order.DeliveryDate = tryParseDate("delivery");
                     break;
+
                 case 0:
                     break;
+
                 default:
                     Console.WriteLine("enter a number between 0 - 6");
                     break;
@@ -470,7 +476,8 @@ class Program
         }
         return order;
     }
-    #endregion  order actions
+
+    #endregion order actions
 
     #region order item actions
 
@@ -521,7 +528,7 @@ class Program
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
                 int orderIDs = tryParseInt();
-                IEnumerable <OrderItem>  printOrderIDs = dal.OrderItem.GetByOrderID(orderIDs);
+                IEnumerable<OrderItem> printOrderIDs = dal.OrderItem.GetByOrderID(orderIDs);
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 
@@ -594,5 +601,5 @@ class Program
         return orderItem;
     }
 
-    #endregion item actions
+    #endregion order item actions
 }

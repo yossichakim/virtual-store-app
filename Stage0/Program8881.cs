@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Targil0
+﻿namespace Targil0
 {
-    partial class Program
+    internal partial class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Wellcome8881();
             Wellcome3341();
@@ -12,7 +10,8 @@ namespace Targil0
             Console.ReadKey();
         }
 
-        static partial void Wellcome3341();
+        private static partial void Wellcome3341();
+
         private static void Wellcome8881()
         {
             Console.WriteLine("Enter your name: ");

@@ -7,6 +7,7 @@ public class Product
     public double ProductPrice { get; set; }
     public Category Category { get; set; }
     public int InStock { get; set; }
+
     public override string ToString() => $"Product ID: {ProductID}\n" +
                                          $"Product Name: {ProductName}\n" +
                                          $"Product Price: {ProductPrice}\n" +

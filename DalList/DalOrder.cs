@@ -1,5 +1,6 @@
-﻿using DO;
-using DalApi;
+﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 /// <summary>
@@ -51,7 +52,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// <returns>  Returns the order list </returns>
     /// </summary>
-    public IEnumerable <Order> GetAll()
+    public IEnumerable<Order> GetAll()
     {
         List<Order> returnOrders = new();
 

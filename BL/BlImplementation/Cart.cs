@@ -49,7 +49,7 @@ internal class Cart : BLApi.ICart
     {
         if (string.IsNullOrWhiteSpace(cart.CustomerName) &&
             string.IsNullOrWhiteSpace(cart.CustomerEmail) &&
-            string.IsNullOrWhiteSpace(cart.CustomerAddress)&&
+            string.IsNullOrWhiteSpace(cart.CustomerAddress) &&
             !cart.CustomerEmail.IsValidEmail())
         {
             throw new BO.NoValidException("name / email / address");

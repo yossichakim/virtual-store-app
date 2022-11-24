@@ -16,7 +16,6 @@ internal class DalProduct : IProduct
     /// <exception cref="AddException"> if the product id already exist </exception>
     public int Add(Product addProduct)
     {
-
         if (DataSource.products.Exists(element => element.ProductID == addProduct.ProductID))
             throw new AddException("product");
 
@@ -75,7 +74,6 @@ internal class DalProduct : IProduct
             throw new NoFoundException("product Id");
 
         DataSource.products.RemoveAll(element => element.ProductID == productId);
-
     }
 
     /// <summary>
@@ -87,7 +85,6 @@ internal class DalProduct : IProduct
     {
         if (!DataSource.products.Exists(element => element.ProductID == updateProduct.ProductID))
             throw new NoFoundException("Product");
-
 
         for (int i = 0; i < DataSource.products.Count(); i++)
         {

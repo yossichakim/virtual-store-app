@@ -22,5 +22,4 @@ public class Order
                                          $"Delivery Date: {DeliveryDate}\n" +
                                          $"Items List: {ItemsList}\n" +
                                          $"Total Price: {TotalPrice}\n";
-
 }

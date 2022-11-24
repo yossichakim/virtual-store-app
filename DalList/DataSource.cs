@@ -1,10 +1,11 @@
 ﻿using DO;
+
 namespace Dal;
 
 /// <summary>
 ///  Structure for Date Source
 /// </summary>
-static class DataSource
+internal static class DataSource
 {
     /// <summary>
     /// constructor for data source
@@ -12,9 +13,9 @@ static class DataSource
     static DataSource() { s_Initialize(); }
 
     private static readonly Random s_random = new Random();
-    internal static List<Product> products = new ();
-    internal static List<Order> orders = new ();
-    internal static List<OrderItem> orderItems = new ();
+    internal static List<Product> products = new();
+    internal static List<Order> orders = new();
+    internal static List<OrderItem> orderItems = new();
     private static int s_orderItemID = 100000;
     private static int s_orderID = 100000;
 
@@ -77,7 +78,7 @@ static class DataSource
                 Category.TV => s_random.Next(1999, 9999),
                 _ => throw new NotImplementedException()
             };
-            products.Add(product) ;
+            products.Add(product);
         }
     }
 

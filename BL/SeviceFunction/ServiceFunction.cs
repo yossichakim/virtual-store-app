@@ -2,7 +2,6 @@
 
 namespace SeviceFunction;
 
-
 internal static class ServiceFunction
 {
     internal static bool IsValidEmail(this string mail)
@@ -20,6 +19,5 @@ internal static class ServiceFunction
 
     internal static void IsEmptyString(this string str)
     {
-
     }
 }
