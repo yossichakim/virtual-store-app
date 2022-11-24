@@ -178,8 +178,7 @@ internal class Order : BLApi.IOrder
 
     private (int, double) AmountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem> items = new();
-        items = Dal.OrderItem.GetByOrderID(item.OrderID).ToList();
+        List<DO.OrderItem> items = Dal.OrderItem.GetByOrderID(item.OrderID).ToList();
 
         double totalPrice = items.Sum(element => element.Amount * element.Price);
         int amount = items.Sum(element => element.Amount);
