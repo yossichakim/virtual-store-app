@@ -108,34 +108,49 @@ internal class Cart : BLApi.ICart
 
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
-        //לבדוק כמות חדשה חיובית
-        if (newAmount <= 0)
+        if (newAmount < 0)
         {
-            throw new Exception("the new amount cannot be negative or zero");
+            throw new Exception("the new amount cannot be negative");
         }
-
-        DO.Product product = new();
-
-        BO.OrderItem orderItem = cart.ItemsList.First(orderItem => orderItem.ProductID == productID);
-
-        if (orderItem is not null)
+        try
         {
-            if (orderItem.Amount < newAmount)
+            DO.Product product = Dal.Product.Get(productID);
+
+            BO.OrderItem item = cart.ItemsList.First(item => item.ProductID == productID);
+            int difference = 0;
+
+            if (item is not null)
             {
-                if (product.InStock < newAmount)
+                if (newAmount == 0)
                 {
-                    throw new Exception("not enough item to add");
+                    cart.TotalPriceInCart -= item.TotalPrice;
+                    cart.ItemsList.Remove(item);
                 }
-                //לבדוק האם יש מספיק להוסיף
-            }
-            else if (orderItem.Amount > newAmount)
-            {
-                //להחסיר מהכמות
-                //לבדוק בנוסף אם הכמות השתנתנה ל0
+                else if (newAmount > item.Amount)
+                {
+                    if (product.InStock < newAmount)
+                    {
+                        throw new Exception("error");
+                    }
+                    difference = newAmount - item.Amount;
+                    item.Amount = newAmount;
+                    item.TotalPrice = item.ProductPrice * newAmount;
+                    cart.TotalPriceInCart += difference * item.ProductPrice;
+                }
+                else if (newAmount < item.Amount)
+                {
+                    difference = item.Amount - newAmount;
+                    item.Amount = newAmount;
+                    item.TotalPrice = item.ProductPrice * newAmount;
+                    cart.TotalPriceInCart -= difference * item.ProductPrice;
+                }
             }
         }
-        //לעדכן כמות של מוצר בדאל
+        catch (Exception)
+        {
+            throw;
+        }
 
-        throw new NotImplementedException();
+        return cart;
     }
 }

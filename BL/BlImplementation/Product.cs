@@ -1,6 +1,4 @@
-﻿using SeviceFunction;
-
-namespace BlImplementation;
+﻿namespace BlImplementation;
 
 internal class Product : BLApi.IProduct
 {
@@ -17,6 +15,7 @@ internal class Product : BLApi.IProduct
                    ProductPrice = item.Price
                };
     }
+
     public BO.Product GetProductManger(int productID)
     {
         if (productID <= 0)
@@ -39,10 +38,8 @@ internal class Product : BLApi.IProduct
         }
         catch (Exception)
         {
-
             throw new Exception("product id not found");
         }
-
     }
 
     public BO.ProductItem GetProductCostumer(int productID, BO.Cart cart)
@@ -76,44 +73,44 @@ internal class Product : BLApi.IProduct
         }
         catch (Exception)
         {
-
             throw new Exception("product id not found");
         }
-
     }
 
     public void AddProduct(BO.Product productToAdd)
     {
-        productToAdd.ProductID.CheckPositiveNumber();
-        //לזרוק חריגה לכל מקרה בנפרד
-        if (productToAdd.ProductID.ToString().Length == 6 && !string.IsNullOrWhiteSpace(productToAdd.ProductName)
-            && productToAdd.ProductPrice > 0 && productToAdd.InStock >= 0)
+        if (productToAdd.ProductID <= 0 ||
+            productToAdd.ProductID.ToString().Length < 6 ||
+            string.IsNullOrWhiteSpace(productToAdd.ProductID.ToString()))
         {
-            DO.Product product = new()
-            {
-                ProductID = productToAdd.ProductID,
-                Name = productToAdd.ProductName,
-                Price = productToAdd.ProductPrice,
-                InStock = productToAdd.InStock,
-                Category = (DO.Category)productToAdd.Category
-            };
-
-            try
-            {
-                Dal.Product.Add(product);
-            }
-            catch (DalApi.AddException ex)
-            {
-                throw new BO.AddException(ex);
-            }
-        }
-        else
-        {
-            throw new Exception("one of the details wrong");
+            throw new Exception("the format of product id is wrong - must be a 6 digit positive number");
         }
 
+        if (string.IsNullOrWhiteSpace(productToAdd.ProductName) ||
+            productToAdd.ProductPrice <= 0 ||
+            productToAdd.InStock < 0)
+        {
+            throw new Exception("one of the fields not valid, name - not empty, price - not zero or negative, stock - not negative");
+        }
+
+        DO.Product product = new()
+        {
+            ProductID = productToAdd.ProductID,
+            Name = productToAdd.ProductName,
+            Price = productToAdd.ProductPrice,
+            InStock = productToAdd.InStock,
+            Category = (DO.Category)productToAdd.Category
+        };
+
+        try
+        {
+            Dal.Product.Add(product);
+        }
+        catch (DalApi.AddException ex)
+        {
+            throw new BO.AddException(ex);
+        }
     }
-
 
     public void RemoveProduct(int productID)
     {
@@ -131,18 +128,18 @@ internal class Product : BLApi.IProduct
         }
     }
 
-
     public void UpdateProduct(BO.Product productTOUpdate)
     {
         if (productTOUpdate.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOUpdate.ProductName)
           && productTOUpdate.ProductPrice > 0 && productTOUpdate.InStock >= 0)
         {
-            DO.Product product = new() {
-            ProductID = productTOUpdate.ProductID,
-            Name = productTOUpdate.ProductName,
-            Price = productTOUpdate.ProductPrice,
-            InStock = productTOUpdate.InStock
-        };
+            DO.Product product = new()
+            {
+                ProductID = productTOUpdate.ProductID,
+                Name = productTOUpdate.ProductName,
+                Price = productTOUpdate.ProductPrice,
+                InStock = productTOUpdate.InStock
+            };
             try
             {
                 Dal.Product.Update(product);
@@ -157,14 +154,4 @@ internal class Product : BLApi.IProduct
             throw new Exception("one of the details wrong");
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
