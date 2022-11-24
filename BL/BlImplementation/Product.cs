@@ -4,6 +4,10 @@ internal class Product : BLApi.IProduct
 {
     private DalApi.IDal Dal = new Dal.DalList();
 
+    /// <summary>
+    /// Returns a list of products - for manager and customer
+    /// </summary>
+    /// <returns> IEnumerable<BO.ProductForList> </returns>
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         return from item in Dal.Product.GetAll()
@@ -16,11 +20,18 @@ internal class Product : BLApi.IProduct
                };
     }
 
+    /// <summary>
+    /// Returns a product - for a manager
+    /// </summary>
+    /// <param name="productID"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public BO.Product GetProductManger(int productID)
     {
         if (productID <= 0)
         {
-            throw new Exception("product id cannot be a negative or zero");
+            throw new BO.NoValidException("product id");
         }
 
         try
@@ -36,17 +47,25 @@ internal class Product : BLApi.IProduct
                 InStock = temp.InStock
             };
         }
-        catch (Exception)
+        catch (DalApi.NoFoundException ex)
         {
-            throw new Exception("product id not found");
+            throw new BO.NoFoundException(ex);
         }
     }
 
+    /// <summary>
+    /// Returns a product - for a costumer
+    /// </summary>
+    /// <param name="productID"></param>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public BO.ProductItem GetProductCostumer(int productID, BO.Cart cart)
     {
         if (productID <= 0)
         {
-            throw new Exception("product id cannot be a negative or zero");
+            throw new BO.NoValidException("product id");
         }
 
         try
@@ -71,9 +90,9 @@ internal class Product : BLApi.IProduct
                 AmountInCart = amount
             };
         }
-        catch (Exception)
+        catch (DalApi.NoFoundException ex)
         {
-            throw new Exception("product id not found");
+            throw new BO.NoFoundException(ex);
         }
     }
 
@@ -83,14 +102,14 @@ internal class Product : BLApi.IProduct
             productToAdd.ProductID.ToString().Length < 6 ||
             string.IsNullOrWhiteSpace(productToAdd.ProductID.ToString()))
         {
-            throw new Exception("the format of product id is wrong - must be a 6 digit positive number");
+            throw new BO.NoValidException("product id");
         }
 
         if (string.IsNullOrWhiteSpace(productToAdd.ProductName) ||
             productToAdd.ProductPrice <= 0 ||
             productToAdd.InStock < 0)
         {
-            throw new Exception("one of the fields not valid, name - not empty, price - not zero or negative, stock - not negative");
+            throw new BO.NoValidException("name / price / stock");
         }
 
         DO.Product product = new()
@@ -116,42 +135,48 @@ internal class Product : BLApi.IProduct
     {
         if (Dal.OrderItem.GetAll().ToList().FindIndex(item => item.ProductID == productID) != -1)
         {
-            throw new Exception("IS EXISST IN ORDER");
+            throw new BO.ErrorDeleteException("product in the order");
         }
         try
         {
             Dal.Product.Delete(productID);
         }
-        catch
+        catch (DalApi.NoFoundException ex)
         {
-            throw new Exception("the product is not exist");
+            throw new BO.NoFoundException(ex);
         }
     }
 
     public void UpdateProduct(BO.Product productTOUpdate)
     {
-        if (productTOUpdate.ProductID > 0 && !string.IsNullOrWhiteSpace(productTOUpdate.ProductName)
-          && productTOUpdate.ProductPrice > 0 && productTOUpdate.InStock >= 0)
+        if (productTOUpdate.ProductID <= 0 ||
+            productTOUpdate.ProductID.ToString().Length < 6 ||
+            string.IsNullOrWhiteSpace(productTOUpdate.ProductID.ToString()))
         {
-            DO.Product product = new()
-            {
-                ProductID = productTOUpdate.ProductID,
-                Name = productTOUpdate.ProductName,
-                Price = productTOUpdate.ProductPrice,
-                InStock = productTOUpdate.InStock
-            };
-            try
-            {
-                Dal.Product.Update(product);
-            }
-            catch (Exception)
-            {
-                throw new Exception("the product is not exist");
-            }
+            throw new BO.NoValidException("product id");
         }
-        else
+
+        if (string.IsNullOrWhiteSpace(productTOUpdate.ProductName) ||
+            productTOUpdate.ProductPrice <= 0 ||
+            productTOUpdate.InStock < 0)
         {
-            throw new Exception("one of the details wrong");
+            throw new BO.NoValidException("name / price / stock");
+        }
+
+        DO.Product product = new()
+        {
+            ProductID = productTOUpdate.ProductID,
+            Name = productTOUpdate.ProductName,
+            Price = productTOUpdate.ProductPrice,
+            InStock = productTOUpdate.InStock
+        };
+        try
+        {
+            Dal.Product.Update(product);
+        }
+        catch (DalApi.NoFoundException ex)
+        {
+            throw new BO.NoFoundException(ex);
         }
     }
 }
