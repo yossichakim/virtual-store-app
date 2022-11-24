@@ -1,5 +1,4 @@
-﻿using DO;
-using SeviceFunction;
+﻿using SeviceFunction;
 
 namespace BlImplementation;
 
@@ -20,7 +19,7 @@ internal class Cart : BLApi.ICart
                 throw new BO.NoValidException("product stock");
             }
         }
-        catch (NoFoundException ex)
+        catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -70,7 +69,7 @@ internal class Cart : BLApi.ICart
                     throw new BO.NoValidException("product stock");
                 }
             }
-            catch (NoFoundException ex)
+            catch (DO.NoFoundException ex)
             {
                 throw new BO.NoFoundException(ex);
             }
@@ -104,7 +103,7 @@ internal class Cart : BLApi.ICart
                 Dal.Product.Update(product);
             }
         }
-        catch (AddException ex)
+        catch (DO.AddException ex)
         {
             throw new BO.AddException(ex);
         }
@@ -150,9 +149,9 @@ internal class Cart : BLApi.ICart
                 }
             }
         }
-        catch (Exception)
+        catch (DO.NoFoundException ex)
         {
-            throw;
+            throw new BO.NoFoundException(ex);
         }
 
         return cart;
