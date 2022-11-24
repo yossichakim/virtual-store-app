@@ -1,6 +1,4 @@
-﻿using BO;
-
-namespace BlImplementation;
+﻿namespace BlImplementation;
 
 internal class Order : BLApi.IOrder
 {
@@ -103,7 +101,6 @@ internal class Order : BLApi.IOrder
                     return order;
                 }
             }
-   
         }
 
         throw new Exception("error");
@@ -111,7 +108,6 @@ internal class Order : BLApi.IOrder
 
     public BO.Order ShippingUpdate(int orderID)
     {
-        
         try
         {
             DO.Order order1 = Dal.Order.Get(orderID);
@@ -128,19 +124,15 @@ internal class Order : BLApi.IOrder
             {
                 throw new Exception("erorr");
             }
-
-          
         }
         catch (Exception)
         {
-
             throw new Exception("ujwjijxi");
         }
     }
 
     public BO.Order DeliveryUpdate(int orderID)
     {
-
         try
         {
             DO.Order order1 = Dal.Order.Get(orderID);
@@ -157,6 +149,12 @@ internal class Order : BLApi.IOrder
             {
                 throw new Exception("erorr");
             }
+        }
+        catch (Exception)
+        {
+            throw new Exception("error");
+        }
+    }
 
     public BO.OrderTracking OrderTrackingManger(int orderID)
     {
@@ -168,9 +166,9 @@ internal class Order : BLApi.IOrder
             orderTracking.OrderTrackingID = orderID;
             orderTracking.Status = GetStatus(order);
             orderTracking.DateAndStatus = new(){
-                Tuple.Create(order.OrderDate, OrderStatus.OrderConfirmed),
-                Tuple.Create(order.ShipDate, OrderStatus.OrderSent),
-                Tuple.Create(order.DeliveryDate, OrderStatus.OrderProvided)
+                Tuple.Create(order.OrderDate, BO.OrderStatus.OrderConfirmed),
+                Tuple.Create(order.ShipDate, BO.OrderStatus.OrderSent),
+                Tuple.Create(order.DeliveryDate, BO.OrderStatus.OrderProvided)
             };
             return orderTracking;
         }
@@ -179,13 +177,6 @@ internal class Order : BLApi.IOrder
             throw;
         }
     }
-
-    public BO.OrderTracking OrderTrackingManger(int orderID)
-    {
-        throw new NotImplementedException();
-    }
-
-
 
     public void UpdateOrder(int orderID)
     {
