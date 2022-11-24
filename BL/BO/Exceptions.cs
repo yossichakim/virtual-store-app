@@ -21,3 +21,8 @@ public class ErrorDeleteException : Exception
 {
     public ErrorDeleteException(string massage) : base($"You are trying to delete a {massage}") { }
 }
+
+public class ErrorUpdateException : Exception
+{
+    public ErrorUpdateException(string massage) : base($"the order as been {massage}") { }
+}

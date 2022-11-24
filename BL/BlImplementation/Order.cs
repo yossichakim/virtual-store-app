@@ -28,33 +28,34 @@ internal class Order : BLApi.IOrder
 
     public BO.Order GetOrderDetails(int orderID)
     {
-        if (orderID < 0)
+        if (orderID <= 0)
         {
             throw new BO.NoValidException("order id");
         }
 
-        foreach (var item in Dal.Order.GetAll())
+        try
         {
-            if (orderID == item.OrderID)
+            DO.Order item = Dal.Order.Get(orderID);
+            (_, double totalPrice) = AmountPriceOrder(item);
+            BO.Order order = new()
             {
-                (_, double totalPrice) = AmountPriceOrder(item);
-                BO.Order order = new()
-                {
-                    OrderID = item.OrderID,
-                    CustomerName = item.CustomerName,
-                    CustomerEmail = item.CustomerEmail,
-                    CustomerAddress = item.CustomerAddress,
-                    OrderDate = item.OrderDate,
-                    ShipDate = item.ShipDate,
-                    DeliveryDate = item.DeliveryDate,
-                    ItemsList = ReturnItemsList(item).ToList(),
-                    Status = GetStatus(item),
-                    TotalPrice = totalPrice,
-                };
-                return order;
-            }
+                OrderID = item.OrderID,
+                CustomerName = item.CustomerName,
+                CustomerEmail = item.CustomerEmail,
+                CustomerAddress = item.CustomerAddress,
+                OrderDate = item.OrderDate,
+                ShipDate = item.ShipDate,
+                DeliveryDate = item.DeliveryDate,
+                ItemsList = ReturnItemsList(item).ToList(),
+                Status = GetStatus(item),
+                TotalPrice = totalPrice,
+            };
+            return order;
         }
-        throw new Exception("no found order");
+        catch (DO.NoFoundException ex)
+        {
+            throw new BO.NoFoundException(ex);
+        }
     }
 
     public BO.Order ShippingUpdate(int orderID)
@@ -73,12 +74,12 @@ internal class Order : BLApi.IOrder
             }
             else
             {
-                throw new Exception("the order as been shipped");
+                throw new BO.ErrorUpdateException("shipped");
             }
         }
-        catch (Exception)
+        catch (DO.NoFoundException ex)
         {
-            throw new Exception("no found order");
+            throw new BO.NoFoundException(ex);
         }
     }
 
@@ -98,12 +99,12 @@ internal class Order : BLApi.IOrder
             }
             else
             {
-                throw new Exception("the order as been delivered");
+                throw new BO.ErrorUpdateException("delivered");
             }
         }
-        catch (Exception)
+        catch (DO.NoFoundException ex)
         {
-            throw new Exception("no found order");
+            throw new BO.NoFoundException(ex);
         }
     }
 
@@ -123,9 +124,9 @@ internal class Order : BLApi.IOrder
             };
             return orderTracking;
         }
-        catch (Exception)
+        catch (DO.NoFoundException ex)
         {
-            throw new Exception("no found order");
+            throw new BO.NoFoundException(ex);
         }
     }
 
