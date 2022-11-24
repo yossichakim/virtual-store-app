@@ -13,5 +13,5 @@ public enum Category
 /// </summary>
 public enum OrderStatus
 {
-    ConfirmedOrder, OrderSent, OrderProvided
+    OrderConfirmed, OrderSent, OrderProvided
 }
