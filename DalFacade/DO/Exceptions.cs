@@ -1,8 +1,8 @@
-﻿namespace DalApi;
+﻿namespace DO;
 
 public class AddException : Exception
 {
-    public AddException(string massage) :base($"the {massage} you try to add already exist")
+    public AddException(string massage) : base($"the {massage} you try to add already exist")
     { }
 
 }
