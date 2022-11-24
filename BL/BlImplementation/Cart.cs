@@ -1,4 +1,5 @@
-﻿using SeviceFunction;
+﻿using DO;
+using SeviceFunction;
 
 namespace BlImplementation;
 
@@ -16,12 +17,12 @@ internal class Cart : BLApi.ICart
 
             if (product.InStock <= 0)
             {
-                throw new Exception("not in stock");
+                throw new BO.NoValidException("product stock");
             }
         }
-        catch (Exception)
+        catch (NoFoundException ex)
         {
-            throw new Exception("error");
+            throw new BO.NoFoundException(ex);
         }
 
         BO.OrderItem item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
@@ -49,33 +50,29 @@ internal class Cart : BLApi.ICart
     {
         if (string.IsNullOrWhiteSpace(cart.CustomerName) &&
             string.IsNullOrWhiteSpace(cart.CustomerEmail) &&
-            string.IsNullOrWhiteSpace(cart.CustomerAddress))
+            string.IsNullOrWhiteSpace(cart.CustomerAddress)&&
+            !cart.CustomerEmail.IsValidEmail())
         {
-            throw new Exception("one of the values are empty");
-        }
-
-        if (!cart.CustomerEmail.IsValidEmail())
-        {
-            throw new Exception("the email address are not valid");
+            throw new BO.NoValidException("name / email / address");
         }
 
         foreach (var item in cart.ItemsList)
         {
             if (item.Amount <= 0)
             {
-                throw new Exception("not EROREr");
+                throw new BO.NoValidException("product amount");
             }
             try
             {
                 DO.Product product = Dal.Product.Get(item.ProductID);
                 if (item.Amount > product.InStock)
                 {
-                    throw new Exception("not enough in stock");
+                    throw new BO.NoValidException("product stock");
                 }
             }
-            catch (Exception)
+            catch (NoFoundException ex)
             {
-                throw new Exception("error");
+                throw new BO.NoFoundException(ex);
             }
         }
 
@@ -89,20 +86,27 @@ internal class Cart : BLApi.ICart
             OrderDate = DateTime.Now
         };
 
-        int orderID = Dal.Order.Add(order);
-
-        foreach (var item in cart.ItemsList)
+        try
         {
-            Dal.OrderItem.Add(new DO.OrderItem
+            int orderID = Dal.Order.Add(order);
+
+            foreach (var item in cart.ItemsList)
             {
-                Amount = item.Amount,
-                Price = item.ProductPrice,
-                ProductID = item.ProductID,
-                OrderID = orderID
-            });
-            DO.Product product = Dal.Product.Get(item.ProductID);
-            product.InStock -= item.Amount;
-            Dal.Product.Update(product);
+                Dal.OrderItem.Add(new DO.OrderItem
+                {
+                    Amount = item.Amount,
+                    Price = item.ProductPrice,
+                    ProductID = item.ProductID,
+                    OrderID = orderID
+                });
+                DO.Product product = Dal.Product.Get(item.ProductID);
+                product.InStock -= item.Amount;
+                Dal.Product.Update(product);
+            }
+        }
+        catch (AddException ex)
+        {
+            throw new BO.AddException(ex);
         }
     }
 
@@ -110,7 +114,7 @@ internal class Cart : BLApi.ICart
     {
         if (newAmount < 0)
         {
-            throw new Exception("the new amount cannot be negative");
+            throw new BO.NoValidException("product amount");
         }
         try
         {

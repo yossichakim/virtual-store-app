@@ -47,7 +47,7 @@ internal class Product : BLApi.IProduct
                 InStock = temp.InStock
             };
         }
-        catch (DalApi.NoFoundException ex)
+        catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -90,7 +90,7 @@ internal class Product : BLApi.IProduct
                 AmountInCart = amount
             };
         }
-        catch (DalApi.NoFoundException ex)
+        catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -125,7 +125,7 @@ internal class Product : BLApi.IProduct
         {
             Dal.Product.Add(product);
         }
-        catch (DalApi.AddException ex)
+        catch (DO.AddException ex)
         {
             throw new BO.AddException(ex);
         }
@@ -141,7 +141,7 @@ internal class Product : BLApi.IProduct
         {
             Dal.Product.Delete(productID);
         }
-        catch (DalApi.NoFoundException ex)
+        catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -174,7 +174,7 @@ internal class Product : BLApi.IProduct
         {
             Dal.Product.Update(product);
         }
-        catch (DalApi.NoFoundException ex)
+        catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
