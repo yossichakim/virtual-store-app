@@ -103,18 +103,69 @@ internal class Order : BLApi.IOrder
 
                 }
             }
-
-            
-            
+   
         }
 
         throw new Exception("error");
     }
 
-    //
+    public BO.Order ShippingUpdate(int orderID)
+    {
+        
+        try
+        {
+            DO.Order order1 = Dal.Order.Get(orderID);
+            BO.Order order = GetOrderDetails(orderID);
+            if (order1.ShipDate == null)
+            {
+                order1.ShipDate = DateTime.Now;
+                Dal.Order.Update(order1);
+                order.ShipDate = order1.ShipDate;
+                order.Status = GetStatus(order1);
+                return order;
+            }
+            else
+            {
+                throw new Exception("erorr");
+            }
+
+          
+        }
+        catch (Exception)
+        {
+
+            throw new Exception("ujwjijxi");
+        }
+    }
+
     public BO.Order DeliveryUpdate(int orderID)
     {
-        throw new NotImplementedException();
+
+        try
+        {
+            DO.Order order1 = Dal.Order.Get(orderID);
+            BO.Order order = GetOrderDetails(orderID);
+            if (order1.DeliveryDate == null)
+            {
+                order1.DeliveryDate = DateTime.Now;
+                Dal.Order.Update(order1);
+                order.ShipDate = order1.DeliveryDate;
+                order.Status = GetStatus(order1);
+                return order;
+            }
+            else
+            {
+                throw new Exception("erorr");
+            }
+
+
+        }
+        catch (Exception)
+        {
+
+            throw new Exception("ujwjijxi");
+        }
+
     }
 
     public BO.OrderTracking OrderTrackingManger(int orderID)
@@ -122,10 +173,7 @@ internal class Order : BLApi.IOrder
         throw new NotImplementedException();
     }
 
-    public BO.Order ShippingUpdate(int orderID)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public void UpdateOrder(int orderID)
     {
