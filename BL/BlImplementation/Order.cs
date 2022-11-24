@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using BO;
+
+namespace BlImplementation;
 
 internal class Order : BLApi.IOrder
 {
@@ -18,7 +20,7 @@ internal class Order : BLApi.IOrder
         }
         else if (item.OrderDate < DateTime.Now)
         {
-            status = BO.OrderStatus.ConfirmedOrder;
+            status = BO.OrderStatus.OrderConfirmed;
         }
 
         return status;
@@ -26,7 +28,7 @@ internal class Order : BLApi.IOrder
 
     private IEnumerable<BO.OrderItem> ReturnItemsList(DO.Order item)
     {
-        List<BO.OrderItem> items = new ();
+        List<BO.OrderItem> items = new();
 
         foreach (var orderItem in Dal.OrderItem.GetByOrderID(item.OrderID))
         {
@@ -80,7 +82,6 @@ internal class Order : BLApi.IOrder
     {
         if (orderID > 0)
         {
-          
             foreach (var item in Dal.Order.GetAll())
             {
                 if (orderID == item.OrderID)
@@ -100,12 +101,8 @@ internal class Order : BLApi.IOrder
                         TotalPrice = totalPrice,
                     };
                     return order;
-
                 }
             }
-
-            
-            
         }
 
         throw new Exception("error");
@@ -119,7 +116,24 @@ internal class Order : BLApi.IOrder
 
     public BO.OrderTracking OrderTrackingManger(int orderID)
     {
-        throw new NotImplementedException();
+        BO.OrderTracking orderTracking = new();
+        try
+        {
+            DO.Order order = Dal.Order.Get(orderID);
+
+            orderTracking.OrderTrackingID = orderID;
+            orderTracking.Status = GetStatus(order);
+            orderTracking.DateAndStatus = new(){
+                Tuple.Create(order.OrderDate, OrderStatus.OrderConfirmed),
+                Tuple.Create(order.ShipDate, OrderStatus.OrderSent),
+                Tuple.Create(order.DeliveryDate, OrderStatus.OrderProvided)
+            };
+            return orderTracking;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     public BO.Order ShippingUpdate(int orderID)
