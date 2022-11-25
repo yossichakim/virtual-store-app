@@ -18,7 +18,7 @@ public class Order
                                          $"Customer Address: {CustomerAddress}\n" +
                                          $"Order Date: {OrderDate}\n" +
                                          $"Status: {Status}\n" +
-                                         $"ShipDate: {ShipDate}\n" +
+                                         $"Ship Date: {ShipDate}\n" +
                                          $"Delivery Date: {DeliveryDate}\n" +
                                          $"Items List: {ItemsList}\n" +
                                          $"Total Price: {TotalPrice}\n";

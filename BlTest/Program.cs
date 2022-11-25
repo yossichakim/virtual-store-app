@@ -1,7 +1,6 @@
 ﻿using BLApi;
 using BlImplementation;
 using BO;
-using DalApi;
 
 namespace BlTest;
 
@@ -28,6 +27,8 @@ internal class Program
     }
 
     private static IBl bl = new Bl();
+    private static Cart cart = new();
+
     private static void Main(string[] args)
     {
         while (true)
@@ -53,8 +54,8 @@ internal class Program
 
                     case MainMenu.Cart:
                         cartActions();
-
                         break;
+
                     default:
                         Console.WriteLine("\nenter a number between 0 - 3\n");
                         break;
@@ -63,27 +64,12 @@ internal class Program
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;
             }
-
         }
     }
-    #region general Actions
-    private static int tryParseInt()
-    {
-        int number;
-        while (!int.TryParse(Console.ReadLine(), out number))
-        {
-            Console.WriteLine("error - enter a number!");
-        }
-
-        return number;
-    }
-
-
-    #endregion general Actions
 
     #region print functions
+
     private static void printMainMenu()
     {
         Console.WriteLine("enter your choice:\n" +
@@ -98,7 +84,6 @@ internal class Program
         enterChoice();
         switch (entityName)
         {
-
             case "product":
 
                 Console.WriteLine($"enter 1 to get all {entityName}s\n" +
@@ -116,26 +101,21 @@ internal class Program
                       $"enter 3 to shipping update\n" +
                       $"enter 4 to delivery update\n" +
                       $"enter 5 to {entityName} tracking for manger");
-                //$"enter 6 to update {entityName}");
                 break;
 
             case "cart":
 
                 Console.WriteLine($"enter 1 to add product to {entityName}\n" +
                       $"enter 2 to update amount\n" +
-                      $"enter 3 to confirmed order\n" +
-                      $"enter 4 to delivery update");
+                      $"enter 3 to confirmed order");
                 break;
-
         }
-
     }
 
     private static void enterChoice()
     {
         Console.WriteLine("enter your choice:");
     }
-
 
     #endregion print functions
 
@@ -157,26 +137,232 @@ internal class Program
                 Console.WriteLine("enter the product id to get:");
                 Console.WriteLine(bl.Product.GetProductManger(tryParseInt()));
                 break;
+
             case ProductMenu.GetProductCostumer:
                 Console.WriteLine("enter the product id to get:");
-                Console.WriteLine(bl.Product.GetProductCostumer(tryParseInt(), bl.Cart cart));
+                Console.WriteLine(bl.Product.GetProductCostumer(tryParseInt(), cart));
                 break;
+
             case ProductMenu.AddProduct:
-                break;
+                {
+                    Product product = new();
+                    addProduct(product);
+                    bl.Product.AddProduct(product);
+                    break;
+                }
+
             case ProductMenu.RemoveProduct:
+                Console.WriteLine("enter the product id to remove product:");
+                bl.Product.RemoveProduct(tryParseInt()); 
                 break;
+
             case ProductMenu.UpdateProduct:
-                break;
+                {
+                    Product product = new();
+                    addProduct(product);
+                    bl.Product.UpdateProduct(product);
+                    break;
+                }
+
             default:
+                Console.WriteLine("Error - not in options");
+                break;
+        }
+    }
+
+    private static void addProduct(Product product)
+    {
+        product.ProductID = entityID("product");
+
+        product.ProductName = entityName("product name");
+
+        product.Category = (Category)tryParseCategoty();
+
+        product.ProductPrice = entityPrice("product");
+
+        product.InStock = entityUnit("product");
+    }
+
+    #endregion product actions
+    
+    #region order actions
+    private static void orderActions()
+    {
+        printSubMenu("order");
+        OrderMenu orderMenu = (OrderMenu)tryParseInt();
+
+        switch (orderMenu)
+        {
+            case OrderMenu.GetOrderList:
+                IEnumerable<OrderForList> printOrders = bl.Order.GetOrderList();
+                foreach (var item in printOrders) Console.WriteLine(item);
+                break;
+
+            case OrderMenu.GetOrderDetails:
+                Console.WriteLine("enter the order id to get:");
+                Console.WriteLine(bl.Order.GetOrderDetails(tryParseInt()));
+                break;
+
+            case OrderMenu.ShippingUpdate:
+                Console.WriteLine("enter the order id:");
+                Console.WriteLine(bl.Order.ShippingUpdate(tryParseInt()));
+                break;
+
+            case OrderMenu.DeliveryUpdate:
+                Console.WriteLine("enter the order id:");
+                Console.WriteLine(bl.Order.DeliveryUpdate(tryParseInt()));
+                break;
+
+            case OrderMenu.OrderTrackingManger:
+                Console.WriteLine("enter the order id:");
+                bl.Order.OrderTrackingManger(tryParseInt());
+                break;
+
+            default:
+                Console.WriteLine("Error - not in options");
+                break;
+        }
+
+
+
+    }
+
+    #endregion order actions
+
+    #region cart action
+    private static void cartActions()
+    {
+        printSubMenu("cart");
+        CartMenu cartMenu = (CartMenu)tryParseInt();
+
+        switch (cartMenu)
+        {
+            case CartMenu.AddProductToCart:
+                Console.WriteLine("enter the product id:");
+                Console.WriteLine(bl.Cart.AddProductToCart(cart, tryParseInt())); 
+                break;
+
+            case CartMenu.UpdateAmount:
+                Console.WriteLine("enter the product id:");
+                int productId = tryParseInt();
+                int newAmount = entityUnit("amount");
+                Console.WriteLine(bl.Cart.UpdateAmount(cart, productId, newAmount)); 
+                break;
+
+            case CartMenu.ConfirmedOrder:
+                bl.Cart.ConfirmedOrder(cart);
+                break;
+
+            default:
+                Console.WriteLine("Error - not in options");
                 break;
         }
 
     }
-    #endregion
 
-    #region order actions
-    #endregion order actions
+    #endregion cart action
 
-    #region cart actions
-    #endregion cart actions
+    #region general actions
+
+    /// <summary>
+    /// Input a valid int number
+    /// </summary>
+    /// <returns>int</returns>
+    private static int tryParseInt()
+    {
+        int number;
+        while (!int.TryParse(Console.ReadLine(), out number))
+        {
+            Console.WriteLine("error - enter a number!");
+        }
+
+        return number;
+    }
+
+    /// <summary>
+    /// Input a valid Category
+    /// </summary>
+    /// <returns>int</returns>
+    private static int tryParseCategoty()
+    {
+        int number;
+        do
+        {
+            Console.WriteLine("enter product category: a number between 0 - 4");
+            number = tryParseInt();
+        } while (number < 0 || number > 4);
+
+        return number;
+    }
+
+    /// <summary>
+    /// Input a valid double number
+    /// </summary>
+    /// <returns>double</returns>
+    private static double tryParseDouble()
+    {
+        double number;
+        while (!double.TryParse(Console.ReadLine(), out number))
+        {
+            Console.WriteLine("error - enter a number!");
+        }
+
+        return number;
+    }
+
+    /// <summary>
+    /// Input a valid ID
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>int</returns>
+    private static int entityID(string entityName)
+    {
+        Console.WriteLine($"enter {entityName} id:");
+        return tryParseInt();
+    }
+
+    /// <summary>
+    /// Input a valid name
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>string</returns>
+    private static string entityName(string entityName)
+    {
+        string? str;
+        Console.WriteLine($"enter {entityName}:");
+        str = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(str))
+        {
+            Console.WriteLine("enter a not empty string");
+            str = Console.ReadLine();
+        }
+
+        return str;
+    }
+
+    /// <summary>
+    /// Input a valid price
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>double</returns>
+    private static double entityPrice(string entityName)
+    {
+        Console.WriteLine($"enter {entityName} price:");
+        return tryParseDouble();
+    }
+
+    /// <summary>
+    /// Input a valid unit
+    /// </summary>
+    /// <param name="entityName"></param>
+    /// <returns>int</returns>
+    private static int entityUnit(string entityName)
+    {
+        Console.WriteLine($"enter {entityName} units:");
+        return tryParseInt();
+    }
+
+    #endregion general actions
+
 }

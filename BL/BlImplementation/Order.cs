@@ -93,7 +93,7 @@ internal class Order : BLApi.IOrder
             {
                 orderDo.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(orderDo);
-                orderBo.ShipDate = orderDo.DeliveryDate;
+                orderBo.DeliveryDate = orderDo.DeliveryDate;
                 orderBo.Status = GetStatus(orderDo);
                 return orderBo;
             }
