@@ -6,29 +6,49 @@ namespace BlTest;
 
 internal class Program
 {
+    /// <summary>
+    /// main menu
+    /// </summary>
     private enum MainMenu
     {
         Exit, Product, Order, Cart
     }
-
+    /// <summary>
+    /// Sub menu for products
+    /// </summary>
     private enum ProductMenu
     {
         GetProductList = 1, GetProductManger, GetProductCostumer, AddProduct, RemoveProduct, UpdateProduct
     }
-
+    /// <summary>
+    /// Sub menu for orders
+    /// </summary>
     private enum OrderMenu
     {
         GetOrderList = 1, GetOrderDetails, ShippingUpdate, DeliveryUpdate, OrderTrackingManger
     }
-
+    /// <summary>
+    /// Shopping cart submenu
+    /// </summary>
     private enum CartMenu
     {
         AddProductToCart = 1, UpdateAmount, ConfirmedOrder
     }
 
+    /// <summary>
+    /// A variable to implement the logical functions
+    /// </summary>
     private static IBl bl = new Bl();
+
+    /// <summary>
+    /// Shopping basket show
+    /// </summary>
     private static Cart cart = new();
 
+    /// <summary>
+    /// main plan
+    /// </summary>
+    /// <param name="args"></param>
     private static void Main(string[] args)
     {
         while (true)
@@ -69,23 +89,27 @@ internal class Program
             {
                 Console.WriteLine(ex.Message + ex.InnerException.Message);
             }
-            catch (NoValidException ex) when (ex.InnerException is not null)
+            catch (NoValidException ex) 
             {
-                Console.WriteLine(ex.Message + ex.InnerException.Message);
+                Console.WriteLine(ex.Message);
             }
-            catch (ErrorDeleteException ex) when (ex.InnerException is not null)
+            catch (ErrorDeleteException ex) 
             {
-                Console.WriteLine(ex.Message + ex.InnerException.Message);
+                Console.WriteLine(ex.Message);
             }
-            catch (ErrorUpdateException ex) when (ex.InnerException is not null)
+            catch (ErrorUpdateException ex) 
             {
-                Console.WriteLine(ex.Message + ex.InnerException.Message);
+                Console.WriteLine(ex.Message);
             }
 
         }
     }
+
     #region print functions
 
+    /// <summary>
+    /// Print main menu
+    /// </summary>
     private static void printMainMenu()
     {
         Console.WriteLine("enter your choice:\n" +
@@ -95,6 +119,10 @@ internal class Program
                           "0 - Finish the program\n");
     }
 
+    /// <summary>
+    /// Print submenu
+    /// </summary>
+    /// <param name="entityName"></param>
     private static void printSubMenu(string entityName)
     {
         enterChoice();
@@ -128,6 +156,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// A request from the user to choose
+    /// </summary>
     private static void enterChoice()
     {
         Console.WriteLine("enter your choice:");
@@ -266,6 +297,12 @@ internal class Program
                 break;
 
             case CartMenu.ConfirmedOrder:
+                Console.WriteLine("enter the name:");
+                cart.CustomerName = Console.ReadLine();
+                Console.WriteLine("enter the email:");
+                cart.CustomerEmail = Console.ReadLine();
+                Console.WriteLine("enter the address:");
+                cart.CustomerAddress = Console.ReadLine();
                 bl.Cart.ConfirmedOrder(cart);
                 break;
 

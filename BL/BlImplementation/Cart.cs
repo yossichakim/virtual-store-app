@@ -27,17 +27,24 @@ internal class Cart : BLApi.ICart
         {
             cart.ItemsList = new();
         }
+        if (cart.TotalPriceInCart is null)
+        {
+            cart.TotalPriceInCart = new();
+
+        }
 
         BO.OrderItem item = new BO.OrderItem(); 
 
         if (cart.ItemsList is not null)
            item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
 
+
         if (item != null)
         {
             item.Amount++;
             item.TotalPrice += item.ProductPrice;
             cart.TotalPriceInCart += item.ProductPrice;
+
         }
         else
         {
@@ -49,8 +56,9 @@ internal class Cart : BLApi.ICart
                 TotalPrice = product.Price,
                 ProductName = product.Name,
             });
-        }
 
+            cart.TotalPriceInCart += product.Price;
+        }
         return cart;
     }
 
@@ -94,7 +102,8 @@ internal class Cart : BLApi.ICart
             CustomerName = cart.CustomerName,
             DeliveryDate = null,
             ShipDate = null,
-            OrderDate = DateTime.Now
+            OrderDate = DateTime.Now,
+            OrderID = Dal.Order.GetAll().Last().OrderID + 1,   
         };
 
         try
