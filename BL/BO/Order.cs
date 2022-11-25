@@ -3,9 +3,9 @@
 public class Order
 {
     public int OrderID { get; set; }
-    public string? CustomerName { get; set; }
-    public string? CustomerEmail { get; set; }
-    public string? CustomerAddress { get; set; }
+    public string CustomerName { get; set; }
+    public string CustomerEmail { get; set; }
+    public string CustomerAddress { get; set; }
     public DateTime? OrderDate { get; set; }
     public OrderStatus Status { get; set; }
     public DateTime? ShipDate { get; set; }
@@ -20,6 +20,6 @@ public class Order
                                          $"Status: {Status}\n" +
                                          $"Ship Date: {ShipDate}\n" +
                                          $"Delivery Date: {DeliveryDate}\n" +
-                                         $"Items List: {ItemsList}\n" +
-                                         $"Total Price: {TotalPrice}\n";
+                                         $"Items List: {string.Join('\n', ItemsList)}\n" +
+                                         $"Total Price order: {TotalPrice}\n";
 }

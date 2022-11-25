@@ -73,12 +73,15 @@ internal class Product : BLApi.IProduct
             DO.Product temp = Dal.Product.Get(productID);
 
             int amount = 0;
-            foreach (var item in cart.ItemsList)
+            if (cart.ItemsList is not null)
             {
-                if (item.ProductID == productID)
+                foreach (var item in cart.ItemsList)
                 {
-                    amount = item.Amount;
-                }
+                    if (item.ProductID == productID)
+                    {
+                        amount = item.Amount;
+                    }
+                } 
             }
             return new BO.ProductItem()
             {

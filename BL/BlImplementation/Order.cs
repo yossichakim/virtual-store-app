@@ -165,11 +165,11 @@ internal class Order : BLApi.IOrder
         {
             BO.OrderItem temp = new()
             {
-                OrderItemID = orderItem.OrderItemID,
                 ProductID = orderItem.ProductID,
                 Amount = orderItem.Amount,
                 ProductPrice = orderItem.Price,
-                TotalPrice = orderItem.Amount * orderItem.Price
+                TotalPrice = orderItem.Amount * orderItem.Price,
+                ProductName = ReturnProductName(orderItem.ProductID)
             };
             items.Add(temp);
         }
@@ -184,6 +184,20 @@ internal class Order : BLApi.IOrder
         int amount = items.Sum(element => element.Amount);
 
         return (amount, totalPrice);
+    }
+
+    private string ReturnProductName(int productId)
+    {
+        string productName = string.Empty;  
+        foreach (var product in Dal.Product.GetAll())
+        {
+            if (product.ProductID == productId)
+            {
+                productName = product.Name;
+                break;
+            }
+        }
+       return productName;  
     }
 
     #endregion service function

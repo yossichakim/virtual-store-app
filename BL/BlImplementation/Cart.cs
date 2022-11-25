@@ -9,7 +9,6 @@ internal class Cart : BLApi.ICart
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
         DO.Product product = new();
-
         try
         {
             product = Dal.Product.Get(productID);
@@ -24,11 +23,21 @@ internal class Cart : BLApi.ICart
             throw new BO.NoFoundException(ex);
         }
 
-        BO.OrderItem item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
+        if (cart.ItemsList is null)
+        {
+            cart.ItemsList = new();
+        }
+
+        BO.OrderItem item = new BO.OrderItem(); 
+
+        if (cart.ItemsList is not null)
+           item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
+
         if (item != null)
         {
             item.Amount++;
             item.TotalPrice += item.ProductPrice;
+            cart.TotalPriceInCart += item.ProductPrice;
         }
         else
         {
@@ -37,10 +46,10 @@ internal class Cart : BLApi.ICart
                 ProductID = productID,
                 ProductPrice = product.Price,
                 Amount = 1,
-                TotalPrice = product.Price
+                TotalPrice = product.Price,
+                ProductName = product.Name,
             });
         }
-        cart.TotalPriceInCart += item.ProductPrice;
 
         return cart;
     }
@@ -55,24 +64,27 @@ internal class Cart : BLApi.ICart
             throw new BO.NoValidException("name / email / address");
         }
 
-        foreach (var item in cart.ItemsList)
+        if (cart.ItemsList is not null)
         {
-            if (item.Amount <= 0)
+            foreach (var item in cart.ItemsList)
             {
-                throw new BO.NoValidException("product amount");
-            }
-            try
-            {
-                DO.Product product = Dal.Product.Get(item.ProductID);
-                if (item.Amount > product.InStock)
+                if (item.Amount <= 0)
                 {
-                    throw new BO.NoValidException("product stock");
+                    throw new BO.NoValidException("product amount");
                 }
-            }
-            catch (DO.NoFoundException ex)
-            {
-                throw new BO.NoFoundException(ex);
-            }
+                try
+                {
+                    DO.Product product = Dal.Product.Get(item.ProductID);
+                    if (item.Amount > product.InStock)
+                    {
+                        throw new BO.NoValidException("product stock");
+                    }
+                }
+                catch (DO.NoFoundException ex)
+                {
+                    throw new BO.NoFoundException(ex);
+                }
+            } 
         }
 
         DO.Order order = new()

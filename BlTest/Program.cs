@@ -61,13 +61,29 @@ internal class Program
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (AddException ex) when (ex.InnerException is not null)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message + ex.InnerException.Message);
             }
+            catch (NoFoundException ex) when (ex.InnerException is not null)
+            {
+                Console.WriteLine(ex.Message + ex.InnerException.Message);
+            }
+            catch (NoValidException ex) when (ex.InnerException is not null)
+            {
+                Console.WriteLine(ex.Message + ex.InnerException.Message);
+            }
+            catch (ErrorDeleteException ex) when (ex.InnerException is not null)
+            {
+                Console.WriteLine(ex.Message + ex.InnerException.Message);
+            }
+            catch (ErrorUpdateException ex) when (ex.InnerException is not null)
+            {
+                Console.WriteLine(ex.Message + ex.InnerException.Message);
+            }
+
         }
     }
-
     #region print functions
 
     private static void printMainMenu()
@@ -215,7 +231,7 @@ internal class Program
 
             case OrderMenu.OrderTrackingManger:
                 Console.WriteLine("enter the order id:");
-                bl.Order.OrderTrackingManger(tryParseInt());
+                Console.WriteLine(bl.Order.OrderTrackingManger(tryParseInt())); 
                 break;
 
             default:

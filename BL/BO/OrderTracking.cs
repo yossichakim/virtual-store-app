@@ -8,5 +8,5 @@ public class OrderTracking
 
     public override string ToString() => $"Order Tracking ID: {OrderTrackingID}\n" +
                                          $"Status: {Status}\n" +
-                                         $"Date And Status: {DateAndStatus}\n";
+                                         $"Date And Status:\n {string.Join('\n', DateAndStatus)}\n";
 }
