@@ -168,6 +168,9 @@ internal class Program
 
     #region product actions
 
+    /// <summary>
+    /// Performing the operations for a product for the buyer and the manager
+    /// </summary>
     private static void productActions()
     {
         printSubMenu("product");
@@ -217,6 +220,10 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Product input
+    /// </summary>
+    /// <param name="product"></param>
     private static void addProduct(Product product)
     {
         product.ProductID = entityID("product");
@@ -231,8 +238,11 @@ internal class Program
     }
 
     #endregion product actions
-    
+
     #region order actions
+    /// <summary>
+    /// Performing actions for an order
+    /// </summary>
     private static void orderActions()
     {
         printSubMenu("order");
@@ -277,6 +287,10 @@ internal class Program
     #endregion order actions
 
     #region cart action
+
+    /// <summary>
+    /// Performing actions for shopping basket
+    /// </summary>
     private static void cartActions()
     {
         printSubMenu("cart");
