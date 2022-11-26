@@ -1,10 +1,16 @@
 ﻿namespace BlImplementation;
 
+/// <summary>
+/// Order interface implementation class
+/// </summary>
 internal class Order : BLApi.IOrder
 {
-
     private DalApi.IDal _dal = new Dal.DalList();
 
+    /// <summary>
+    /// The function returns a list of all orders
+    /// </summary>
+    /// <returns>returns a list of all orders</returns>
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         List<BO.OrderForList> returnOrderList = new();
@@ -27,6 +33,11 @@ internal class Order : BLApi.IOrder
         return returnOrderList;
     }
 
+    /// <summary>
+    /// The function receives an order ID and returns the order
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns>returns the order</returns>
     public BO.Order GetOrderDetails(int orderID)
     {
         if (orderID <= 0)
@@ -59,6 +70,11 @@ internal class Order : BLApi.IOrder
         }
     }
 
+    /// <summary>
+    /// The function receives an order ID and updates a shipping date
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns>Returns an order with an updated shipping date</returns>
     public BO.Order ShippingUpdate(int orderID)
     {
         try
@@ -84,6 +100,13 @@ internal class Order : BLApi.IOrder
         }
     }
 
+    /// <summary>
+    /// The function receives an order ID and updates a date of delivery
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns>Returns an order with an updated delivery date</returns>
+    /// <exception cref="BO.ErrorUpdateException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public BO.Order DeliveryUpdate(int orderID)
     {
         try
@@ -109,6 +132,12 @@ internal class Order : BLApi.IOrder
         }
     }
 
+    /// <summary>
+    /// The function receives an order ID and displays the order status
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NoFoundException"></exception>
     public BO.OrderTracking OrderTrackingManger(int orderID)
     {
         BO.OrderTracking orderTracking = new();
@@ -131,13 +160,13 @@ internal class Order : BLApi.IOrder
         }
     }
 
-    public void UpdateOrder(int orderID)
-    {
-        throw new NotImplementedException();
-    }
-
     #region service function
 
+    /// <summary>
+    /// Gets an order data entity and returns its status
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     private BO.OrderStatus getStatus(DO.Order item)
     {
         BO.OrderStatus status = new();
@@ -158,6 +187,11 @@ internal class Order : BLApi.IOrder
         return status;
     }
 
+    /// <summary>
+    /// Gets an order data entity and returns a list of order items of type logical entity
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     private IEnumerable<BO.OrderItem> returnItemsList(DO.Order item)
     {
         List<BO.OrderItem> items = new();
@@ -177,6 +211,11 @@ internal class Order : BLApi.IOrder
         return items;
     }
 
+    /// <summary>
+    /// Gets an order data entity and returns quantity of products and total price of products
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     private (int, double) amountPriceOrder(DO.Order item)
     {
         List<DO.OrderItem> items = _dal.OrderItem.GetByOrderID(item.OrderID).ToList();
@@ -187,9 +226,14 @@ internal class Order : BLApi.IOrder
         return (amount, totalPrice);
     }
 
+    /// <summary>
+    /// Gets a product ID and returns the product name
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns>returns the product name</returns>
     private string returnProductName(int productId)
     {
-        string productName = string.Empty;  
+        string productName = string.Empty;
         foreach (var product in _dal.Product.GetAll())
         {
             if (product.ProductID == productId)
@@ -198,7 +242,7 @@ internal class Order : BLApi.IOrder
                 break;
             }
         }
-       return productName;  
+       return productName;
     }
 
     #endregion service function

@@ -1,12 +1,22 @@
 ﻿using SeviceFunction;
-using System.Linq.Expressions;
 
 namespace BlImplementation;
 
+/// <summary>
+/// Cart interface implementation class
+/// </summary>
 internal class Cart : BLApi.ICart
 {
     private DalApi.IDal _dal = new Dal.DalList();
 
+    /// <summary>
+    /// This function receives a cart entity and a product ID and adds this product to the cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productID"></param>
+    /// <returns>Returns a cart entity with a product added</returns>
+    /// <exception cref="BO.NoValidException">If the quantity of the product is incorrect</exception>
+    /// <exception cref="BO.NoFoundException">Product not found</exception>
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
         DO.Product product = new();
@@ -63,6 +73,14 @@ internal class Cart : BLApi.ICart
         return cart;
     }
 
+    /// <summary>
+    /// The function receives a cart entity and validates the received cart for the order
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
+    /// <exception cref="BO.ErrorUpdateCartException"></exception>
+    /// <exception cref="BO.AddException"></exception>
     public void ConfirmedOrder(BO.Cart cart)
     {
         if (string.IsNullOrWhiteSpace(cart.CustomerName) ||
@@ -123,7 +141,7 @@ internal class Cart : BLApi.ICart
                     DO.Product product = _dal.Product.Get(item.ProductID);
                     product.InStock -= item.Amount;
                     _dal.Product.Update(product);
-                } 
+                }
             }
             else
             {
@@ -136,6 +154,15 @@ internal class Cart : BLApi.ICart
         }
     }
 
+    /// <summary>
+    /// This function receives a cart entity and a product ID and quantity to update a product, and updates the quantity in the cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productID"></param>
+    /// <param name="newAmount"></param>
+    /// <returns>Returns a cart entity with an updated product</returns
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
 
@@ -151,7 +178,7 @@ internal class Cart : BLApi.ICart
 
             if (cart.ItemsList is null ||!cart.ItemsList.Exists(element => element.ProductID == productID))
             {
-                throw new BO.NoValidException("product"); 
+                throw new BO.NoValidException("product");
             }
 
             item = cart.ItemsList.First(element => element.ProductID == product.ProductID);
