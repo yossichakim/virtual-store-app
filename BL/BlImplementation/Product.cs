@@ -1,7 +1,14 @@
 ﻿namespace BlImplementation;
 
+/// <summary>
+/// Implementation of product functions
+/// </summary>
 internal class Product : BLApi.IProduct
 {
+
+    /// <summary>
+    /// Access to dal
+    /// </summary>
     private DalApi.IDal _dal = new Dal.DalList();
 
     /// <summary>
@@ -98,7 +105,12 @@ internal class Product : BLApi.IProduct
             throw new BO.NoFoundException(ex);
         }
     }
-
+    /// <summary>
+    /// add product
+    /// </summary>
+    /// <param name="productToAdd"></param>
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.AddException"></exception>
     public void AddProduct(BO.Product productToAdd)
     {
         if (productToAdd.ProductID <= 0 ||
@@ -134,6 +146,12 @@ internal class Product : BLApi.IProduct
         }
     }
 
+    /// <summary>
+    /// remove product
+    /// </summary>
+    /// <param name="productID"></param>
+    /// <exception cref="BO.ErrorDeleteException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public void RemoveProduct(int productID)
     {
         if (_dal.OrderItem.GetAll().ToList().FindIndex(item => item.ProductID == productID) != -1)
@@ -150,6 +168,12 @@ internal class Product : BLApi.IProduct
         }
     }
 
+    /// <summary>
+    /// update product
+    /// </summary>
+    /// <param name="productTOUpdate"></param>
+    /// <exception cref="BO.NoValidException"></exception>
+    /// <exception cref="BO.NoFoundException"></exception>
     public void UpdateProduct(BO.Product productTOUpdate)
     {
         if (productTOUpdate.ProductID <= 0 ||
