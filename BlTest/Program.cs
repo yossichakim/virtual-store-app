@@ -39,12 +39,12 @@ internal class Program
     /// <summary>
     /// A variable to implement the logical functions
     /// </summary>
-    private static IBl bl = new Bl();
+    private static IBl _bl = new Bl();
 
     /// <summary>
     /// Shopping basket show
     /// </summary>
-    private static Cart cart = new();
+    private static Cart _cart = new();
 
     /// <summary>
     /// main plan
@@ -99,6 +99,10 @@ internal class Program
                 Console.WriteLine(ex.Message);
             }
             catch (ErrorUpdateException ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch(ErrorUpdateCartException ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -180,38 +184,38 @@ internal class Program
         switch (productMenu)
         {
             case ProductMenu.GetProductList:
-                IEnumerable<ProductForList> printProducts = bl.Product.GetProductList();
+                IEnumerable<ProductForList> printProducts = _bl.Product.GetProductList();
                 foreach (var item in printProducts) Console.WriteLine(item);
                 break;
 
             case ProductMenu.GetProductManger:
                 Console.WriteLine("enter the product id to get:");
-                Console.WriteLine(bl.Product.GetProductManger(tryParseInt()));
+                Console.WriteLine(_bl.Product.GetProductManger(tryParseInt()));
                 break;
 
             case ProductMenu.GetProductCostumer:
                 Console.WriteLine("enter the product id to get:");
-                Console.WriteLine(bl.Product.GetProductCostumer(tryParseInt(), cart));
+                Console.WriteLine(_bl.Product.GetProductCostumer(tryParseInt(), _cart));
                 break;
 
             case ProductMenu.AddProduct:
                 {
                     Product product = new();
                     addProduct(product);
-                    bl.Product.AddProduct(product);
+                    _bl.Product.AddProduct(product);
                     break;
                 }
 
             case ProductMenu.RemoveProduct:
                 Console.WriteLine("enter the product id to remove product:");
-                bl.Product.RemoveProduct(tryParseInt()); 
+                _bl.Product.RemoveProduct(tryParseInt()); 
                 break;
 
             case ProductMenu.UpdateProduct:
                 {
                     Product product = new();
                     addProduct(product);
-                    bl.Product.UpdateProduct(product);
+                    _bl.Product.UpdateProduct(product);
                     break;
                 }
 
@@ -253,28 +257,28 @@ internal class Program
         switch (orderMenu)
         {
             case OrderMenu.GetOrderList:
-                IEnumerable<OrderForList> printOrders = bl.Order.GetOrderList();
+                IEnumerable<OrderForList> printOrders = _bl.Order.GetOrderList();
                 foreach (var item in printOrders) Console.WriteLine(item);
                 break;
 
             case OrderMenu.GetOrderDetails:
                 Console.WriteLine("enter the order id to get:");
-                Console.WriteLine(bl.Order.GetOrderDetails(tryParseInt()));
+                Console.WriteLine(_bl.Order.GetOrderDetails(tryParseInt()));
                 break;
 
             case OrderMenu.ShippingUpdate:
                 Console.WriteLine("enter the order id:");
-                Console.WriteLine(bl.Order.ShippingUpdate(tryParseInt()));
+                Console.WriteLine(_bl.Order.ShippingUpdate(tryParseInt()));
                 break;
 
             case OrderMenu.DeliveryUpdate:
                 Console.WriteLine("enter the order id:");
-                Console.WriteLine(bl.Order.DeliveryUpdate(tryParseInt()));
+                Console.WriteLine(_bl.Order.DeliveryUpdate(tryParseInt()));
                 break;
 
             case OrderMenu.OrderTrackingManger:
                 Console.WriteLine("enter the order id:");
-                Console.WriteLine(bl.Order.OrderTrackingManger(tryParseInt())); 
+                Console.WriteLine(_bl.Order.OrderTrackingManger(tryParseInt())); 
                 break;
 
             default:
@@ -302,24 +306,24 @@ internal class Program
         {
             case CartMenu.AddProductToCart:
                 Console.WriteLine("enter the product id:");
-                Console.WriteLine(bl.Cart.AddProductToCart(cart, tryParseInt())); 
+                Console.WriteLine(_bl.Cart.AddProductToCart(_cart, tryParseInt())); 
                 break;
 
             case CartMenu.UpdateAmount:
                 Console.WriteLine("enter the product id:");
                 int productId = tryParseInt();
                 int newAmount = entityUnit("amount");
-                Console.WriteLine(bl.Cart.UpdateAmount(cart, productId, newAmount)); 
+                Console.WriteLine(_bl.Cart.UpdateAmount(_cart, productId, newAmount)); 
                 break;
 
             case CartMenu.ConfirmedOrder:
                 Console.WriteLine("enter the name:");
-                cart.CustomerName = Console.ReadLine();
+                _cart.CustomerName = Console.ReadLine();
                 Console.WriteLine("enter the email:");
-                cart.CustomerEmail = Console.ReadLine();
+                _cart.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("enter the address:");
-                cart.CustomerAddress = Console.ReadLine();
-                bl.Cart.ConfirmedOrder(cart);
+                _cart.CustomerAddress = Console.ReadLine();
+                _bl.Cart.ConfirmedOrder(_cart);
                 break;
 
             default:

@@ -32,3 +32,10 @@ public class ErrorUpdateException : Exception
     {
     }
 }
+
+public class ErrorUpdateCartException : Exception
+{
+    public ErrorUpdateCartException(string massage) : base($"the cart {massage}")
+    {
+    }
+}

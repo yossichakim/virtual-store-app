@@ -22,27 +22,27 @@ internal static class DataSource
     /// <summary>
     /// The function is responsible for the running number of an order item
     /// </summary>
-    internal static int GetOrderItemID => s_orderItemID++;
+    internal static int getOrderItemID => s_orderItemID++;
 
     /// <summary>
     /// The function is responsible for the running number of an order
     /// </summary>
-    internal static int GetOrderID => s_orderID++;
+    internal static int getOrderID => s_orderID++;
 
     /// <summary>
     /// call to initialize function for any entity
     /// </summary>
     private static void s_Initialize()
     {
-        InitProducts();
-        InitOrders();
-        InitOrderItems();
+        initProducts();
+        initOrders();
+        initOrderItems();
     }
 
     /// <summary>
     /// Initializes the array of products
     /// </summary>
-    private static void InitProducts()
+    private static void initProducts()
     {
         int initProductID = 100000;
         string[] prodactName = { "LG 34\"", "SAMSUNG 22\"", "LENOVO 29\"", "BENQ 24\"", "DELL 21.5\"",
@@ -85,7 +85,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes the array of orders
     /// </summary>
-    private static void InitOrders()
+    private static void initOrders()
     {
         string[] costumerName = {"Emlynn Devitt",
     "Darill Aspray",
@@ -215,7 +215,7 @@ internal static class DataSource
         {
             Order order = new Order
             {
-                OrderID = GetOrderID,
+                OrderID = getOrderID,
                 CustomerName = costumerName[i],
                 CustomerEmail = costumerEmail[i],
                 CustomerAddress = costumerAddress[i]
@@ -240,7 +240,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes the array of order items
     /// </summary>
-    private static void InitOrderItems()
+    private static void initOrderItems()
     {
         OrderItem orderItem = new OrderItem();
         int countProducts = products.Count();
@@ -255,7 +255,7 @@ internal static class DataSource
                 orderItem.ProductID = tmpProduct.ProductID;
                 orderItem.Amount = s_random.Next(1, 11);
                 orderItem.Price = tmpProduct.Price;
-                orderItem.OrderItemID = GetOrderItemID;
+                orderItem.OrderItemID = getOrderItemID;
                 orderItems.Add(orderItem);
             }
         }

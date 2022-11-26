@@ -18,7 +18,7 @@ internal class DalOrder : IOrder
     {
         if (DataSource.orders.Exists(element => element.OrderID == addOrder.OrderID))
             throw new AddException("order");
-
+        addOrder.OrderID = DataSource.getOrderID;
         DataSource.orders.Add(addOrder);
 
         return addOrder.OrderID;

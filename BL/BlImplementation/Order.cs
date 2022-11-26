@@ -2,22 +2,23 @@
 
 internal class Order : BLApi.IOrder
 {
-    private DalApi.IDal Dal = new Dal.DalList();
+
+    private DalApi.IDal _dal = new Dal.DalList();
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         List<BO.OrderForList> returnOrderList = new();
 
-        foreach (var item in Dal.Order.GetAll())
+        foreach (var item in _dal.Order.GetAll())
         {
-            (int amount, double totalPrice) = AmountPriceOrder(item);
+            (int amount, double totalPrice) = amountPriceOrder(item);
             BO.OrderForList order = new()
             {
                 OrderID = item.OrderID,
                 CustomerName = item.CustomerName,
                 AmountOfItems = amount,
                 TotalPrice = totalPrice,
-                Status = GetStatus(item)
+                Status = getStatus(item)
             };
 
             returnOrderList.Add(order);
@@ -35,8 +36,8 @@ internal class Order : BLApi.IOrder
 
         try
         {
-            DO.Order item = Dal.Order.Get(orderID);
-            (_, double totalPrice) = AmountPriceOrder(item);
+            DO.Order item = _dal.Order.Get(orderID);
+            (_, double totalPrice) = amountPriceOrder(item);
             BO.Order order = new()
             {
                 OrderID = item.OrderID,
@@ -46,8 +47,8 @@ internal class Order : BLApi.IOrder
                 OrderDate = item.OrderDate,
                 ShipDate = item.ShipDate,
                 DeliveryDate = item.DeliveryDate,
-                ItemsList = ReturnItemsList(item).ToList(),
-                Status = GetStatus(item),
+                ItemsList = returnItemsList(item).ToList(),
+                Status = getStatus(item),
                 TotalPrice = totalPrice,
             };
             return order;
@@ -62,14 +63,14 @@ internal class Order : BLApi.IOrder
     {
         try
         {
-            DO.Order orderDo = Dal.Order.Get(orderID);
+            DO.Order orderDo = _dal.Order.Get(orderID);
             BO.Order orderBo = GetOrderDetails(orderID);
             if (orderDo.ShipDate == null)
             {
                 orderDo.ShipDate = DateTime.Now;
-                Dal.Order.Update(orderDo);
+                _dal.Order.Update(orderDo);
                 orderBo.ShipDate = orderDo.ShipDate;
-                orderBo.Status = GetStatus(orderDo);
+                orderBo.Status = getStatus(orderDo);
                 return orderBo;
             }
             else
@@ -87,14 +88,14 @@ internal class Order : BLApi.IOrder
     {
         try
         {
-            DO.Order orderDo = Dal.Order.Get(orderID);
+            DO.Order orderDo = _dal.Order.Get(orderID);
             BO.Order orderBo = GetOrderDetails(orderID);
             if (orderDo.DeliveryDate == null)
             {
                 orderDo.DeliveryDate = DateTime.Now;
-                Dal.Order.Update(orderDo);
+                _dal.Order.Update(orderDo);
                 orderBo.DeliveryDate = orderDo.DeliveryDate;
-                orderBo.Status = GetStatus(orderDo);
+                orderBo.Status = getStatus(orderDo);
                 return orderBo;
             }
             else
@@ -113,10 +114,10 @@ internal class Order : BLApi.IOrder
         BO.OrderTracking orderTracking = new();
         try
         {
-            DO.Order order = Dal.Order.Get(orderID);
+            DO.Order order = _dal.Order.Get(orderID);
 
             orderTracking.OrderTrackingID = orderID;
-            orderTracking.Status = GetStatus(order);
+            orderTracking.Status = getStatus(order);
             orderTracking.DateAndStatus = new(){
                 Tuple.Create(order.OrderDate, BO.OrderStatus.OrderConfirmed),
                 Tuple.Create(order.ShipDate, BO.OrderStatus.OrderSent),
@@ -137,7 +138,7 @@ internal class Order : BLApi.IOrder
 
     #region service function
 
-    private BO.OrderStatus GetStatus(DO.Order item)
+    private BO.OrderStatus getStatus(DO.Order item)
     {
         BO.OrderStatus status = new();
 
@@ -157,11 +158,11 @@ internal class Order : BLApi.IOrder
         return status;
     }
 
-    private IEnumerable<BO.OrderItem> ReturnItemsList(DO.Order item)
+    private IEnumerable<BO.OrderItem> returnItemsList(DO.Order item)
     {
         List<BO.OrderItem> items = new();
 
-        foreach (var orderItem in Dal.OrderItem.GetByOrderID(item.OrderID))
+        foreach (var orderItem in _dal.OrderItem.GetByOrderID(item.OrderID))
         {
             BO.OrderItem temp = new()
             {
@@ -169,16 +170,16 @@ internal class Order : BLApi.IOrder
                 Amount = orderItem.Amount,
                 ProductPrice = orderItem.Price,
                 TotalPrice = orderItem.Amount * orderItem.Price,
-                ProductName = ReturnProductName(orderItem.ProductID)
+                ProductName = returnProductName(orderItem.ProductID)
             };
             items.Add(temp);
         }
         return items;
     }
 
-    private (int, double) AmountPriceOrder(DO.Order item)
+    private (int, double) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem> items = Dal.OrderItem.GetByOrderID(item.OrderID).ToList();
+        List<DO.OrderItem> items = _dal.OrderItem.GetByOrderID(item.OrderID).ToList();
 
         double totalPrice = items.Sum(element => element.Amount * element.Price);
         int amount = items.Sum(element => element.Amount);
@@ -186,10 +187,10 @@ internal class Order : BLApi.IOrder
         return (amount, totalPrice);
     }
 
-    private string ReturnProductName(int productId)
+    private string returnProductName(int productId)
     {
         string productName = string.Empty;  
-        foreach (var product in Dal.Product.GetAll())
+        foreach (var product in _dal.Product.GetAll())
         {
             if (product.ProductID == productId)
             {

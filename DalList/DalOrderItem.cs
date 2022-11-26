@@ -13,9 +13,8 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AddException"> if the array of orders items are full </exception>
     public int Add(OrderItem addOrderItem)
     {
-        if (DataSource.orderItems.Exists(element => element.OrderItemID == addOrderItem.OrderID))
-            throw new AddException("order item");
 
+        addOrderItem.OrderItemID = DataSource.getOrderItemID;
         DataSource.orderItems.Add(addOrderItem);
 
         return addOrderItem.OrderItemID;

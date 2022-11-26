@@ -16,8 +16,4 @@ internal static class ServiceFunction
             throw new Exception("not positive number");
         }
     }
-
-    internal static void IsEmptyString(this string str)
-    {
-    }
 }
