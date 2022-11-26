@@ -27,6 +27,7 @@ internal class Program
     {
         GetOrderList = 1, GetOrderDetails, ShippingUpdate, DeliveryUpdate, OrderTrackingManger
     }
+
     /// <summary>
     /// Shopping cart submenu
     /// </summary>
@@ -240,6 +241,7 @@ internal class Program
     #endregion product actions
 
     #region order actions
+
     /// <summary>
     /// Performing actions for an order
     /// </summary>
