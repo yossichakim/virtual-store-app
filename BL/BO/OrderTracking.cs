@@ -24,7 +24,30 @@ public class OrderTracking
     /// print order tracking
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => $"Order Tracking ID: {OrderTrackingID}\n" +
-                                         $"Status: {Status}\n" +
-                                         $"Date And Status:\n {string.Join('\n', DateAndStatus)}\n";
+    public override string ToString()
+    {
+        string str = string.Empty;
+        str = $"Order Tracking ID: {OrderTrackingID}\n";
+        switch (Status)
+        {
+            case OrderStatus.OrderConfirmed:
+                str += "Status: Order Confirmed\n";
+                break;
+
+            case OrderStatus.OrderSent:
+                str += "Status: Order Sent\n";
+                break;
+
+            case OrderStatus.OrderProvided:
+                str += "Status: Order Provided\n";
+                break;
+
+            default:
+                break;
+        }
+
+        str += $"Date And Status:\n" + $"{string.Join('\n', DateAndStatus)}\n";
+
+        return str;
+    }
 }
