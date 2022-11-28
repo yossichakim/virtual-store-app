@@ -9,6 +9,7 @@ public class Product
     /// ProductID
     /// </summary>
     public int ProductID { get; set; }
+
     /// <summary>
     /// product name
     /// </summary>

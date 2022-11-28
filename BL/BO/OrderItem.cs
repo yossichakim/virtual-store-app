@@ -9,6 +9,7 @@ public class OrderItem
     /// product ID
     /// </summary>
     public int ProductID { get; set; }
+
     /// <summary>
     /// product name
     /// </summary>
@@ -34,7 +35,7 @@ public class OrderItem
     /// </summary>
     /// <returns></returns>
     public override string ToString() => $"Product ID: {ProductID}\n" +
-                                         $"ProductName: {ProductName}\n"+
+                                         $"ProductName: {ProductName}\n" +
                                          $"Product Price: {ProductPrice}\n" +
                                          $"Amount: {Amount}\n" +
                                          $"Total Price: {TotalPrice}\n";

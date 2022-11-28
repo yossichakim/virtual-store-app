@@ -18,16 +18,14 @@ internal class Order : BLApi.IOrder
         foreach (var item in _dal.Order.GetAll())
         {
             (int amount, double totalPrice) = amountPriceOrder(item);
-            BO.OrderForList order = new()
+            returnOrderList.Add(new()
             {
                 OrderID = item.OrderID,
                 CustomerName = item.CustomerName,
                 AmountOfItems = amount,
                 TotalPrice = totalPrice,
                 Status = getStatus(item)
-            };
-
-            returnOrderList.Add(order);
+            });
         }
 
         return returnOrderList;
@@ -242,7 +240,7 @@ internal class Order : BLApi.IOrder
                 break;
             }
         }
-       return productName;
+        return productName;
     }
 
     #endregion service function

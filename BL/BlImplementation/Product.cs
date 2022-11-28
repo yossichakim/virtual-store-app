@@ -5,7 +5,6 @@
 /// </summary>
 internal class Product : BLApi.IProduct
 {
-
     /// <summary>
     /// Access to dal
     /// </summary>
@@ -88,7 +87,7 @@ internal class Product : BLApi.IProduct
                     {
                         amount = item.Amount;
                     }
-                } 
+                }
             }
             return new BO.ProductItem()
             {
@@ -105,6 +104,7 @@ internal class Product : BLApi.IProduct
             throw new BO.NoFoundException(ex);
         }
     }
+
     /// <summary>
     /// add product
     /// </summary>

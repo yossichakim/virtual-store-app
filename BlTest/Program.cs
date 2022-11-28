@@ -13,6 +13,7 @@ internal class Program
     {
         Exit, Product, Order, Cart
     }
+
     /// <summary>
     /// Sub menu for products
     /// </summary>
@@ -20,6 +21,7 @@ internal class Program
     {
         GetProductList = 1, GetProductManger, GetProductCostumer, AddProduct, RemoveProduct, UpdateProduct
     }
+
     /// <summary>
     /// Sub menu for orders
     /// </summary>
@@ -90,23 +92,22 @@ internal class Program
             {
                 Console.WriteLine(ex.Message + ex.InnerException.Message);
             }
-            catch (NoValidException ex) 
+            catch (NoValidException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            catch (ErrorDeleteException ex) 
+            catch (ErrorDeleteException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            catch (ErrorUpdateException ex) 
+            catch (ErrorUpdateException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            catch(ErrorUpdateCartException ex)
+            catch (ErrorUpdateCartException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
     }
 
@@ -208,7 +209,7 @@ internal class Program
 
             case ProductMenu.RemoveProduct:
                 Console.WriteLine("enter the product id to remove product:");
-                _bl.Product.RemoveProduct(tryParseInt()); 
+                _bl.Product.RemoveProduct(tryParseInt());
                 break;
 
             case ProductMenu.UpdateProduct:
@@ -278,16 +279,13 @@ internal class Program
 
             case OrderMenu.OrderTrackingManger:
                 Console.WriteLine("enter the order id:");
-                Console.WriteLine(_bl.Order.OrderTrackingManger(tryParseInt())); 
+                Console.WriteLine(_bl.Order.OrderTrackingManger(tryParseInt()));
                 break;
 
             default:
                 Console.WriteLine("Error - not in options");
                 break;
         }
-
-
-
     }
 
     #endregion order actions
@@ -306,14 +304,14 @@ internal class Program
         {
             case CartMenu.AddProductToCart:
                 Console.WriteLine("enter the product id:");
-                Console.WriteLine(_bl.Cart.AddProductToCart(_cart, tryParseInt())); 
+                Console.WriteLine(_bl.Cart.AddProductToCart(_cart, tryParseInt()));
                 break;
 
             case CartMenu.UpdateAmount:
                 Console.WriteLine("enter the product id:");
                 int productId = tryParseInt();
                 int newAmount = entityUnit("amount");
-                Console.WriteLine(_bl.Cart.UpdateAmount(_cart, productId, newAmount)); 
+                Console.WriteLine(_bl.Cart.UpdateAmount(_cart, productId, newAmount));
                 break;
 
             case CartMenu.ConfirmedOrder:
@@ -330,7 +328,6 @@ internal class Program
                 Console.WriteLine("Error - not in options");
                 break;
         }
-
     }
 
     #endregion cart action
@@ -437,5 +434,4 @@ internal class Program
     }
 
     #endregion general actions
-
 }

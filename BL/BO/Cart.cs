@@ -34,8 +34,9 @@ public class Cart
     /// Printing the basket
     /// </summary>
     /// <returns></returns>
-    public override string ToString() {
-        string str = string.Empty;  
+    public override string ToString()
+    {
+        string str = string.Empty;
         if (!string.IsNullOrEmpty(CustomerName))
         {
             str = $"Customer Name: {CustomerName}\n" +
@@ -46,6 +47,5 @@ public class Cart
         return str +
                $"Items List:\n{string.Join('\n', ItemsList)}\n" +
                $"Total Price In Cart: {TotalPriceInCart}\n";
-
-    } 
+    }
 }

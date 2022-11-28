@@ -31,7 +31,7 @@ public class OrderForList
     public double TotalPrice { get; set; }
 
     /// <summary>
-    /// print 
+    /// print
     /// </summary>
     /// <returns></returns>
     public override string ToString() => $"OrderID: {OrderID}\n" +

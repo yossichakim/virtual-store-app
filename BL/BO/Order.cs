@@ -31,7 +31,7 @@ public class Order
     public DateTime? OrderDate { get; set; }
 
     /// <summary>
-    /// order status 
+    /// order status
     /// </summary>
     public OrderStatus Status { get; set; }
 

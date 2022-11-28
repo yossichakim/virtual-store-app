@@ -13,7 +13,6 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AddException"> if the array of orders items are full </exception>
     public int Add(OrderItem addOrderItem)
     {
-
         addOrderItem.OrderItemID = DataSource.getOrderItemID;
         DataSource.orderItems.Add(addOrderItem);
 

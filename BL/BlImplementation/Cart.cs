@@ -41,7 +41,6 @@ internal class Cart : BLApi.ICart
         if (cart.TotalPriceInCart is null)
         {
             cart.TotalPriceInCart = new();
-
         }
 
         BO.OrderItem item = new BO.OrderItem();
@@ -49,13 +48,11 @@ internal class Cart : BLApi.ICart
         if (cart.ItemsList is not null)
             item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
 
-
         if (item != null)
         {
             item.Amount++;
             item.TotalPrice += item.ProductPrice;
             cart.TotalPriceInCart += item.ProductPrice;
-
         }
         else
         {
@@ -165,7 +162,6 @@ internal class Cart : BLApi.ICart
     /// <exception cref="BO.NoFoundException"></exception>
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
-
         try
         {
             DO.Product product = _dal.Product.Get(productID);
@@ -176,7 +172,7 @@ internal class Cart : BLApi.ICart
             }
             BO.OrderItem item;
 
-            if (cart.ItemsList is null ||!cart.ItemsList.Exists(element => element.ProductID == productID))
+            if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element.ProductID == productID))
             {
                 throw new BO.NoValidException("product");
             }
