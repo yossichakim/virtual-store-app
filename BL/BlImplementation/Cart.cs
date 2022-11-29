@@ -143,6 +143,7 @@ internal class Cart : BLApi.ICart
                 cart.CustomerName = null;
                 cart.CustomerAddress = null;
                 cart.ItemsList.Clear();
+                cart.TotalPriceInCart = 0;
 
             }
             else
