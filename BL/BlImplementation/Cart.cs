@@ -139,6 +139,11 @@ internal class Cart : BLApi.ICart
                     product.InStock -= item.Amount;
                     _dal.Product.Update(product);
                 }
+                cart.CustomerEmail = null;
+                cart.CustomerName = null;
+                cart.CustomerAddress = null;
+                cart.ItemsList.Clear();
+
             }
             else
             {
