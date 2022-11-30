@@ -18,7 +18,7 @@ public class OrderTracking
     /// <summary>
     /// date and status
     /// </summary>
-    public List<Tuple<DateTime?, OrderStatus?>?>? DateAndStatus { get; set; }
+    public List<Tuple<DateTime?, OrderStatus>?>? DateAndStatus { get; set; }
 
     /// <summary>
     /// print order tracking
