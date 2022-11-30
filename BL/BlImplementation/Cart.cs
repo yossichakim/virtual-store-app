@@ -118,7 +118,7 @@ internal class Cart : BLApi.ICart
             CustomerName = cart.CustomerName,
             DeliveryDate = null,
             ShipDate = null,
-            OrderDate = DateTime.Now,
+            OrderDate = DateTime.Now
         };
 
         try
@@ -180,7 +180,8 @@ internal class Cart : BLApi.ICart
 
             if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element.ProductID == productID))
             {
-                throw new BO.NoValidException("product");
+                Exception ex = new ("");
+                throw new BO.NoFoundException(ex, "the product no found in cart");
             }
 
             item = cart.ItemsList.First(element => element.ProductID == product.ProductID);

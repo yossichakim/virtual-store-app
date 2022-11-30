@@ -13,12 +13,12 @@ public class OrderTracking
     /// <summary>
     /// status
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// date and status
     /// </summary>
-    public List<Tuple<DateTime?, OrderStatus>>? DateAndStatus { get; set; }
+    public List<Tuple<DateTime?, OrderStatus?>?>? DateAndStatus { get; set; }
 
     /// <summary>
     /// print order tracking

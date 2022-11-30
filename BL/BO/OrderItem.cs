@@ -13,7 +13,7 @@ public class OrderItem
     /// <summary>
     /// product name
     /// </summary>
-    public string ProductName { get; set; }
+    public string? ProductName { get; set; }
 
     /// <summary>
     /// product price

@@ -23,7 +23,7 @@ public class ProductForList
     /// <summary>
     /// category
     /// </summary>
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
 
     /// <summary>
     /// print product for list

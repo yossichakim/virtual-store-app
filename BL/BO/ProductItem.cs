@@ -23,7 +23,7 @@ public class ProductItem
     /// <summary>
     /// categoty
     /// </summary>
-    public Category Categoty { get; set; }
+    public Category? Categoty { get; set; }
 
     /// <summary>
     /// amount in cart

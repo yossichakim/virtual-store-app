@@ -23,7 +23,7 @@ public class Product
     /// <summary>
     /// category
     /// </summary>
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
 
     /// <summary>
     /// in stock

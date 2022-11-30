@@ -13,17 +13,17 @@ public class Order
     /// <summary>
     /// customer name
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
 
     /// <summary>
     /// customer email
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
 
     /// <summary>
     /// customer address
     /// </summary>
-    public string CustomerAddress { get; set; }
+    public string? CustomerAddress { get; set; }
 
     /// <summary>
     /// order date
@@ -33,7 +33,7 @@ public class Order
     /// <summary>
     /// order status
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// ship date
@@ -48,7 +48,7 @@ public class Order
     /// <summary>
     /// items list in order
     /// </summary>
-    public List<OrderItem>? ItemsList { get; set; }
+    public List<OrderItem?>? ItemsList { get; set; }
 
     /// <summary>
     /// total price for order

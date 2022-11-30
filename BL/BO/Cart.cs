@@ -23,7 +23,7 @@ public class Cart
     /// <summary>
     /// The products added to the basket
     /// </summary>
-    public List<OrderItem> ItemsList { get; set; }
+    public List<OrderItem?>? ItemsList { get; set; }
 
     /// <summary>
     /// The total price of the products in the basket
