@@ -21,7 +21,7 @@ internal class Order : BLApi.IOrder
             returnOrderList.Add(new()
             {
                 OrderID = item.OrderID,
-                CustomerName = item.CustomerName,
+                CustomerName = item?.CustomerName,
                 AmountOfItems = amount,
                 TotalPrice = totalPrice,
                 Status = getStatus(item)
@@ -229,14 +229,14 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="productId"></param>
     /// <returns>returns the product name</returns>
-    private string returnProductName(int productId)
+    private string? returnProductName(int productId)
     {
-        string productName = string.Empty;
+        string ?productName = string.Empty;
         foreach (var product in _dal.Product.GetAll())
         {
-            if (product.ProductID == productId)
+            if (product?.ProductID == productId)
             {
-                productName = product.Name;
+                productName = product?.Name;
                 break;
             }
         }

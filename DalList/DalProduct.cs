@@ -49,10 +49,9 @@ internal class DalProduct : IProduct
     /// <summary>
     /// <returns> Returns the list of all products </returns>
     /// </summary>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
+    public IEnumerable<Product?> GetAll(Func <Product?, bool>? func = null)
     {
         return DataSource.products.Select(item => item);
-
     }
 
     /// <summary>

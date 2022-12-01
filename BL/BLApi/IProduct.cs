@@ -11,7 +11,7 @@ public interface IProduct
     /// Returns a list of all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList> GetProductList();
+    public IEnumerable<ProductForList?> GetProductList();
 
     /// <summary>
     /// Gets a product ID and returns a product entity - for a manager

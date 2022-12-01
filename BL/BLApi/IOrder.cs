@@ -11,7 +11,7 @@ public interface IOrder
     /// The function returns a list of all orders
     /// </summary>
     /// <returns>returns a list of all orders</returns>
-    public IEnumerable<OrderForList> GetOrderList();
+    public IEnumerable<OrderForList?> GetOrderList();
 
     /// <summary>
     /// The function receives an order ID and returns the order
