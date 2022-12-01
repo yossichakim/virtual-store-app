@@ -30,7 +30,7 @@ internal class Order : BLApi.IOrder
                     TotalPrice = totalPrice,
                     Status = getStatus(order)
                 });
-            } 
+            }
         }
 
         return returnOrderList;
@@ -213,8 +213,8 @@ internal class Order : BLApi.IOrder
                 };
                 items.Add(temp);
             }
-       
-           
+
+
         }
         return items;
     }
@@ -226,12 +226,12 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private (int, double) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem> items = _dal.OrderItem.GetAll(element => item.OrderID == element!.Value.OrderID);
+        List<DO.OrderItem?> items = _dal.OrderItem.GetAll(element => item.OrderID == element!.Value.OrderID).ToList();
 
-        double totalPrice = items.Sum(element => element.Amount * element.Price);
-        int amount = items.Sum(element => element.Amount);
+        double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
+        int? amount = items.Sum(element => element?.Amount);
 
-        return (amount, totalPrice);
+        return ((int)amount!, (double)totalPrice!);
     }
 
     /// <summary>
