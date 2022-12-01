@@ -36,7 +36,7 @@ internal class DalOrder : IOrder
         if (!DataSource.orders.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("order");
 
-        Order ?returnOrder = new Order();
+        Order? returnOrder = new Order();
 
         foreach (var tmpOrder in DataSource.orders)
         {
@@ -47,14 +47,6 @@ internal class DalOrder : IOrder
         }
 
         return (Order)returnOrder;
-    }
-
-    /// <summary>
-    /// <returns>  Returns the order list </returns>
-    /// </summary>
-    public IEnumerable<Order?> GetAll(Func <Order?, bool>? func = null)
-    {
-        return DataSource.orders.Select(item => item);
     }
 
     /// <summary>
@@ -96,4 +88,18 @@ internal class DalOrder : IOrder
             index++;
         }
     }
+
+    public Order Get(Func<Order?, bool>? func = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// <returns>  Returns the order list </returns>
+    /// </summary>
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
+    {
+        return DataSource.orders.Select(item => item);
+    }
+
 }

@@ -527,8 +527,8 @@ internal class Program
 
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
-                int orderIDs = tryParseInt();
-                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.GetByOrderID(orderIDs);
+                int? orderIDs = tryParseInt();
+                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.Get(element => element.Value.OrderID == orderIDs);
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 

@@ -247,18 +247,24 @@ internal static class DataSource
 
         foreach (var inOrders in orders.Take(orders.Count()))
         {
-            Order item = (Order)inOrders;
-            orderItem.OrderID = item.OrderID;
-            int rnd = s_random.Next(1, 5);
-            for (int i = 0; i < rnd; i++)
+            if (inOrders is Order order)
             {
-                Product tmpProduct = (Product)products[s_random.Next(countProducts)];
-                orderItem.ProductID = tmpProduct.ProductID;
-                orderItem.Amount = s_random.Next(1, 11);
-                orderItem.Price = tmpProduct.Price;
-                orderItem.OrderItemID = getOrderItemID;
-                orderItems.Add(orderItem);
+                orderItem.OrderID = order.OrderID;
+                int rnd = s_random.Next(1, 5);
+                for (int i = 0; i < rnd; i++)
+                {
+                    if (products[s_random.Next(countProducts)] is Product product)
+                    {
+                        orderItem.ProductID = product.ProductID;
+                        orderItem.Amount = s_random.Next(1, 11);
+                        orderItem.Price = product.Price;
+                        orderItem.OrderItemID = getOrderItemID;
+                        orderItems.Add(orderItem);
+                    }
+                }
             }
+
+
         }
     }
 }

@@ -17,12 +17,13 @@ internal class Product : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         return from item in _dal.Product.GetAll()
+               
                select new BO.ProductForList()
                {
-                   ProductID = item.ProductID,
-                   ProductName = item.Name,
-                   Category = (BO.Category)item.Category,
-                   ProductPrice = item.Price
+                   ProductID = item.Value.ProductID,
+                   ProductName = item.Value.Name,
+                   Category = (BO.Category)item.Value.Category!,
+                   ProductPrice = item.Value.Price
                };
     }
 
@@ -47,7 +48,7 @@ internal class Product : BLApi.IProduct
             return new BO.Product()
             {
                 ProductPrice = temp.Price,
-                Category = (BO.Category)temp.Category,
+                Category = (BO.Category)temp.Category!,
                 ProductName = temp.Name,
                 ProductID = productID,
                 InStock = temp.InStock
@@ -94,7 +95,7 @@ internal class Product : BLApi.IProduct
                 ProductID = temp.ProductID,
                 ProductName = temp.Name,
                 ProductPrice = temp.Price,
-                Categoty = (BO.Category)temp.Category,
+                Categoty = (BO.Category)temp.Category!,
                 InStock = (temp.InStock > 0) ? true : false,
                 AmountInCart = amount
             };
@@ -133,7 +134,7 @@ internal class Product : BLApi.IProduct
             Name = productToAdd.ProductName,
             Price = productToAdd.ProductPrice,
             InStock = productToAdd.InStock,
-            Category = (DO.Category)productToAdd.Category
+            Category = (DO.Category)productToAdd.Category!
         };
 
         try
@@ -154,7 +155,7 @@ internal class Product : BLApi.IProduct
     /// <exception cref="BO.NoFoundException"></exception>
     public void RemoveProduct(int productID)
     {
-        if (_dal.OrderItem.GetAll().ToList().FindIndex(item => item.ProductID == productID) != -1)
+        if (_dal.OrderItem.GetAll().ToList().FindIndex(item => item?.ProductID == productID) != -1)
         {
             throw new BO.ErrorDeleteException("product in the order");
         }

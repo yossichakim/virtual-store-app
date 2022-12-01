@@ -32,27 +32,15 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public Product Get(int productID)
     {
-        if (!DataSource.products.Exists(element => element?.ProductID == productID))
-            throw new NoFoundException("product ID");
-
-        Product? returnProdcut = new Product();
-        foreach (var tmpProduct in DataSource.products)
-        {
-            if (tmpProduct?.ProductID == productID)
-            {
-                returnProdcut = tmpProduct;
-            }
-        }
-        return (Product)returnProdcut;
+        return Get(product => product!.Value.ProductID == productID);
     }
 
     /// <summary>
     /// <returns> Returns the list of all products </returns>
     /// </summary>
-    public IEnumerable<Product?> GetAll(Func <Product?, bool>? func = null)
-    {
-        return DataSource.products.Select(item => item);
-    }
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
+        => func is null ? DataSource.products.Select(item => item) :
+            DataSource.products.Where(func);
 
     /// <summary>
     /// Deletes the product whose ID number was received as a parameter
@@ -85,5 +73,15 @@ internal class DalProduct : IProduct
                 return;
             }
         }
+    }
+
+    public Product Get(Func<Product?, bool>? func)
+    {
+
+        if (DataSource.products.FirstOrDefault(func!) is Product product)
+        {
+            return product;
+        }
+        throw new NoFoundException("product");
     }
 }

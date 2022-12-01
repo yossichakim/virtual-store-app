@@ -45,7 +45,7 @@ public class Cart
         }
 
         return str +
-               $"Items List:\n{string.Join('\n', ItemsList)}\n" +
+               $"Items List:\n{string.Join('\n', ItemsList!)}\n" +
                $"Total Price In Cart: {TotalPriceInCart}\n";
     }
 }

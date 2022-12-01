@@ -38,15 +38,11 @@ internal class Cart : BLApi.ICart
         {
             cart.ItemsList = new();
         }
-        if (cart.TotalPriceInCart is null)
-        {
-            cart.TotalPriceInCart = new();
-        }
 
         BO.OrderItem item = new BO.OrderItem();
 
         if (cart.ItemsList is not null)
-            item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID);
+            item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID)!;
 
         if (item != null)
         {
@@ -54,9 +50,10 @@ internal class Cart : BLApi.ICart
             item.TotalPrice += item.ProductPrice;
             cart.TotalPriceInCart += item.ProductPrice;
         }
+
         else
         {
-            cart.ItemsList.Add(new BO.OrderItem()
+            cart.ItemsList!.Add(new BO.OrderItem()
             {
                 ProductID = productID,
                 ProductPrice = product.Price,
@@ -92,13 +89,14 @@ internal class Cart : BLApi.ICart
         {
             foreach (var item in cart.ItemsList)
             {
-                if (item.Amount <= 0)
+                if (item?.Amount <= 0)
                 {
                     throw new BO.NoValidException("product amount");
                 }
+
                 try
                 {
-                    DO.Product product = _dal.Product.Get(item.ProductID);
+                    DO.Product product = _dal.Product.Get(item!.ProductID);
                     if (item.Amount > product.InStock)
                     {
                         throw new BO.NoValidException("product stock");
@@ -130,7 +128,7 @@ internal class Cart : BLApi.ICart
                 {
                     _dal.OrderItem.Add(new DO.OrderItem
                     {
-                        Amount = item.Amount,
+                        Amount = item!.Amount,
                         Price = item.ProductPrice,
                         ProductID = item.ProductID,
                         OrderID = orderID
@@ -180,7 +178,7 @@ internal class Cart : BLApi.ICart
 
             if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element.ProductID == productID))
             {
-                Exception ex = new ("");
+                Exception ex = new("");
                 throw new BO.NoFoundException(ex, "the product no found in cart");
             }
 

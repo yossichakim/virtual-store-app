@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using BO;
+
+namespace BlImplementation;
 
 /// <summary>
 /// Order interface implementation class
@@ -17,15 +19,18 @@ internal class Order : BLApi.IOrder
 
         foreach (var item in _dal.Order.GetAll())
         {
-            (int amount, double totalPrice) = amountPriceOrder(item);
-            returnOrderList.Add(new()
+            if (item is DO.Order order)
             {
-                OrderID = item.OrderID,
-                CustomerName = item?.CustomerName,
-                AmountOfItems = amount,
-                TotalPrice = totalPrice,
-                Status = getStatus(item)
-            });
+                (int amount, double totalPrice) = amountPriceOrder(order);
+                returnOrderList.Add(new()
+                {
+                    OrderID = order.OrderID,
+                    CustomerName = order.CustomerName,
+                    AmountOfItems = amount,
+                    TotalPrice = totalPrice,
+                    Status = getStatus(order)
+                });
+            } 
         }
 
         return returnOrderList;
@@ -190,21 +195,26 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    private IEnumerable<BO.OrderItem> returnItemsList(DO.Order item)
+    private IEnumerable<BO.OrderItem?> returnItemsList(DO.Order item)
     {
-        List<BO.OrderItem> items = new();
+        List<BO.OrderItem?> items = new();
 
-        foreach (var orderItem in _dal.OrderItem.GetByOrderID(item.OrderID))
+        foreach (var orderItem in _dal.OrderItem.GetAll(orderItem => orderItem!.Value.OrderID == item.OrderID))
         {
-            BO.OrderItem temp = new()
+            if (orderItem is DO.OrderItem _orderItem)
             {
-                ProductID = orderItem.ProductID,
-                Amount = orderItem.Amount,
-                ProductPrice = orderItem.Price,
-                TotalPrice = orderItem.Amount * orderItem.Price,
-                ProductName = returnProductName(orderItem.ProductID)
-            };
-            items.Add(temp);
+                BO.OrderItem temp = new()
+                {
+                    ProductID = _orderItem.ProductID,
+                    Amount = _orderItem.Amount,
+                    ProductPrice = _orderItem.Price,
+                    TotalPrice = _orderItem.Amount * _orderItem.Price,
+                    ProductName = returnProductName(_orderItem.ProductID)
+                };
+                items.Add(temp);
+            }
+       
+           
         }
         return items;
     }
@@ -216,7 +226,7 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private (int, double) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem> items = _dal.OrderItem.GetByOrderID(item.OrderID).ToList();
+        List<DO.OrderItem> items = _dal.OrderItem.GetAll(element => item.OrderID == element!.Value.OrderID);
 
         double totalPrice = items.Sum(element => element.Amount * element.Price);
         int amount = items.Sum(element => element.Amount);
@@ -231,7 +241,7 @@ internal class Order : BLApi.IOrder
     /// <returns>returns the product name</returns>
     private string? returnProductName(int productId)
     {
-        string ?productName = string.Empty;
+        string? productName = string.Empty;
         foreach (var product in _dal.Product.GetAll())
         {
             if (product?.ProductID == productId)

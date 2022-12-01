@@ -89,38 +89,13 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    /// The function receives an ID number of the order and of a product
-    /// and returns the corresponding order item
+    /// 
     /// </summary>
-    /// <param name="prodID"></param>
-    /// <param name="orderID"></param>
-    /// <returns> returns the corresponding order item </returns>
-    /// <exception cref="NoFoundException"> if the order item not exist </exception>
-    public OrderItem? Find(int prodID, int orderID)
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public OrderItem Get(Func<OrderItem?, bool>? func)
     {
-        OrderItem? returnOrderItem = new();
-        for (int i = 0; i < DataSource.orderItems.Count(); i++)
-        {
-            if (DataSource.orderItems[i]?.ProductID == prodID && DataSource.orderItems[i]?.OrderID == orderID)
-            {
-                returnOrderItem = DataSource.orderItems[i];
-                return returnOrderItem;
-            }
-        }
-        throw new NoFoundException("order item");
-    }
-
-    /// <summary>
-    /// Looking for all order items of an order
-    /// </summary>
-    /// <param name="orderID"></param>
-    /// <returns> Returns all order items of the same order ID number </returns>
-    /// <exception cref="NoFoundException"> if the order item not exist </exception>
-    public IEnumerable<OrderItem?> GetByOrderID(int orderID)
-    {
-        if (!DataSource.orderItems.Exists(element => element?.OrderID == orderID))
-            throw new NoFoundException("order id");
-
-        return DataSource.orderItems.Where(element => element?.OrderID == orderID);
+        throw new NotImplementedException();
     }
 }
