@@ -521,14 +521,14 @@ internal class Program
                 int productID = tryParseInt();
                 Console.WriteLine("enter the order id to find:");
                 int orderID = tryParseInt();
-                OrderItem? findOrderItem = dal.OrderItem.Find(productID, orderID);
+                OrderItem? findOrderItem = dal.OrderItem.Get(element => element!.Value.ProductID==productID && element.Value.OrderID == orderID);
                 Console.WriteLine(findOrderItem);
                 break;
 
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
-                int? orderIDs = tryParseInt();
-                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.GetAll(element => element.Value.OrderID == orderIDs);
+                int orderIDs = tryParseInt();
+                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.GetAll(element => element!.Value.OrderID == orderIDs);
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 
