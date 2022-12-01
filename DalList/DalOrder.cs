@@ -52,7 +52,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// <returns>  Returns the order list </returns>
     /// </summary>
-    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
+    public IEnumerable<Order?> GetAll(Func <Order?, bool>? func = null)
     {
         return DataSource.orders.Select(item => item);
     }
