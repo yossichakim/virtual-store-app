@@ -28,7 +28,7 @@ public class Cart
     /// <summary>
     /// The total price of the products in the basket
     /// </summary>
-    public double? TotalPriceInCart { get; set; }
+    public double TotalPriceInCart { get; set; }
 
     /// <summary>
     /// Printing the basket

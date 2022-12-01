@@ -16,7 +16,7 @@ internal class DalOrder : IOrder
     /// <exception cref="AddException"> if the array of orders are full </exception>
     public int Add(Order addOrder)
     {
-        if (DataSource.orders.Exists(element => element.OrderID == addOrder.OrderID))
+        if (DataSource.orders.Exists(element => element?.OrderID == addOrder.OrderID))
             throw new AddException("order");
         addOrder.OrderID = DataSource.getOrderID;
         DataSource.orders.Add(addOrder);
@@ -33,35 +33,28 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public Order Get(int orderID)
     {
-        if (!DataSource.orders.Exists(element => element.OrderID == orderID))
+        if (!DataSource.orders.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("order");
 
-        Order returnOrder = new Order();
+        Order ?returnOrder = new Order();
 
         foreach (var tmpOrder in DataSource.orders)
         {
-            if (tmpOrder.OrderID == orderID)
+            if (tmpOrder?.OrderID == orderID)
             {
                 returnOrder = tmpOrder;
             }
         }
 
-        return returnOrder;
+        return (Order)returnOrder;
     }
 
     /// <summary>
     /// <returns>  Returns the order list </returns>
     /// </summary>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
     {
-        List<Order> returnOrders = new();
-
-        foreach (var item in DataSource.orders)
-        {
-            returnOrders.Add(item);
-        }
-
-        return returnOrders;
+        return DataSource.orders.Select(item => item);
     }
 
     /// <summary>
@@ -71,10 +64,10 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Delete(int orderID)
     {
-        if (!DataSource.orders.Exists(element => element.OrderID == orderID))
+        if (!DataSource.orders.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("order");
 
-        DataSource.orders.RemoveAll(element => element.OrderID == orderID);
+        DataSource.orders.RemoveAll(element => element?.OrderID == orderID);
 
         //return;
     }
@@ -86,7 +79,7 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Update(Order updateOrder)
     {
-        if (!DataSource.orders.Exists(element => element.OrderID == updateOrder.OrderID))
+        if (!DataSource.orders.Exists(element => element?.OrderID == updateOrder.OrderID))
             throw new NoFoundException("order");
 
         //int index = DataSource.orders.FindIndex(updateOrder);
@@ -95,7 +88,7 @@ internal class DalOrder : IOrder
         int index = 0;
         foreach (var item in DataSource.orders)
         {
-            if (updateOrder.OrderID == item.OrderID)
+            if (updateOrder.OrderID == item?.OrderID)
             {
                 DataSource.orders[index] = updateOrder;
                 return;

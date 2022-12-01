@@ -2,13 +2,13 @@
 
 namespace DalApi;
 
-public interface ICrud<T>
+public interface ICrud<T> where T : struct
 {
     public int Add(T add);
 
     public T Get(int get);
 
-    public IEnumerable<T> GetAll(Predicate<T?,bool>? func =null);
+    public IEnumerable<T?> GetAll(Func<T?, bool>? func = null);
 
     public void Delete(int id);
 

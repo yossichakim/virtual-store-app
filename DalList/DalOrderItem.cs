@@ -27,35 +27,28 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public OrderItem Get(int orderItem)
     {
-        if (!DataSource.orderItems.Exists(element => element.OrderItemID == orderItem))
+        if (!DataSource.orderItems.Exists(element => element?.OrderItemID == orderItem))
             throw new NoFoundException("order item");
 
-        OrderItem returnOrderItem = new OrderItem();
+        OrderItem? returnOrderItem = new OrderItem();
 
         foreach (var tmpOrderItem in DataSource.orderItems)
         {
-            if (tmpOrderItem.OrderItemID == orderItem)
+            if (tmpOrderItem?.OrderItemID == orderItem)
             {
                 returnOrderItem = tmpOrderItem;
             }
         }
 
-        return returnOrderItem;
+        return (OrderItem)returnOrderItem;
     }
 
     /// <summary>
     /// <returns> Returns the list of order items </returns>
     /// </summary>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
-        List<OrderItem> returnOrderItems = new();
-
-        foreach (var item in DataSource.orderItems)
-        {
-            returnOrderItems.Add(item);
-        }
-
-        return returnOrderItems;
+        return DataSource.orderItems.Select(item => item);
     }
 
     /// <summary>
@@ -65,10 +58,10 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Delete(int orderItemID)
     {
-        if (!DataSource.orderItems.Exists(element => element.OrderItemID == orderItemID))
+        if (!DataSource.orderItems.Exists(element => element?.OrderItemID == orderItemID))
             throw new NoFoundException("order item");
 
-        DataSource.orderItems.RemoveAll(element => element.OrderItemID == orderItemID);
+        DataSource.orderItems.RemoveAll(element => element?.OrderItemID == orderItemID);
 
         //return;
     }
@@ -80,13 +73,13 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Update(OrderItem updateOrderItem)
     {
-        if (!DataSource.orderItems.Exists(element => element.OrderItemID == updateOrderItem.OrderItemID))
+        if (!DataSource.orderItems.Exists(element => element?.OrderItemID == updateOrderItem.OrderItemID))
             throw new NoFoundException("order item");
 
         int index = 0;
         foreach (var item in DataSource.orderItems)
         {
-            if (updateOrderItem.OrderItemID == item.OrderItemID)
+            if (updateOrderItem.OrderItemID == item?.OrderItemID)
             {
                 DataSource.orderItems[index] = updateOrderItem;
                 return;
@@ -103,12 +96,12 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderID"></param>
     /// <returns> returns the corresponding order item </returns>
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
-    public OrderItem Find(int prodID, int orderID)
+    public OrderItem? Find(int prodID, int orderID)
     {
-        OrderItem returnOrderItem = new();
+        OrderItem? returnOrderItem = new();
         for (int i = 0; i < DataSource.orderItems.Count(); i++)
         {
-            if (DataSource.orderItems[i].ProductID == prodID && DataSource.orderItems[i].OrderID == orderID)
+            if (DataSource.orderItems[i]?.ProductID == prodID && DataSource.orderItems[i]?.OrderID == orderID)
             {
                 returnOrderItem = DataSource.orderItems[i];
                 return returnOrderItem;
@@ -123,11 +116,11 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderID"></param>
     /// <returns> Returns all order items of the same order ID number </returns>
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
-    public IEnumerable<OrderItem> GetByOrderID(int orderID)
+    public IEnumerable<OrderItem?> GetByOrderID(int orderID)
     {
-        if (!DataSource.orderItems.Exists(element => element.OrderID == orderID))
+        if (!DataSource.orderItems.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("order id");
 
-        return DataSource.orderItems.Where(element => element.OrderID == orderID);
+        return DataSource.orderItems.Where(element => element?.OrderID == orderID);
     }
 }

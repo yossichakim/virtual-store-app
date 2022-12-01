@@ -14,8 +14,8 @@ internal static class DataSource
 
     private static readonly Random s_random = new Random();
     internal static List<Product?> products = new();
-    internal static List<Order> orders = new();
-    internal static List<OrderItem> orderItems = new();
+    internal static List<Order?> orders = new();
+    internal static List<OrderItem?> orderItems = new();
     private static int s_orderItemID = 100000;
     private static int s_orderID = 100000;
 
@@ -247,7 +247,8 @@ internal static class DataSource
 
         foreach (var inOrders in orders.Take(orders.Count()))
         {
-            orderItem.OrderID = inOrders.OrderID;
+            Order item = (Order)inOrders;
+            orderItem.OrderID = item.OrderID;
             int rnd = s_random.Next(1, 5);
             for (int i = 0; i < rnd; i++)
             {
