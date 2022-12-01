@@ -13,7 +13,7 @@ internal static class DataSource
     static DataSource() { s_Initialize(); }
 
     private static readonly Random s_random = new Random();
-    internal static List<Product> products = new();
+    internal static List<Product?> products = new();
     internal static List<Order> orders = new();
     internal static List<OrderItem> orderItems = new();
     private static int s_orderItemID = 100000;
@@ -251,7 +251,7 @@ internal static class DataSource
             int rnd = s_random.Next(1, 5);
             for (int i = 0; i < rnd; i++)
             {
-                Product tmpProduct = products[s_random.Next(countProducts)];
+                Product tmpProduct = (Product)products[s_random.Next(countProducts)];
                 orderItem.ProductID = tmpProduct.ProductID;
                 orderItem.Amount = s_random.Next(1, 11);
                 orderItem.Price = tmpProduct.Price;

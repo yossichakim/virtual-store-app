@@ -1,4 +1,6 @@
-﻿namespace DalApi;
+﻿using System;
+
+namespace DalApi;
 
 public interface ICrud<T>
 {
@@ -6,7 +8,7 @@ public interface ICrud<T>
 
     public T Get(int get);
 
-    public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetAll(Predicate<T?,bool>? func =null);
 
     public void Delete(int id);
 

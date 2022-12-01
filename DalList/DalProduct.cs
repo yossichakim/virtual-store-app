@@ -16,7 +16,7 @@ internal class DalProduct : IProduct
     /// <exception cref="AddException"> if the product id already exist </exception>
     public int Add(Product addProduct)
     {
-        if (DataSource.products.Exists(element => element.ProductID == addProduct.ProductID))
+        if (DataSource.products.Exists(element => element?.ProductID == addProduct.ProductID))
             throw new AddException("product");
 
         DataSource.products.Add(addProduct);
@@ -32,34 +32,25 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public Product Get(int productID)
     {
-        if (!DataSource.products.Exists(element => element.ProductID == productID))
+        if (!DataSource.products.Exists(element => element?.ProductID == productID))
             throw new NoFoundException("product ID");
 
-        Product returnProdcut = new Product();
+        Product? returnProdcut = new Product();
         foreach (var tmpProduct in DataSource.products)
         {
-            if (tmpProduct.ProductID == productID)
+            if (tmpProduct?.ProductID == productID)
             {
                 returnProdcut = tmpProduct;
             }
         }
-        return returnProdcut;
+        return (Product)returnProdcut;
     }
 
     /// <summary>
     /// <returns> Returns the list of all products </returns>
     /// </summary>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable <Product?> GetAll()
     {
-        //List<Product> returnProducts = new();
-
-        //foreach (var item in DataSource.products)
-        //{
-        //    returnProducts.Add(item);
-        //}
-
-        //return returnProducts;
-
         return DataSource.products.Select(item => item);
     }
 
@@ -70,10 +61,10 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Delete(int productId)
     {
-        if (!DataSource.products.Exists(element => element.ProductID == productId))
+        if (!DataSource.products.Exists(element => element?.ProductID == productId))
             throw new NoFoundException("product Id");
 
-        DataSource.products.RemoveAll(element => element.ProductID == productId);
+        DataSource.products.RemoveAll(element => element?.ProductID == productId);
     }
 
     /// <summary>
@@ -83,12 +74,12 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
-        if (!DataSource.products.Exists(element => element.ProductID == updateProduct.ProductID))
+        if (!DataSource.products.Exists(element => element?.ProductID == updateProduct.ProductID))
             throw new NoFoundException("Product");
 
         for (int i = 0; i < DataSource.products.Count(); i++)
         {
-            if (updateProduct.ProductID == DataSource.products[i].ProductID)
+            if (updateProduct.ProductID == DataSource.products[i]?.ProductID)
             {
                 DataSource.products[i] = updateProduct;
                 return;
