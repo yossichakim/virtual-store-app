@@ -251,7 +251,7 @@ internal class Program
                 break;
 
             case ProductMenu.GetAllProduct:
-                IEnumerable<Product> printProducts = dal.Product.GetAll();
+                IEnumerable<Product?> printProducts = dal.Product.GetAll();
                 foreach (var item in printProducts) Console.WriteLine(item);
                 break;
 
@@ -361,7 +361,7 @@ internal class Program
                 break;
 
             case OrderMenu.GetAllorders:
-                IEnumerable<Order> printOrder = dal.Order.GetAll();
+                IEnumerable<Order?> printOrder = dal.Order.GetAll();
                 foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
@@ -503,7 +503,7 @@ internal class Program
                 break;
 
             case OrderItemMenu.GetAllOrdersItems:
-                IEnumerable<OrderItem> printOrdersItems = dal.OrderItem.GetAll();
+                IEnumerable<OrderItem?> printOrdersItems = dal.OrderItem.GetAll();
                 foreach (var item in printOrdersItems) Console.WriteLine(item);
                 break;
 
@@ -521,14 +521,14 @@ internal class Program
                 int productID = tryParseInt();
                 Console.WriteLine("enter the order id to find:");
                 int orderID = tryParseInt();
-                OrderItem findOrderItem = dal.OrderItem.Find(productID, orderID);
+                OrderItem? findOrderItem = dal.OrderItem.Find(productID, orderID);
                 Console.WriteLine(findOrderItem);
                 break;
 
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
                 int orderIDs = tryParseInt();
-                IEnumerable<OrderItem> printOrderIDs = dal.OrderItem.GetByOrderID(orderIDs);
+                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.GetByOrderID(orderIDs);
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 
