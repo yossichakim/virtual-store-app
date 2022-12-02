@@ -36,7 +36,7 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    /// <returns> Returns the list of all products </returns>
+    /// <returns> Returns the list of all products in condition </returns>
     /// </summary>
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
         => func is null ? DataSource.products.Select(item => item) :
