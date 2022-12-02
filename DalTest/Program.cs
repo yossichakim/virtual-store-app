@@ -521,7 +521,7 @@ internal class Program
                 int productID = tryParseInt();
                 Console.WriteLine("enter the order id to find:");
                 int orderID = tryParseInt();
-                OrderItem? findOrderItem = dal.OrderItem.Get(element => element!.Value.ProductID==productID && element.Value.OrderID == orderID);
+                OrderItem? findOrderItem = dal.OrderItem.Get(element => element!.Value.ProductID == productID && element.Value.OrderID == orderID);
                 Console.WriteLine(findOrderItem);
                 break;
 

@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
 
 namespace Dal;
 
@@ -44,12 +45,12 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    /// <returns> Returns the list of order items </returns>
+    /// <returns> Returns the list of order items in condition </returns>
     /// </summary>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
-    {
-        return DataSource.orderItems.Select(item => item);
-    }
+        => func is null ? DataSource.orderItems.Select(item => item):
+         DataSource.orderItems.Where(func);
+
 
     /// <summary>
     /// Deletion of an order item by ID number of the order item
@@ -96,6 +97,10 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotImplementedException"></exception>
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
-        throw new NotImplementedException();
+        if (DataSource.orderItems.FirstOrDefault(func!) is OrderItem orderItem)
+        {
+            return orderItem;
+        }
+        throw new NoFoundException("order item");
     }
 }

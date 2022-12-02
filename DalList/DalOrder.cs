@@ -91,15 +91,20 @@ internal class DalOrder : IOrder
 
     public Order Get(Func<Order?, bool>? func = null)
     {
-        throw new NotImplementedException();
+        if (DataSource.orders.FirstOrDefault() is Order order)
+        {
+            return order;
+        }
+        throw new NoFoundException("order");
     }
 
     /// <summary>
     /// <returns>  Returns the order list </returns>
     /// </summary>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
-    {
-        return DataSource.orders.Select(item => item);
-    }
+     => func is null ? DataSource.orders.Select(item => item):
+       DataSource.orders.Where(func);
+
+
 
 }
