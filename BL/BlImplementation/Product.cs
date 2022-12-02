@@ -17,7 +17,7 @@ internal class Product : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         return from item in _dal.Product.GetAll()
-               
+
                select new BO.ProductForList()
                {
                    ProductID = item.Value.ProductID,
@@ -84,7 +84,7 @@ internal class Product : BLApi.IProduct
             {
                 foreach (var item in cart.ItemsList)
                 {
-                    if (item.ProductID == productID)
+                    if (item!.ProductID == productID)
                     {
                         amount = item.Amount;
                     }

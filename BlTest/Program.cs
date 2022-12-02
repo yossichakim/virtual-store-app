@@ -185,7 +185,7 @@ internal class Program
         switch (productMenu)
         {
             case ProductMenu.GetProductList:
-                IEnumerable<ProductForList> printProducts = _bl.Product.GetProductList();
+                IEnumerable<ProductForList> printProducts = _bl.Product.GetProductList()!;
                 foreach (var item in printProducts) Console.WriteLine(item);
                 break;
 
@@ -258,7 +258,7 @@ internal class Program
         switch (orderMenu)
         {
             case OrderMenu.GetOrderList:
-                IEnumerable<OrderForList> printOrders = _bl.Order.GetOrderList();
+                IEnumerable<OrderForList> printOrders = _bl.Order.GetOrderList()!;
                 foreach (var item in printOrders) Console.WriteLine(item);
                 break;
 

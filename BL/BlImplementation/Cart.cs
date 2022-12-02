@@ -42,7 +42,7 @@ internal class Cart : BLApi.ICart
         BO.OrderItem item = new BO.OrderItem();
 
         if (cart.ItemsList is not null)
-            item = cart.ItemsList.Find(elememnt => elememnt.ProductID == productID)!;
+            item = cart.ItemsList.Find(elememnt => elememnt!.ProductID == productID)!;
 
         if (item != null)
         {
@@ -50,7 +50,6 @@ internal class Cart : BLApi.ICart
             item.TotalPrice += item.ProductPrice;
             cart.TotalPriceInCart += item.ProductPrice;
         }
-
         else
         {
             cart.ItemsList!.Add(new BO.OrderItem()
@@ -142,7 +141,6 @@ internal class Cart : BLApi.ICart
                 cart.CustomerAddress = null;
                 cart.ItemsList.Clear();
                 cart.TotalPriceInCart = 0;
-
             }
             else
             {
@@ -176,13 +174,13 @@ internal class Cart : BLApi.ICart
             }
             BO.OrderItem item;
 
-            if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element.ProductID == productID))
+            if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element!.ProductID == productID))
             {
                 Exception ex = new("");
                 throw new BO.NoFoundException(ex, "the product no found in cart");
             }
 
-            item = cart.ItemsList.First(element => element.ProductID == product.ProductID);
+            item = cart.ItemsList.First(element => element!.ProductID == product.ProductID)!;
 
             int difference = 0;
 

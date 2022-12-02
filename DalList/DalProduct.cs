@@ -77,7 +77,6 @@ internal class DalProduct : IProduct
 
     public Product Get(Func<Product?, bool>? func)
     {
-
         if (DataSource.products.FirstOrDefault(func!) is Product product)
         {
             return product;

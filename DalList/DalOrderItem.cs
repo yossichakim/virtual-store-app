@@ -89,7 +89,7 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>

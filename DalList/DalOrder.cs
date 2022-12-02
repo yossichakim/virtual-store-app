@@ -101,5 +101,4 @@ internal class DalOrder : IOrder
     {
         return DataSource.orders.Select(item => item);
     }
-
 }

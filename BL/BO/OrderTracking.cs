@@ -46,7 +46,7 @@ public class OrderTracking
                 break;
         }
 
-        str += $"Date And Status:\n" + $"{string.Join('\n', DateAndStatus)}\n";
+        str += $"Date And Status:\n" + $"{string.Join('\n', DateAndStatus!)}\n";
 
         return str;
     }

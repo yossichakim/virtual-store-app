@@ -211,8 +211,6 @@ internal class Order : BLApi.IOrder
                 };
                 items.Add(temp);
             }
-
-
         }
         return items;
     }
@@ -226,8 +224,8 @@ internal class Order : BLApi.IOrder
     {
         List<DO.OrderItem?> items = _dal.OrderItem.GetAll(element => item.OrderID == element!.Value.OrderID).ToList();
 
-        double totalPrice = items.Sum(element => element?.Amount * element?.Price).Value;
-        int amount = items.Sum(element => element?.Amount).Value;
+        double totalPrice = items.Sum(element => element?.Amount * element?.Price)!.Value;
+        int amount = items.Sum(element => element?.Amount)!.Value;
 
         return (amount, totalPrice);
     }
