@@ -247,7 +247,8 @@ internal class Program
 
             case ProductMenu.GetProduct:
                 Console.WriteLine("enter the product id to get:");
-                Console.WriteLine(dal.Product.Get(tryParseInt()));
+                int id = tryParseInt();
+                Console.WriteLine(dal.Product.Get(element => id == element!.Value.ProductID));
                 break;
 
             case ProductMenu.GetAllProduct:
@@ -357,7 +358,8 @@ internal class Program
 
             case OrderMenu.GetOrder:
                 Console.WriteLine("enter the Order id to get:");
-                Console.WriteLine(dal.Order.Get(tryParseInt()));
+                int id = tryParseInt();
+                Console.WriteLine(dal.Order.Get(element=> id == element!.Value.OrderID));
                 break;
 
             case OrderMenu.GetAllorders:
@@ -499,7 +501,8 @@ internal class Program
 
             case OrderItemMenu.GetOrderItem:
                 Console.WriteLine("enter the order item id to get:");
-                Console.WriteLine(dal.OrderItem.Get(tryParseInt()));
+                int id = tryParseInt();
+                Console.WriteLine(dal.OrderItem.Get(element => element!.Value.OrderItemID == id));
                 break;
 
             case OrderItemMenu.GetAllOrdersItems:
