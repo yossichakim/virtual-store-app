@@ -26,7 +26,6 @@ namespace PL.Product
         {
             InitializeComponent();
             ProductListview.ItemsSource = _bl.Product.GetProductList();
-
             FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
@@ -36,7 +35,12 @@ namespace PL.Product
                 .Where(item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddProduct_Click(object sender, RoutedEventArgs e)
         => new Product(_bl).Show();
+
+        private void AllCatgory_Click(object sender, RoutedEventArgs e)
+        {
+            ProductListview.ItemsSource = _bl.Product.GetProductList();
+        }
     }
 }

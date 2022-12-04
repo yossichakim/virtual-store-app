@@ -1,18 +1,8 @@
 ﻿using BLApi;
 using BlImplementation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace PL.Product
 {
@@ -31,6 +21,11 @@ namespace PL.Product
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product()
@@ -44,12 +39,12 @@ namespace PL.Product
             try
             {
                 _bl.Product.AddProduct(product);
-                MessageBox.Show("seucsse");
+                MessageBox.Show("הפעולה בוצעה בהצלחה");
                 this.Close();
             }
-            catch 
+            catch(BO.AddException ex)
             {
-                MessageBox.Show("error");
+                MessageBox.Show(ex.Message + ex.InnerException!.Message);
             }
         }
     }

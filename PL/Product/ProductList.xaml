@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+          VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="243*"/>
                 <ColumnDefinition Width="157*"/>
@@ -28,6 +28,7 @@ VerticalAlignment="Stretch" Width="auto">
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="מספר מזהה" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="שם" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="מחיר"  />                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="קטגוריה" />                </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name = "AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="Button_Click"/>
+        <Button x:Name = "AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProduct_Click"/>
+        <Button x:Name = "AllCatgory" Content="כל הקטגוריות" HorizontalAlignment="Left" Margin="22,13,0,0" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgory_Click"/>
     </Grid>
 </Window>
