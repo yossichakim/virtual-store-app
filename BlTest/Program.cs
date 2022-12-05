@@ -140,8 +140,8 @@ internal class Program
                       $"enter 2 to get {entityName} manger\n" +
                       $"enter 3 to get {entityName} costumer\n" +
                       $"enter 4 to add {entityName}\n" +
-                      $"enter 5 to remove {entityName}" +
-                      $"enter 6 to update {entityName}");
+                      $"enter 5 to remove {entityName}\n" +
+                      $"enter 6 to update {entityName} \n");
                 break;
 
             case "order":
@@ -150,14 +150,14 @@ internal class Program
                       $"enter 2 to get {entityName} details\n" +
                       $"enter 3 to shipping update\n" +
                       $"enter 4 to delivery update\n" +
-                      $"enter 5 to {entityName} tracking for manger");
+                      $"enter 5 to {entityName} tracking for manger\n");
                 break;
 
             case "cart":
 
                 Console.WriteLine($"enter 1 to add product to {entityName}\n" +
                       $"enter 2 to update amount\n" +
-                      $"enter 3 to confirmed order");
+                      $"enter 3 to confirmed order\n");
                 break;
         }
     }
