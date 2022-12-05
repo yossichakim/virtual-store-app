@@ -27,18 +27,6 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// The function receives an ID number of an order
-    /// and checks whether there is a matching order and returns the order
-    /// </summary>
-    /// <param name="orderID"></param>
-    /// <returns> Returns the requested order </returns>
-    /// <exception cref="NoFoundException"> if the order not exist </exception>
-    public Order Get(int orderID)
-    {
-        return Get(element => orderID == element?.OrderID);
-    }
-
-    /// <summary>
     /// Deleting the order from the array by deleting it and replacing it with the last place
     /// </summary>
     /// <param name="orderID"></param>
@@ -62,10 +50,29 @@ internal class DalOrder : IOrder
         Add(updateOrder);
     }
 
+    /// <summary>
+    /// The function receives an ID number of an order
+    /// and checks whether there is a matching order and returns the order
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns> Returns the requested order </returns>
+    /// <exception cref="NoFoundException"> if the order not exist </exception>
+    public Order Get(int orderID)
+    {
+        return Get(element => orderID == element?.OrderID);
+    }
+
+    /// <summary>
+    /// The function receives an condition of an order
+    /// and checks whether there is a matching order and returns the order
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns> Returns the requested order </returns>
+    /// <exception cref="NoFoundException"></exception>
     public Order Get(Func<Order?, bool>? func)
     {
         if (DataSource.orders.FirstOrDefault(func!) is Order order)
-             return order;
+            return order;
 
         throw new NoFoundException("ORDER");
     }
@@ -74,6 +81,6 @@ internal class DalOrder : IOrder
     /// <returns>  Returns the order list </returns>
     /// </summary>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
-     => func is null ? DataSource.orders.Select(item => item):
+     => func is null ? DataSource.orders.Select(item => item) :
        DataSource.orders.Where(func);
 }

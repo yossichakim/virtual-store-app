@@ -25,24 +25,6 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    /// Gets an ID number of the product and returns the product object
-    /// </summary>
-    /// <param name="productID"></param>
-    /// <returns> returns the product object </returns>
-    /// <exception cref="NoFoundException"> if the product not exist </exception>
-    public Product Get(int productID)
-    {
-        return Get(product => product?.ProductID == productID);
-    }
-
-    /// <summary>
-    /// <returns> Returns the list of all products in condition </returns>
-    /// </summary>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
-        => func is null ? DataSource.products.Select(item => item) :
-            DataSource.products.Where(func);
-
-    /// <summary>
     /// Deletes the product whose ID number was received as a parameter
     /// </summary>
     /// <param name="productId"></param>
@@ -67,16 +49,35 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    ///
+    /// Gets an ID number of the product and returns the product object
+    /// </summary>
+    /// <param name="productID"></param>
+    /// <returns> returns the product object </returns>
+    /// <exception cref="NoFoundException"> if the product not exist </exception>
+    public Product Get(int productID)
+    {
+        return Get(product => product?.ProductID == productID);
+    }
+
+    /// <summary>
+    /// The function receives an condition of an product
+    /// and checks whether there is a matching product and returns the product
     /// </summary>
     /// <param name="func"></param>
-    /// <returns></returns>
+    /// <returns> returns the product object </returns>
     /// <exception cref="NoFoundException"></exception>
     public Product Get(Func<Product?, bool>? func)
     {
         if (DataSource.products.FirstOrDefault(func!) is Product product)
-                return product;
+            return product;
 
         throw new NoFoundException("PRODUCT");
     }
+
+    /// <summary>
+    /// <returns> Returns the list of all products in condition </returns>
+    /// </summary>
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
+        => func is null ? DataSource.products.Select(item => item) :
+            DataSource.products.Where(func);
 }

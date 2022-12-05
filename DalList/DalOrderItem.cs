@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Linq;
 
 namespace Dal;
 
@@ -14,30 +13,12 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AddException"> if the array of orders items are full </exception>
     public int Add(OrderItem addOrderItem)
     {
+        //initialize Running ID number
         addOrderItem.OrderItemID = DataSource.getOrderItemID;
         DataSource.orderItems.Add(addOrderItem);
 
         return addOrderItem.OrderItemID;
     }
-
-    /// <summary>
-    /// Find the order items by the ID number
-    /// </summary>
-    /// <param name="orderItem"></param>
-    /// <returns> Returns the requested order item </returns>
-    /// <exception cref="NoFoundException"> if the order item not exist </exception>
-    public OrderItem Get(int orderItem)
-    {
-        return Get(element => element?.OrderItemID == orderItem);
-    }
-
-    /// <summary>
-    /// <returns> Returns the list of order items in condition </returns>
-    /// </summary>
-    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
-        => func is null ? DataSource.orderItems.Select(item => item):
-         DataSource.orderItems.Where(func);
-
 
     /// <summary>
     /// Deletion of an order item by ID number of the order item
@@ -64,10 +45,22 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    ///
+    /// Find the order items by the ID number
+    /// </summary>
+    /// <param name="orderItem"></param>
+    /// <returns> Returns the requested order item </returns>
+    /// <exception cref="NoFoundException"> if the order item not exist </exception>
+    public OrderItem Get(int orderItem)
+    {
+        return Get(element => element?.OrderItemID == orderItem);
+    }
+
+    /// <summary>
+    /// The function receives an condition of an order item
+    /// and checks whether there is a matching order item and returns the order item
     /// </summary>
     /// <param name="func"></param>
-    /// <returns></returns>
+    /// <returns> Returns the requested order item </returns>
     /// <exception cref="NotImplementedException"></exception>
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
@@ -76,4 +69,11 @@ internal class DalOrderItem : IOrderItem
 
         throw new NoFoundException("ORDER ITEM");
     }
+
+    /// <summary>
+    /// <returns> Returns the list of order items in condition </returns>
+    /// </summary>
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
+        => func is null ? DataSource.orderItems.Select(item => item) :
+         DataSource.orderItems.Where(func);
 }
