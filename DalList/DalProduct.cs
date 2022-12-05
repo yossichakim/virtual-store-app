@@ -32,7 +32,7 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public Product Get(int productID)
     {
-        return Get(product => product!.Value.ProductID == productID);
+        return Get(product => product!?.ProductID == productID);
     }
 
     /// <summary>

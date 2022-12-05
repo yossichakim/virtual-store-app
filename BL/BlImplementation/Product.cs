@@ -20,10 +20,10 @@ internal class Product : BLApi.IProduct
 
                select new BO.ProductForList()
                {
-                   ProductID = item.Value.ProductID,
-                   ProductName = item.Value.Name,
-                   Category = (BO.Category)item.Value.Category!,
-                   ProductPrice = item.Value.Price
+                   ProductID = item?.ProductID,
+                   ProductName = item?.Name,
+                   Category = (BO.Category)item?.Category!,
+                   ProductPrice = item?.Price
                };
     }
 

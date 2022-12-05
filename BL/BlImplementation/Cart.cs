@@ -42,7 +42,7 @@ internal class Cart : BLApi.ICart
         BO.OrderItem item = new BO.OrderItem();
 
         if (cart.ItemsList is not null)
-            item = cart.ItemsList.Find(elememnt => elememnt!.ProductID == productID)!;
+            item = cart.ItemsList.Find(element => element!.ProductID == productID)!;
 
         if (item != null)
         {
