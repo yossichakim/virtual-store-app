@@ -11,15 +11,15 @@ internal class Order : BLApi.IOrder
     /// The function returns a list of all orders
     /// </summary>
     /// <returns>returns a list of all orders</returns>
-    public IEnumerable<BO.OrderForList> GetOrderList()
+    public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         List<BO.OrderForList> returnOrderList = new();
-
+        
         foreach (var item in _dal.Order.GetAll())
         {
             if (item is DO.Order order)
             {
-                (int? amount, double? totalPrice) = amountPriceOrder(order);
+               (int? amount, double? totalPrice) = amountPriceOrder(order);
                 returnOrderList.Add(new()
                 {
                     OrderID = order.OrderID,
@@ -207,8 +207,8 @@ internal class Order : BLApi.IOrder
                     Amount = _orderItem.Amount,
                     ProductPrice = _orderItem.Price,
                     TotalPrice = _orderItem.Amount * _orderItem.Price,
-                    ProductName = returnProductName(_orderItem.ProductID)
-                };
+                    ProductName = _dal.Product.Get(product => product?.ProductID == _orderItem.ProductID).Name
+            };
                 items.Add(temp);
             }
         }
@@ -228,25 +228,6 @@ internal class Order : BLApi.IOrder
         int? amount = items.Sum(element => element?.Amount);
 
         return (amount, totalPrice);
-    }
-
-    /// <summary>
-    /// Gets a product ID and returns the product name
-    /// </summary>
-    /// <param name="productId"></param>
-    /// <returns>returns the product name</returns>
-    private string? returnProductName(int productId)
-    {
-        string? productName = string.Empty;
-        foreach (var product in _dal.Product.GetAll())
-        {
-            if (product?.ProductID == productId)
-            {
-                productName = product?.Name;
-                break;
-            }
-        }
-        return productName;
     }
 
     #endregion service function
