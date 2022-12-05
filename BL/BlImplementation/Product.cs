@@ -17,7 +17,6 @@ internal class Product : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         return from item in _dal.Product.GetAll()
-
                select new BO.ProductForList()
                {
                    ProductID = item?.ProductID,
@@ -155,7 +154,7 @@ internal class Product : BLApi.IProduct
     /// <exception cref="BO.NoFoundException"></exception>
     public void RemoveProduct(int productID)
     {
-        if (_dal.OrderItem.GetAll().ToList().FindIndex(item => item?.ProductID == productID) != -1)
+        if (_dal.OrderItem.GetAll(item => item?.ProductID == productID) == null)
         {
             throw new BO.ErrorDeleteException("product in the order");
         }
