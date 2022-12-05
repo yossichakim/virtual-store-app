@@ -17,8 +17,9 @@ internal class DalOrder : IOrder
     public int Add(Order addOrder)
     {
         if (DataSource.orders.Exists(element => element?.OrderID == addOrder.OrderID))
-            throw new AddException("order");
+            throw new AddException("ORDER");
 
+        //initialize Running ID number
         addOrder.OrderID = DataSource.getOrderID;
         DataSource.orders.Add(addOrder);
 
@@ -45,7 +46,7 @@ internal class DalOrder : IOrder
     public void Delete(int orderID)
     {
         if (!DataSource.orders.Exists(element => element?.OrderID == orderID))
-            throw new NoFoundException("order");
+            throw new NoFoundException("ORDER");
 
         DataSource.orders.RemoveAll(element => element?.OrderID == orderID);
     }
@@ -61,12 +62,12 @@ internal class DalOrder : IOrder
         Add(updateOrder);
     }
 
-    public Order Get(Func<Order?, bool>? func = null)
+    public Order Get(Func<Order?, bool>? func)
     {
-        if (DataSource.orders.FirstOrDefault() is Order order)
+        if (DataSource.orders.FirstOrDefault(func!) is Order order)
              return order;
 
-        throw new NoFoundException("order");
+        throw new NoFoundException("ORDER");
     }
 
     /// <summary>
@@ -75,7 +76,4 @@ internal class DalOrder : IOrder
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
      => func is null ? DataSource.orders.Select(item => item):
        DataSource.orders.Where(func);
-
-
-
 }

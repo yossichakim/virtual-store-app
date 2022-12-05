@@ -47,11 +47,9 @@ internal class DalOrderItem : IOrderItem
     public void Delete(int orderItemID)
     {
         if (!DataSource.orderItems.Exists(element => element?.OrderItemID == orderItemID))
-            throw new NoFoundException("order item");
+            throw new NoFoundException("ORDER ITEM");
 
         DataSource.orderItems.RemoveAll(element => element?.OrderItemID == orderItemID);
-
-        //return;
     }
 
     /// <summary>
@@ -76,6 +74,6 @@ internal class DalOrderItem : IOrderItem
         if (DataSource.orderItems.FirstOrDefault(func!) is OrderItem orderItem)
             return orderItem;
 
-        throw new NoFoundException("order item");
+        throw new NoFoundException("ORDER ITEM");
     }
 }

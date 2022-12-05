@@ -73,10 +73,14 @@ internal class Program
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (AddException ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;
+            }
+
+            catch (NoFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }
@@ -166,7 +170,7 @@ internal class Program
         double number;
         while (!double.TryParse(Console.ReadLine(), out number))
         {
-            Console.WriteLine("error - enter a number!");
+            Console.WriteLine("ERROR - ENTER A NUMBER!");
         }
 
         return number;
@@ -266,7 +270,7 @@ internal class Program
                 break;
 
             default:
-                Console.WriteLine("error - enter a number between 0 - 4");
+                Console.WriteLine("ERROR - NOT IN OPTION");
                 break;
         }
     }
@@ -378,7 +382,7 @@ internal class Program
                 break;
 
             default:
-                Console.WriteLine("error - enter a number between 0 - 4");
+                Console.WriteLine("ERROR - NOT IN OPTION");
                 break;
         }
     }
@@ -536,6 +540,7 @@ internal class Program
                 break;
 
             default:
+                Console.WriteLine("ERROR - NOT IN OPTION");
                 break;
         }
     }
