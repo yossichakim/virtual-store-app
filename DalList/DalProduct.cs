@@ -32,7 +32,7 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public Product Get(int productID)
     {
-        return Get(product => product!?.ProductID == productID);
+        return Get(product => product?.ProductID == productID);
     }
 
     /// <summary>
@@ -62,25 +62,15 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
-        if (!DataSource.products.Exists(element => element?.ProductID == updateProduct.ProductID))
-            throw new NoFoundException("Product");
-
-        for (int i = 0; i < DataSource.products.Count(); i++)
-        {
-            if (updateProduct.ProductID == DataSource.products[i]?.ProductID)
-            {
-                DataSource.products[i] = updateProduct;
-                return;
-            }
-        }
+        Delete(updateProduct.ProductID);
+        Add(updateProduct);      
     }
 
     public Product Get(Func<Product?, bool>? func)
     {
         if (DataSource.products.FirstOrDefault(func!) is Product product)
-        {
-            return product;
-        }
+                return product;
+
         throw new NoFoundException("product");
     }
 }
