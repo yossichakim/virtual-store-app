@@ -60,8 +60,6 @@ internal class DalOrder : IOrder
             throw new NoFoundException("order");
 
         DataSource.orders.RemoveAll(element => element?.OrderID == orderID);
-
-        //return;
     }
 
     /// <summary>
@@ -73,9 +71,6 @@ internal class DalOrder : IOrder
     {
         if (!DataSource.orders.Exists(element => element?.OrderID == updateOrder.OrderID))
             throw new NoFoundException("order");
-
-        //int index = DataSource.orders.FindIndex(updateOrder);
-        //DataSource.orders.ElementAt(0);
 
         int index = 0;
         foreach (var item in DataSource.orders)

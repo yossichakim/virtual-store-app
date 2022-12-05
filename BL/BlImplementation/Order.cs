@@ -19,13 +19,13 @@ internal class Order : BLApi.IOrder
         {
             if (item is DO.Order order)
             {
-                (int amount, double totalPrice) = amountPriceOrder(order);
+                (int? amount, double? totalPrice) = amountPriceOrder(order);
                 returnOrderList.Add(new()
                 {
                     OrderID = order.OrderID,
                     CustomerName = order.CustomerName,
-                    AmountOfItems = amount,
-                    TotalPrice = totalPrice,
+                    AmountOfItems = (int)amount!,
+                    TotalPrice = (double)totalPrice!,
                     Status = getStatus(order)
                 });
             }
@@ -49,7 +49,7 @@ internal class Order : BLApi.IOrder
         try
         {
             DO.Order item = _dal.Order.Get(orderID);
-            (_, double totalPrice) = amountPriceOrder(item);
+            (_, double? totalPrice) = amountPriceOrder(item);
             BO.Order order = new()
             {
                 OrderID = item.OrderID,
@@ -61,7 +61,7 @@ internal class Order : BLApi.IOrder
                 DeliveryDate = item.DeliveryDate,
                 ItemsList = returnItemsList(item).ToList(),
                 Status = getStatus(item),
-                TotalPrice = totalPrice,
+                TotalPrice = (double)totalPrice!,
             };
             return order;
         }
@@ -197,7 +197,7 @@ internal class Order : BLApi.IOrder
     {
         List<BO.OrderItem?> items = new();
 
-        foreach (var orderItem in _dal.OrderItem.GetAll(orderItem => orderItem!.Value.OrderID == item.OrderID))
+        foreach (var orderItem in _dal.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID))
         {
             if (orderItem is DO.OrderItem _orderItem)
             {
@@ -220,12 +220,12 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    private (int, double) amountPriceOrder(DO.Order item)
+    private (int?, double?) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem?> items = _dal.OrderItem.GetAll(element => item.OrderID == element!.Value.OrderID).ToList();
+        List<DO.OrderItem?> items = _dal.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList();
 
-        double totalPrice = items.Sum(element => element?.Amount * element?.Price)!.Value;
-        int amount = items.Sum(element => element?.Amount)!.Value;
+        double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
+        int? amount = items.Sum(element => element?.Amount);
 
         return (amount, totalPrice);
     }
