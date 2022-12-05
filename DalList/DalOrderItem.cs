@@ -28,20 +28,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public OrderItem Get(int orderItem)
     {
-        if (!DataSource.orderItems.Exists(element => element?.OrderItemID == orderItem))
-            throw new NoFoundException("order item");
-
-        OrderItem? returnOrderItem = new OrderItem();
-
-        foreach (var tmpOrderItem in DataSource.orderItems)
-        {
-            if (tmpOrderItem?.OrderItemID == orderItem)
-            {
-                returnOrderItem = tmpOrderItem;
-            }
-        }
-
-        return (OrderItem)returnOrderItem;
+        return Get(element => element?.OrderItemID == orderItem);
     }
 
     /// <summary>
@@ -74,19 +61,8 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Update(OrderItem updateOrderItem)
     {
-        if (!DataSource.orderItems.Exists(element => element?.OrderItemID == updateOrderItem.OrderItemID))
-            throw new NoFoundException("order item");
-
-        int index = 0;
-        foreach (var item in DataSource.orderItems)
-        {
-            if (updateOrderItem.OrderItemID == item?.OrderItemID)
-            {
-                DataSource.orderItems[index] = updateOrderItem;
-                return;
-            }
-            index++;
-        }
+        Delete(updateOrderItem.OrderItemID);
+        Add(updateOrderItem);
     }
 
     /// <summary>
@@ -98,9 +74,8 @@ internal class DalOrderItem : IOrderItem
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
         if (DataSource.orderItems.FirstOrDefault(func!) is OrderItem orderItem)
-        {
             return orderItem;
-        }
+
         throw new NoFoundException("order item");
     }
 }

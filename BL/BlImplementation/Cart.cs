@@ -23,26 +23,21 @@ internal class Cart : BLApi.ICart
         try
         {
             product = _dal.Product.Get(productID);
-
-            if (product.InStock <= 0)
-            {
-                throw new BO.NoValidException("product stock");
-            }
         }
         catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
 
+        if (product.InStock <= 0)
+            throw new BO.NoValidException("product stock");
+
         if (cart.ItemsList is null)
-        {
             cart.ItemsList = new();
-        }
 
         BO.OrderItem item = new BO.OrderItem();
 
-        if (cart.ItemsList is not null)
-            item = cart.ItemsList.Find(element => element!.ProductID == productID)!;
+        item = cart.ItemsList.Find(element => element!.ProductID == productID)!;
 
         if (item != null)
         {
@@ -52,7 +47,8 @@ internal class Cart : BLApi.ICart
         }
         else
         {
-            cart.ItemsList!.Add(new BO.OrderItem()
+            cart.ItemsList!.Add(
+            new BO.OrderItem()
             {
                 ProductID = productID,
                 ProductPrice = product.Price,
@@ -96,34 +92,31 @@ internal class Cart : BLApi.ICart
                 try
                 {
                     DO.Product product = _dal.Product.Get(item!.ProductID);
+
                     if (item.Amount > product.InStock)
-                    {
                         throw new BO.NoValidException("product stock");
-                    }
                 }
                 catch (DO.NoFoundException ex)
                 {
                     throw new BO.NoFoundException(ex);
                 }
             }
-        }
 
-        DO.Order order = new()
-        {
-            CustomerAddress = cart.CustomerAddress,
-            CustomerEmail = cart.CustomerEmail,
-            CustomerName = cart.CustomerName,
-            DeliveryDate = null,
-            ShipDate = null,
-            OrderDate = DateTime.Now
-        };
-
-        try
-        {
-            if (cart.ItemsList is not null)
+            try
             {
+                DO.Order order = new()
+                {
+                    CustomerAddress = cart.CustomerAddress,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerName = cart.CustomerName,
+                    DeliveryDate = null,
+                    ShipDate = null,
+                    OrderDate = DateTime.Now
+                };
+
                 int orderID = _dal.Order.Add(order);
-                foreach (var item in cart.ItemsList)
+
+                foreach (var item in cart.ItemsList!)
                 {
                     _dal.OrderItem.Add(new DO.OrderItem
                     {
@@ -142,14 +135,14 @@ internal class Cart : BLApi.ICart
                 cart.ItemsList.Clear();
                 cart.TotalPriceInCart = 0;
             }
-            else
+            catch (DO.AddException ex)
             {
-                throw new BO.ErrorUpdateCartException("is empty");
+                throw new BO.AddException(ex);
             }
         }
-        catch (DO.AddException ex)
+        else
         {
-            throw new BO.AddException(ex);
+            throw new BO.ErrorUpdateCartException("is empty");
         }
     }
 
