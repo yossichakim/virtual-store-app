@@ -19,10 +19,10 @@ internal class Product : BLApi.IProduct
         return from item in _dal.Product.GetAll()
                select new BO.ProductForList()
                {
-                   ProductID = item?.ProductID,
+                   ProductID = (int)item?.ProductID!,
                    ProductName = item?.Name,
                    Category = (BO.Category)item?.Category!,
-                   ProductPrice = item?.Price
+                   ProductPrice = (double)item?.Price!
                };
     }
 

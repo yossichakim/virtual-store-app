@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ProductList" Height="450" Width="800">
+        Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -15,9 +15,8 @@
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
           VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="243*"/>
-                <ColumnDefinition Width="157*"/>
-                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <ComboBox x:Name ="FilterProducts" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="FilterProducts_SelectionChanged"/>
             <Label Grid.Column="2" Content="סנן לפי קטגוריה" HorizontalAlignment="Left" Margin="72,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-1.718,0.671"/>

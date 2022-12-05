@@ -36,6 +36,7 @@ namespace PL.Product
                 ProductPrice = double.Parse(Price.Text),
                 InStock = int.Parse(Instock.Text)
             };
+
             try
             {
                 _bl.Product.AddProduct(product);
