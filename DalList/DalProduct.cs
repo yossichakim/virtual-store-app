@@ -17,7 +17,7 @@ internal class DalProduct : IProduct
     public int Add(Product addProduct)
     {
         if (DataSource.products.Exists(element => element?.ProductID == addProduct.ProductID))
-            throw new AddException("product");
+            throw new AddException("PRODUCT");
 
         DataSource.products.Add(addProduct);
 
@@ -50,7 +50,7 @@ internal class DalProduct : IProduct
     public void Delete(int productId)
     {
         if (!DataSource.products.Exists(element => element?.ProductID == productId))
-            throw new NoFoundException("product Id");
+            throw new NoFoundException("PRODUCT");
 
         DataSource.products.RemoveAll(element => element?.ProductID == productId);
     }
@@ -63,14 +63,20 @@ internal class DalProduct : IProduct
     public void Update(Product updateProduct)
     {
         Delete(updateProduct.ProductID);
-        Add(updateProduct);      
+        Add(updateProduct);
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="NoFoundException"></exception>
     public Product Get(Func<Product?, bool>? func)
     {
         if (DataSource.products.FirstOrDefault(func!) is Product product)
                 return product;
 
-        throw new NoFoundException("product");
+        throw new NoFoundException("PRODUCT");
     }
 }
