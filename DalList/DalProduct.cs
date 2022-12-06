@@ -45,7 +45,7 @@ internal class DalProduct : IProduct
     public void Update(Product updateProduct)
     {
         Delete(updateProduct.ProductID);
-        Add(updateProduct);
+        DataSource.products.Add(updateProduct);
     }
 
     /// <summary>

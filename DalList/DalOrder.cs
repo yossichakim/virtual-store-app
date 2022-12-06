@@ -47,7 +47,7 @@ internal class DalOrder : IOrder
     public void Update(Order updateOrder)
     {
         Delete(updateOrder.OrderID);
-        Add(updateOrder);
+        DataSource.orders.Add(updateOrder);
     }
 
     /// <summary>

@@ -41,7 +41,7 @@ internal class DalOrderItem : IOrderItem
     public void Update(OrderItem updateOrderItem)
     {
         Delete(updateOrderItem.OrderItemID);
-        Add(updateOrderItem);
+        DataSource.orderItems.Add(updateOrderItem);
     }
 
     /// <summary>
