@@ -214,9 +214,7 @@ internal class Program
 
             case ProductMenu.UpdateProduct:
                 {
-                    Product product = new();
-                    addProduct(product);
-                    _bl.Product.UpdateProduct(product);
+                    _bl.Product.UpdateProduct(updateProduct());
                     break;
                 }
 
@@ -241,6 +239,54 @@ internal class Program
         product.ProductPrice = entityPrice("product");
 
         product.InStock = entityUnit("product");
+    }
+
+    /// <summary>
+    /// update product according to the user's request
+    /// </summary>
+    /// <returns>Product</returns>
+    private static Product updateProduct()
+    {
+        Product product = _bl.Product.GetProductManger(entityID("product"));
+        int choice = 1;
+        while (choice != 0)
+        {
+            Console.WriteLine("what do you want to update?\n" +
+                              "1 - product name\n" +
+                              "2 - product price\n" +
+                              "3 - product stock\n" +
+                              "4 - product category\n" +
+                              "0 - finish update");
+
+            enterChoice();
+            choice = tryParseInt();
+            switch (choice)
+            {
+                case 1:
+                    product.ProductName = entityName("product name");
+                    break;
+
+                case 2:
+                    product.ProductPrice = entityPrice("product");
+                    break;
+
+                case 3:
+                    product.InStock = entityUnit("product");
+                    break;
+
+                case 4:
+                    product.Category = (Category)tryParseCategoty();
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    Console.WriteLine("enter a number between 0 - 4");
+                    break;
+            }
+        }
+        return product;
     }
 
     #endregion product actions

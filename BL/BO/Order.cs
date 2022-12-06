@@ -66,6 +66,6 @@ public class Order
                                          $"Status: {Status}\n" +
                                          $"Ship Date: {ShipDate}\n" +
                                          $"Delivery Date: {DeliveryDate}\n" +
-                                         $"Items List: {string.Join('\n', ItemsList!)}\n" +
+                                         $"Items List:\n{string.Join('\n', ItemsList!)}\n" +
                                          $"Total Price order: {TotalPrice}\n";
 }
