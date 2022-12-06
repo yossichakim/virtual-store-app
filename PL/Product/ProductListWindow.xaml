@@ -21,7 +21,7 @@
             <ComboBox x:Name ="FilterProducts" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" SelectionChanged="FilterProducts_SelectionChanged"/>
             <Label Grid.Column="2" Content="סנן לפי קטגוריה" HorizontalAlignment="Left" Margin="72,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="-1.718,0.671"/>
         </Grid>
-        <ListView x:Name ="ProductListview" Grid.Row="1" >
+        <ListView x:Name ="ProductListview" Grid.Row="1" MouseDoubleClick="ProductListview_MouseDoubleClick" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="מספר מזהה" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="שם" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="מחיר"  />                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="קטגוריה" />                </GridView>

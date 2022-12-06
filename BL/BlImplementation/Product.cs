@@ -11,19 +11,32 @@ internal class Product : BLApi.IProduct
     private DalApi.IDal _dal = new Dal.DalList();
 
     /// <summary>
+    /// Returns a list of filtered products
+    /// </summary>
+    /// <param name="products"></param>
+    /// <param name="func"></param>
+    /// <returns>Returns a list of filtered products</returns>
+    public IEnumerable<BO.ProductForList?> Filter(IEnumerable<BO.ProductForList?> products, Func<BO.ProductForList?, bool>? func)
+    {
+        return products.Where(func!);
+    }
+
+    /// <summary>
     /// Returns a list of products - for manager and customer
     /// </summary>
     /// <returns> IEnumerable<BO.ProductForList> </returns>
-    public IEnumerable<BO.ProductForList> GetProductList()
+    public IEnumerable<BO.ProductForList?> GetProductList(Func<BO.ProductForList?, bool>? func = null)
     {
-        return from item in _dal.Product.GetAll()
-               select new BO.ProductForList()
+        var products = _dal.Product.GetAll();
+        bool flag = func is null;
+        return (from item in products
+                select new BO.ProductForList()
                {
                    ProductID = (int)item?.ProductID!,
                    ProductName = item?.Name,
                    Category = (BO.Category)item?.Category!,
                    ProductPrice = (double)item?.Price!
-               };
+               }).Where(element => flag ? flag : func!(element));
     }
 
     /// <summary>

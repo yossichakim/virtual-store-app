@@ -22,25 +22,30 @@ namespace PL.Product
     public partial class ProductList : Window
     {
         private IBl _bl = new Bl();
+        private IEnumerable<BO.ProductForList?> productForLists;
         public ProductList()
         {
             InitializeComponent();
-            ProductListview.ItemsSource = _bl.Product.GetProductList();
+            productForLists = _bl.Product.GetProductList();
+            ProductListview.ItemsSource = productForLists;
             FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
         private void FilterProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ProductListview.ItemsSource = _bl.Product.GetProductList()
-                .Where(item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
+            ProductListview.ItemsSource =
+                _bl.Product.Filter(productForLists, item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
+
         }
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         => new Product(_bl).Show();
 
         private void AllCatgory_Click(object sender, RoutedEventArgs e)
-        {
-            ProductListview.ItemsSource = _bl.Product.GetProductList();
-        }
+          =>  ProductListview.ItemsSource = _bl.Product.GetProductList();
+ 
+
+        private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        => new Product(_bl , ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
     }
 }

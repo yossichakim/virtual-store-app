@@ -11,7 +11,15 @@ public interface IProduct
     /// Returns a list of all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList?> GetProductList();
+    public IEnumerable<ProductForList?> GetProductList(Func<ProductForList?, bool>? func = null);
+
+    /// <summary>
+    /// Returns a list of filtered products
+    /// </summary>
+    /// <param name="products"></param>
+    /// <param name="func"></param>
+    /// <returns>Returns a list of filtered products</returns>
+    public IEnumerable<BO.ProductForList?> Filter(IEnumerable<BO.ProductForList?> products, Func<BO.ProductForList?, bool>? func);
 
     /// <summary>
     /// Gets a product ID and returns a product entity - for a manager
