@@ -7,14 +7,11 @@
         mc:Ignorable="d"
         Icon="onlineshopping_117952.ico"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <ImageBrush x:Key="AdminIcon" ImageSource="manager__icon.png"  />
-    </Window.Resources>
     <Grid>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="109" Width="252" Click="Button_Click" FontSize="36" FontWeight="Bold" FontFamily="Rod">
-            <Border Background="{StaticResource AdminIcon}">
-                
-            </Border>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="109" Width="252" Click="Button_Click">
+            <Grid>
+                <Image Source="manager__icon.png" Stretch="Fill" />
+            </Grid>
         </Button>
 
     </Grid>
