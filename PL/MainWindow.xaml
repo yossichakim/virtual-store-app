@@ -11,11 +11,10 @@
         <Button Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Height="109" Width="252" Click="Button_Click" FontSize="36" FontWeight="Bold" FontFamily="Rod">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="Black" />
+                    <GradientStop Color="White" Offset="1" />
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-
     </Grid>
 </Window>

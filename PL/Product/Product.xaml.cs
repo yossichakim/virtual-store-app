@@ -1,52 +1,47 @@
 ﻿using BLApi;
-using BlImplementation;
 using System;
 using System.Windows;
+namespace PL.Product;
 
-
-namespace PL.Product
+/// <summary>
+/// Interaction logic for Product.xaml
+/// </summary>
+public partial class Product : Window
 {
-    /// <summary>
-    /// Interaction logic for Product.xaml
-    /// </summary>
-    public partial class Product : Window
+    private IBl _bl;
+
+    public Product(IBl bl)
     {
-        private IBl _bl;
+        InitializeComponent();
+        _bl = bl;
+        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+    }
 
-        public Product(IBl bl)
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void AddProduct_Click(object sender, RoutedEventArgs e)
+    {
+        BO.Product product = new BO.Product()
         {
-            InitializeComponent();
-            _bl = bl;
-            Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            ProductID = int.Parse(Id.Text),
+            ProductName = Name.Text,
+            Category = (BO.Category)Catgory.SelectedItem,
+            ProductPrice = double.Parse(Price.Text),
+            InStock = int.Parse(Instock.Text)
+        };
 
+        try
+        {
+            _bl.Product.AddProduct(product);
+            MessageBox.Show("הפעולה בוצעה בהצלחה");
+            this.Close();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        catch (BO.AddException ex)
         {
-            BO.Product product = new BO.Product()
-            {
-                ProductID = int.Parse(Id.Text),
-                ProductName = Name.Text,
-                Category = (BO.Category)Catgory.SelectedItem,
-                ProductPrice = double.Parse(Price.Text),
-                InStock = int.Parse(Instock.Text)
-            };
-
-            try
-            {
-                _bl.Product.AddProduct(product);
-                MessageBox.Show("הפעולה בוצעה בהצלחה");
-                this.Close();
-            }
-            catch(BO.AddException ex)
-            {
-                MessageBox.Show(ex.Message + ex.InnerException!.Message);
-            }
+            MessageBox.Show(ex.Message + ex.InnerException!.Message);
         }
     }
 }
