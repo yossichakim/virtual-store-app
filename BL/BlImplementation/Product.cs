@@ -46,6 +46,7 @@ internal class Product : BLApi.IProduct
 
             return new BO.Product()
             {
+
                 ProductPrice = temp.Price,
                 Category = (BO.Category)temp.Category!,
                 ProductName = temp.Name,
@@ -194,6 +195,7 @@ internal class Product : BLApi.IProduct
         {
             ProductID = productTOUpdate.ProductID,
             Name = productTOUpdate.ProductName,
+            Category = (DO.Category)productTOUpdate.Category!,
             Price = productTOUpdate.ProductPrice,
             InStock = productTOUpdate.InStock
         };
