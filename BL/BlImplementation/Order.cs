@@ -14,12 +14,12 @@ internal class Order : BLApi.IOrder
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         List<BO.OrderForList> returnOrderList = new();
-        
+
         foreach (var item in _dal.Order.GetAll())
         {
             if (item is DO.Order order)
             {
-               (int? amount, double? totalPrice) = amountPriceOrder(order);
+                (int? amount, double? totalPrice) = amountPriceOrder(order);
                 returnOrderList.Add(new()
                 {
                     OrderID = order.OrderID,
@@ -208,7 +208,7 @@ internal class Order : BLApi.IOrder
                     ProductPrice = _orderItem.Price,
                     TotalPrice = _orderItem.Amount * _orderItem.Price,
                     ProductName = _dal.Product.Get(product => product?.ProductID == _orderItem.ProductID).Name
-            };
+                };
                 items.Add(temp);
             }
         }

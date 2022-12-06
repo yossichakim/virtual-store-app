@@ -77,7 +77,6 @@ internal class Program
             {
                 Console.WriteLine(ex.Message);
             }
-
             catch (NoFoundException ex)
             {
                 Console.WriteLine(ex.Message);

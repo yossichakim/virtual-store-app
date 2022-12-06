@@ -17,6 +17,5 @@
                 <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
             </Grid>
         </Button>
-
     </Grid>
 </Window>
