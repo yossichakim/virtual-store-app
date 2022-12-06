@@ -14,11 +14,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="manager__icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="onlineshopping_117952.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="manager__icon.png" />
   </ItemGroup>
 
 </Project>
