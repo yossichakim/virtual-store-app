@@ -17,8 +17,8 @@
         <ComboBox x:Name="Catgory" HorizontalAlignment="Left" Margin="398,118,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
         <TextBox x:Name="Price" HorizontalAlignment="Left" Margin="406,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="Instock" HorizontalAlignment="Left" Margin="406,298,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="AddProduct" Content="Confirm Add" HorizontalAlignment="Left" Margin="688,321,0,0" VerticalAlignment="Top" Click="AddProductClick"/>
-        <Button x:Name="UpdateProduct" Content="Confirm Update" HorizontalAlignment="Left" Margin="688,321,0,0" VerticalAlignment="Top" Width="72" Height="20" Click="UpdateProductClick"/>
+        <Button x:Name="AddProduct" Content="Confirm Add" Margin="0,0,0,10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddProductClick"/>
+        <Button x:Name="UpdateProduct" Content="Confirm Update" Margin="0,0,0,10" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateProductClick"/>
 
     </Grid>
 </Window>
