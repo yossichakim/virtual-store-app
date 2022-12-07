@@ -2,16 +2,24 @@
 using BO;
 using System;
 using System.Windows;
+
 namespace PL.Product;
 
 /// <summary>
 /// Interaction logic for Product.xaml
 /// </summary>
-public partial class Product : Window
+public partial class ProductView : Window
 {
+    /// <summary>
+    /// Access for the logical layer
+    /// </summary>
     private IBl _bl;
 
-    public Product(IBl bl)
+    /// <summary>
+    /// Constructor for a window to add a product
+    /// </summary>
+    /// <param name="bl"></param>
+    public ProductView(IBl bl)
     {
         InitializeComponent();
         _bl = bl;
@@ -19,23 +27,27 @@ public partial class Product : Window
         UpdateProduct.Visibility = Visibility.Hidden;
     }
 
-    public Product(IBl bl, int updateProductID )
+    /// <summary>
+    /// Constructor for a window to update a product
+    /// </summary>
+    /// <param name="bl"></param>
+    public ProductView(IBl bl, int updateProductID)
     {
         InitializeComponent();
         _bl = bl;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        BO.Product a = _bl.Product.GetProductManger(updateProductID);
+        BO.Product product = _bl.Product.GetProductManger(updateProductID);
         Id.Text = updateProductID.ToString();
         Id.IsEnabled = false;
-        Name.Text = a.ProductName;
-        Catgory.SelectedItem = a.Category;
-        Price.Text = a.ProductPrice.ToString();
-        Instock.Text = a.InStock.ToString();
+        Name.Text = product.ProductName;
+        Catgory.SelectedItem = product.Category;
+        Price.Text = product.ProductPrice.ToString();
+        Instock.Text = product.InStock.ToString();
         AddProduct.Visibility = Visibility.Hidden;
     }
 
     /// <summary>
-    ///
+    /// Adding a product to the product list
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -47,7 +59,7 @@ public partial class Product : Window
         try
         {
             _bl.Product.AddProduct(product);
-            MessageBox.Show("The transaction completed successfully");
+            MessageBox.Show("SUCCSES");
             this.Close();
         }
         catch (AddException ex)
@@ -60,6 +72,11 @@ public partial class Product : Window
         }
     }
 
+    /// <summary>
+    /// Product update in the product list
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateProductClick(object sender, RoutedEventArgs e)
     {
         BO.Product? product = ValidProduct();
@@ -70,7 +87,7 @@ public partial class Product : Window
         try
         {
             _bl.Product.UpdateProduct(product);
-            MessageBox.Show("The transaction completed successfully");
+            MessageBox.Show("SUCCSES");
             this.Close();
         }
         catch (NoFoundException ex)
@@ -81,12 +98,15 @@ public partial class Product : Window
         {
             MessageBox.Show(ex.Message);
         }
-
     }
 
+    /// <summary>
+    /// Auxiliary function for basic input correctness check when adding or updating a product
+    /// </summary>
+    /// <returns> If everything is fine you will return a product entity to add or update </returns>
     private BO.Product? ValidProduct()
     {
-        BO.Product? product ;
+        BO.Product? product;
 
         if (!int.TryParse(Instock.Text, out int n1) ||
             !int.TryParse(Id.Text, out int n2) ||
@@ -96,7 +116,7 @@ public partial class Product : Window
             MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT");
             return null;
         }
-        
+
         product = new BO.Product()
         {
             ProductID = int.Parse(Id.Text),
@@ -107,5 +127,4 @@ public partial class Product : Window
         };
         return product;
     }
-
 }

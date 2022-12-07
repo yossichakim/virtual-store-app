@@ -20,15 +20,15 @@
             </Grid.ColumnDefinitions >
             <Label Grid.Column="0" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <ComboBox Grid.Column="0" x:Name ="FilterProducts" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      Width="100" SelectionChanged="FilterProducts_SelectionChanged"/>
+                      Width="100" SelectionChanged="FilterProductsClick"/>
         </Grid>
-        <ListView x:Name ="ProductListview" Grid.Row="1" MouseDoubleClick="ProductListview_MouseDoubleClick" >
+        <ListView x:Name ="ProductListview" Grid.Row="1" MouseDoubleClick="AccessUpdateProduct" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"  />                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" />                </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name = "AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProduct_Click"/>
-        <Button x:Name = "AllCatgory" Content="All Category" HorizontalAlignment="Left" Margin="22,13,0,0" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgory_Click"/>
+        <Button x:Name = "AddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AccessAddProduct"/>
+        <Button x:Name = "AllCatgory" Content="All Category" HorizontalAlignment="Left" Margin="22,13,0,0" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgoryClick"/>
     </Grid>
 </Window>

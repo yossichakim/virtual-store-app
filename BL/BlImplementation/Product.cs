@@ -6,7 +6,7 @@
 internal class Product : BLApi.IProduct
 {
     /// <summary>
-    /// Access to dal
+    /// Access to Dal
     /// </summary>
     private DalApi.IDal _dal = new Dal.DalList();
 
@@ -31,12 +31,12 @@ internal class Product : BLApi.IProduct
         bool flag = func is null;
         return (from item in products
                 select new BO.ProductForList()
-               {
-                   ProductID = (int)item?.ProductID!,
-                   ProductName = item?.Name,
-                   Category = (BO.Category)item?.Category!,
-                   ProductPrice = (double)item?.Price!
-               }).Where(element => flag ? flag : func!(element));
+                {
+                    ProductID = (int)item?.ProductID!,
+                    ProductName = item?.Name,
+                    Category = (BO.Category)item?.Category!,
+                    ProductPrice = (double)item?.Price!
+                }).Where(element => flag ? flag : func!(element));
     }
 
     /// <summary>

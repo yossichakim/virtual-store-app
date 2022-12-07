@@ -2,17 +2,9 @@
 using BlImplementation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Product
 {
@@ -21,8 +13,19 @@ namespace PL.Product
     /// </summary>
     public partial class ProductList : Window
     {
+        /// <summary>
+        /// Access to the logical layer
+        /// </summary>
         private IBl _bl = new Bl();
+
+        /// <summary>
+        /// Saving the list of products
+        /// </summary>
         private IEnumerable<BO.ProductForList?> productForLists;
+
+        /// <summary>
+        /// constructor for product list
+        /// </summary>
         public ProductList()
         {
             InitializeComponent();
@@ -31,21 +34,37 @@ namespace PL.Product
             FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
-        private void FilterProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ProductListview.ItemsSource =
-                _bl.Product.Filter(productForLists, item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
+        /// <summary>
+        /// Filter the list of products by category
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
+            ProductListview.ItemsSource = _bl.Product.Filter(productForLists,
+                item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
-        }
+        /// <summary>
+        /// Access for adding a product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AccessAddProduct(object sender, RoutedEventArgs e)
+        => new ProductView(_bl).Show();
 
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
-        => new Product(_bl).Show();
+        /// <summary>
+        /// Refreshing the list of products and presenting without filtering
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllCatgoryClick(object sender, RoutedEventArgs e)
+        => ProductListview.ItemsSource = _bl.Product.GetProductList();
 
-        private void AllCatgory_Click(object sender, RoutedEventArgs e)
-          =>  ProductListview.ItemsSource = _bl.Product.GetProductList();
- 
-
-        private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        => new Product(_bl , ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
+        /// <summary>
+        /// Access for product update
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
+        => new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
     }
 }

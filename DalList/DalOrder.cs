@@ -78,7 +78,7 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// <returns>  Returns the order list </returns>
+    /// <returns>  Returns the order list in condition </returns>
     /// </summary>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
      => func is null ? DataSource.orders.Select(item => item) :

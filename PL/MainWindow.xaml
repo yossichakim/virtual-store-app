@@ -10,7 +10,7 @@
     <Grid>
         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                 Height="250" Width="200"
-                Click="Button_Click">
+                Click="AdminAccsess">
             <Grid>
                 <Image VerticalAlignment="Top" Height="190" Width="190"
                        Source="manager__icon.png" Stretch="Fill" />

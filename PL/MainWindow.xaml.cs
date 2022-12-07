@@ -9,12 +9,20 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
+    /// <summary>
+    /// Access for the logical layer
+    /// </summary>
     private IBl _bl = new Bl();
 
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
+    /// <summary>
+    /// constructor
+    /// </summary>
+    public MainWindow() => InitializeComponent();
 
-    private void Button_Click(object sender, RoutedEventArgs e) => new ProductList().Show();
+    /// <summary>
+    /// Admin access to product list
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void AdminAccsess(object sender, RoutedEventArgs e) => new ProductList().Show();
 }
