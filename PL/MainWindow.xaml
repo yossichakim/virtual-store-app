@@ -8,8 +8,12 @@
         Icon="onlineshopping_117952.ico"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+        <Image Source="C:\Users\melon\source\repos\Benjamin-Machlev\dotNet5783_8881_3341\bin\background-image.jpg" Stretch="UniformToFill" />
+
+      <Grid Margin="74,0,74,0">
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top"
                 Height="250" Width="200"
+                Background ="Transparent"
                 Click="AdminAccsess">
             <Grid>
                 <Image VerticalAlignment="Top" Height="190" Width="190"
@@ -17,5 +21,6 @@
                 <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
             </Grid>
         </Button>
+       </Grid>
     </Grid>
 </Window>
