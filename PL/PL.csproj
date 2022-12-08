@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background-image.jpg" />
     <None Remove="manager__icon.png" />
   </ItemGroup>
 
@@ -26,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="background-image.jpg" />
     <Resource Include="manager__icon.png" />
   </ItemGroup>
 

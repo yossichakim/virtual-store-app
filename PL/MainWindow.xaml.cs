@@ -26,6 +26,4 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void AdminAccsess(object sender, RoutedEventArgs e) => new ProductList().Show();
 
-
-
 }
