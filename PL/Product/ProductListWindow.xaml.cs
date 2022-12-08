@@ -32,6 +32,7 @@ namespace PL.Product
             productForLists = _bl.Product.GetProductList();
             ProductListview.ItemsSource = productForLists;
             FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
+  
         }
 
         /// <summary>

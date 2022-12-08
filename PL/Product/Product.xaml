@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Product" Height="450" Width="800">
     <Grid Name="MainGrid">
-        <Label Content="Product ID" HorizontalAlignment="Left" Margin="230,67,0,0" VerticalAlignment="Top"/>
-        <Label Content="Category" HorizontalAlignment="Left" Margin="239,118,0,0" VerticalAlignment="Top"/>
-        <Label Content="Product Name" HorizontalAlignment="Left" Margin="247,180,0,0" VerticalAlignment="Top"/>
-        <Label Content="Price" HorizontalAlignment="Left" Margin="248,234,0,0" VerticalAlignment="Top"/>
-        <Label Content="Amount" HorizontalAlignment="Left" Margin="238,295,0,0" VerticalAlignment="Top"/>
+        <Label Content="Product ID:" HorizontalAlignment="Left" Margin="311,67,0,0" VerticalAlignment="Top"/>
+        <Label Content="Category:" HorizontalAlignment="Left" Margin="311,118,0,0" VerticalAlignment="Top"/>
+        <Label Content="Product Name:" HorizontalAlignment="Left" Margin="311,180,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="311,234,0,0" VerticalAlignment="Top"/>
+        <Label Content="Amount:" HorizontalAlignment="Left" Margin="311,295,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Id" HorizontalAlignment="Left" Margin="400,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="Name" HorizontalAlignment="Left" Margin="403,183,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="Catgory" HorizontalAlignment="Left" Margin="398,118,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
