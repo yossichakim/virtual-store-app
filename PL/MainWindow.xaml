@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="onlineshopping_117952.ico"
-        
+
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Grid>
         <Image Source="/background-image.jpg" Stretch="UniformToFill" />
 
@@ -16,7 +16,16 @@
                 <Button HorizontalAlignment="Right" VerticalAlignment="Top"
                 Height="250" Width="200"
                 Background ="Transparent"
-                Click="AdminAccsess" Cursor="Hand" >
+                Click="AdminAccsess" Cursor="Hand" BorderThickness="5" >
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Style.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20" />
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Button.Resources>
                     <Grid>
                         <Image VerticalAlignment="Top" Height="190" Width="190"
                        Source="manager__icon.png" Stretch="Fill" />
