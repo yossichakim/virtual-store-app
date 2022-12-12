@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Icon="C:\Users\melon\source\repos\Benjamin-Machlev\dotNet5783_8881_3341\PL\Image\onlineshoppingIcon.ico"
+        Icon="onlineshopping_117952.ico"
 
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Image Source="C:\Users\melon\source\repos\Benjamin-Machlev\dotNet5783_8881_3341\PL\Image\background-image.jpg" Stretch="UniformToFill" />
+        <Image Source="/background-image.jpg" Stretch="UniformToFill" />
 
             <Grid Margin="0,0,10,10" >
                 <Button HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -28,7 +28,7 @@
                 </Button.Resources>
                     <Grid>
                         <Image VerticalAlignment="Top" Height="190" Width="190"
-                       Source="C:\Users\melon\source\repos\Benjamin-Machlev\dotNet5783_8881_3341\PL\Image\manager__icon.png" Stretch="Fill" />
+                       Source="manager__icon.png" Stretch="Fill" />
                         <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
                     </Grid>
             </Button>
