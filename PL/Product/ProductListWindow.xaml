@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -23,10 +24,21 @@
                Width="100" SelectionChanged="FilterProductsClick"/>
         </Grid>
         <ListView x:Name ="ProductListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateProduct" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
+
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100"/>                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="100" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="100"/>                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width ="100" />                </GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width ="100" />
+                </GridView>
             </ListView.View>
+           
         </ListView>
         <Button x:Name = "AddProduct" Cursor="Hand" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AccessAddProduct">
             <Button.Resources>
