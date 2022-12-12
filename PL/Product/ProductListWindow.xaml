@@ -28,7 +28,27 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100"/>                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="100" />                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="100"/>                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width ="100" />                </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name = "AddProduct" Cursor="Hand" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AccessAddProduct"/>
-        <Button x:Name = "AllCatgory" Cursor="Hand" Content="All Category" HorizontalAlignment="Left" Margin="22,13,0,0" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgoryClick"/>
+        <Button x:Name = "AddProduct" Cursor="Hand" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AccessAddProduct">
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name = "AllCatgory" Cursor="Hand" Content="All Category" HorizontalAlignment="Left" Margin="5" Padding="5" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgoryClick">
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </Style.Resources>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>
