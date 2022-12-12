@@ -1,8 +1,9 @@
 ﻿using BLApi;
 using BO;
 using System;
+using System.Media;
 using System.Windows;
-
+//using System.Windows.Forms;
 namespace PL.Product;
 
 /// <summary>
@@ -59,7 +60,7 @@ public partial class ProductView : Window
         try
         {
             _bl.Product.AddProduct(product);
-            MessageBox.Show("SUCCSES");
+            MessageBox.Show("SUCCSES","SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
         catch (AddException ex)
@@ -87,7 +88,8 @@ public partial class ProductView : Window
         try
         {
             _bl.Product.UpdateProduct(product);
-            MessageBox.Show("SUCCSES");
+            MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
+            SystemSounds.Question.Play();
             this.Close();
         }
         catch (NoFoundException ex)
