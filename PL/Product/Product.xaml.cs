@@ -63,11 +63,11 @@ public partial class ProductView : Window
         }
         catch (AddException ex)
         {
-            MessageBox.Show(ex.Message + ex.InnerException!.Message);
+            MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (NoValidException ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -91,13 +91,14 @@ public partial class ProductView : Window
         }
         catch (NoFoundException ex)
         {
-            MessageBox.Show(ex.Message + ex.InnerException!.Message);
+            MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (NoValidException ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+    
 
     /// <summary>
     /// Auxiliary function for basic input correctness check when adding or updating a product
@@ -112,7 +113,7 @@ public partial class ProductView : Window
             !double.TryParse(Price.Text, out double n3) ||
             string.IsNullOrWhiteSpace(Name.Text))
         {
-            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT");
+            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             return null;
         }
 
