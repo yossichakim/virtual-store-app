@@ -1,5 +1,4 @@
-﻿using BLApi;
-using BO;
+﻿using BO;
 using System;
 using System.Windows;
 namespace PL.Product;
@@ -12,13 +11,14 @@ public partial class ProductView : Window
     /// <summary>
     /// Access for the logical layer
     /// </summary>
-    private IBl _bl;
+    private BLApi.IBl? _bl = BLApi.Factory.Get();
+
 
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
     /// <param name="bl"></param>
-    public ProductView(IBl bl)
+    public ProductView(BLApi.IBl? bl)
     {
         InitializeComponent();
         _bl = bl;
@@ -30,12 +30,12 @@ public partial class ProductView : Window
     /// Constructor for a window to update a product
     /// </summary>
     /// <param name="bl"></param>
-    public ProductView(IBl bl, int updateProductID)
+    public ProductView(BLApi.IBl? bl, int updateProductID)
     {
         InitializeComponent();
         _bl = bl;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        BO.Product product = _bl.Product.GetProductManger(updateProductID);
+        BO.Product product = _bl?.Product.GetProductManger(updateProductID)!;
         Id.Text = updateProductID.ToString();
         Id.IsEnabled = false;
         Name.Text = product.ProductName;
@@ -57,7 +57,7 @@ public partial class ProductView : Window
             return;
         try
         {
-            _bl.Product.AddProduct(product);
+            _bl?.Product.AddProduct(product);
             MessageBox.Show("SUCCSES","SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
@@ -85,7 +85,7 @@ public partial class ProductView : Window
 
         try
         {
-            _bl.Product.UpdateProduct(product);
+            _bl?.Product.UpdateProduct(product);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }

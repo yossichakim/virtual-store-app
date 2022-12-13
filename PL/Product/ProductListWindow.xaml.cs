@@ -1,6 +1,4 @@
-﻿using BLApi;
-using BlImplementation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +14,8 @@ namespace PL.Product
         /// <summary>
         /// Access to the logical layer
         /// </summary>
-        private IBl _bl = new Bl();
+        private BLApi.IBl? _bl = BLApi.Factory.Get();
+
 
         /// <summary>
         /// Saving the list of products
@@ -41,7 +40,7 @@ namespace PL.Product
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-            ProductListview.ItemsSource = _bl.Product.Filter(productForLists,
+            ProductListview.ItemsSource = _bl?.Product.Filter(productForLists,
                 item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace PL.Product
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AllCatgoryClick(object sender, RoutedEventArgs e)
-        => ProductListview.ItemsSource = _bl.Product.GetProductList();
+        => ProductListview.ItemsSource = _bl?.Product.GetProductList();
 
         /// <summary>
         /// Access for product update

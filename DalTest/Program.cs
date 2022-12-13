@@ -1,6 +1,4 @@
-﻿using Dal;
-using DalApi;
-using DO;
+﻿using DO;
 
 /// <summary>
 /// Prints and updates in arrays according to the user's request
@@ -39,8 +37,7 @@ internal class Program
         AddOrderItem = 1, GetOrderItem, GetAllOrdersItems, RemoveOrderItem, UpdateOrderItem, FindOrderItem, GetByOrderID
     }
 
-    private static IDal dal = new DalList();
-
+    private static DalApi.IDal? dal = DalApi.Factory.Get();
     private static void Main(string[] args)
     {
         while (true)
@@ -245,27 +242,27 @@ internal class Program
             case ProductMenu.AddProduct:
                 Product product = new Product();
                 addProduct(ref product);
-                Console.WriteLine(dal.Product.Add(product));
+                Console.WriteLine(dal?.Product.Add(product));
                 break;
 
             case ProductMenu.GetProduct:
                 Console.WriteLine("enter the product id to get:");
                 int id = tryParseInt();
-                Console.WriteLine(dal.Product.Get(element => id == element?.ProductID));
+                Console.WriteLine(dal?.Product.Get(element => id == element?.ProductID));
                 break;
 
             case ProductMenu.GetAllProduct:
-                IEnumerable<Product?> printProducts = dal.Product.GetAll();
-                foreach (var item in printProducts) Console.WriteLine(item);
+                IEnumerable<Product?> printProducts = dal?.Product.GetAll()!;
+                foreach (var item in printProducts!) Console.WriteLine(item);
                 break;
 
             case ProductMenu.RemoveProduct:
                 Console.WriteLine("enter the product id to remove:");
-                dal.Product.Delete(tryParseInt());
+                dal?.Product.Delete(tryParseInt());
                 break;
 
             case ProductMenu.UpdateProduct:
-                dal.Product.Update(updateProduct());
+                dal?.Product.Update(updateProduct());
                 break;
 
             default:
@@ -297,7 +294,7 @@ internal class Program
     /// <returns>Product</returns>
     private static Product updateProduct()
     {
-        Product product = dal.Product.Get(entityID("product"));
+        Product product = (Product)dal?.Product.Get(entityID("product"))!;
         int choice = 1;
         while (choice != 0)
         {
@@ -356,28 +353,28 @@ internal class Program
             case OrderMenu.AddOrder:
                 Order order = new Order();
                 addOrder(ref order);
-                Console.WriteLine(dal.Order.Add(order));
+                Console.WriteLine(dal?.Order.Add(order));
                 break;
 
             case OrderMenu.GetOrder:
                 Console.WriteLine("enter the Order id to get:");
                 int id = tryParseInt();
-                Console.WriteLine(dal.Order.Get(element => id == element?.OrderID));
+                Console.WriteLine(dal?.Order.Get(element => id == element?.OrderID));
                 break;
 
             case OrderMenu.GetAllorders:
-                IEnumerable<Order?> printOrder = dal.Order.GetAll();
+                IEnumerable<Order?> printOrder = dal?.Order.GetAll()!;
                 foreach (var item in printOrder) Console.WriteLine(item);
                 break;
 
             case OrderMenu.RemoveOrder:
                 Console.WriteLine("enter the Order id to remove:");
-                dal.Order.Delete(tryParseInt());
+                dal?.Order.Delete(tryParseInt());
                 break;
 
             case OrderMenu.UpdateOrder:
 
-                dal.Order.Update(updateOrder());
+                dal?.Order.Update(updateOrder());
                 break;
 
             default:
@@ -430,7 +427,7 @@ internal class Program
     /// <returns> Order </returns>
     private static Order updateOrder()
     {
-        Order order = dal.Order.Get(entityID("order"));
+        Order order = (Order)dal?.Order.Get(entityID("order"))!;
         int choice = 1;
         while (choice != 0)
         {
@@ -499,27 +496,27 @@ internal class Program
             case OrderItemMenu.AddOrderItem:
                 OrderItem orderItem = new OrderItem();
                 addOrderItem(ref orderItem);
-                Console.WriteLine(dal.OrderItem.Add(orderItem));
+                Console.WriteLine(dal?.OrderItem.Add(orderItem));
                 break;
 
             case OrderItemMenu.GetOrderItem:
                 Console.WriteLine("enter the order item id to get:");
                 int id = tryParseInt();
-                Console.WriteLine(dal.OrderItem.Get(element => element?.OrderItemID == id));
+                Console.WriteLine(dal?.OrderItem.Get(element => element?.OrderItemID == id));
                 break;
 
             case OrderItemMenu.GetAllOrdersItems:
-                IEnumerable<OrderItem?> printOrdersItems = dal.OrderItem.GetAll();
+                IEnumerable<OrderItem?> printOrdersItems = dal?.OrderItem.GetAll()!;
                 foreach (var item in printOrdersItems) Console.WriteLine(item);
                 break;
 
             case OrderItemMenu.RemoveOrderItem:
                 Console.WriteLine("enter the order item id to remove:");
-                dal.OrderItem.Delete(tryParseInt());
+                dal?.OrderItem.Delete(tryParseInt());
                 break;
 
             case OrderItemMenu.UpdateOrderItem:
-                dal.OrderItem.Update(updateOrderItem());
+                dal?.OrderItem.Update(updateOrderItem());
                 break;
 
             case OrderItemMenu.FindOrderItem:
@@ -527,14 +524,14 @@ internal class Program
                 int productID = tryParseInt();
                 Console.WriteLine("enter the order id to find:");
                 int orderID = tryParseInt();
-                OrderItem? findOrderItem = dal.OrderItem.Get(element => element?.ProductID == productID && element?.OrderID == orderID);
+                OrderItem? findOrderItem = dal?.OrderItem.Get(element => element?.ProductID == productID && element?.OrderID == orderID);
                 Console.WriteLine(findOrderItem);
                 break;
 
             case OrderItemMenu.GetByOrderID:
                 Console.WriteLine("enter the order ids to find:");
                 int orderIDs = tryParseInt();
-                IEnumerable<OrderItem?> printOrderIDs = dal.OrderItem.GetAll(element => element?.OrderID == orderIDs);
+                IEnumerable<OrderItem?> printOrderIDs = dal?.OrderItem.GetAll(element => element?.OrderID == orderIDs)!;
                 foreach (var item in printOrderIDs) Console.WriteLine(item);
                 break;
 
@@ -567,7 +564,7 @@ internal class Program
     /// <returns>OrderItem</returns>
     private static OrderItem updateOrderItem()
     {
-        OrderItem orderItem = dal.OrderItem.Get(tryParseInt());
+        OrderItem orderItem = (OrderItem)dal?.OrderItem.Get(tryParseInt())!;
         int choice = 1;
         while (choice != 0)
         {

@@ -1,6 +1,4 @@
-﻿using BLApi;
-using BlImplementation;
-using PL.Product;
+﻿using PL.Product;
 using System.Windows;
 namespace PL;
 
@@ -12,7 +10,7 @@ public partial class MainWindow : Window
     /// <summary>
     /// Access for the logical layer
     /// </summary>
-    private IBl _bl = new Bl();
+    private BLApi.IBl? _bl = BLApi.Factory.Get();
 
     /// <summary>
     /// constructor
