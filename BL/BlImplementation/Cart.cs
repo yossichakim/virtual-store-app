@@ -7,7 +7,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Cart : BLApi.ICart
 {
-    private DalApi.IDal _dal = new Dal.DalList();
+    private DalApi.IDal? _dal = DalApi.Factory.Get();
 
     /// <summary>
     /// This function receives a cart entity and a product ID and adds this product to the cart
@@ -22,7 +22,7 @@ internal class Cart : BLApi.ICart
         DO.Product product = new();
         try
         {
-            product = _dal.Product.Get(productID);
+            product = (DO.Product)_dal?.Product.Get(productID)!;
         }
         catch (DO.NoFoundException ex)
         {
@@ -57,7 +57,7 @@ internal class Cart : BLApi.ICart
                 ProductName = product.Name,
             });
 
-            cart.TotalPriceInCart += product.Price;
+            cart.TotalPriceInCart += product.Price!;
         }
         return cart;
     }
@@ -91,9 +91,9 @@ internal class Cart : BLApi.ICart
 
                 try
                 {
-                    DO.Product product = _dal.Product.Get(item!.ProductID);
+                    DO.Product? product = _dal?.Product.Get(item!.ProductID);
 
-                    if (item.Amount > product.InStock)
+                    if (item?.Amount > product?.InStock)
                         throw new BO.NoValidException("product stock");
                 }
                 catch (DO.NoFoundException ex)
@@ -114,20 +114,20 @@ internal class Cart : BLApi.ICart
                     OrderDate = DateTime.Now
                 };
 
-                int orderID = _dal.Order.Add(order);
+                int? orderID = _dal?.Order.Add(order);
 
                 foreach (var item in cart.ItemsList!)
                 {
-                    _dal.OrderItem.Add(new DO.OrderItem
+                    _dal?.OrderItem.Add(new DO.OrderItem
                     {
                         Amount = item!.Amount,
                         Price = item.ProductPrice,
                         ProductID = item.ProductID,
-                        OrderID = orderID
+                        OrderID = (int)orderID!
                     });
-                    DO.Product product = _dal.Product.Get(item.ProductID);
-                    product.InStock -= item.Amount;
-                    _dal.Product.Update(product);
+                    DO.Product product = (DO.Product)_dal?.Product.Get(item!.ProductID)!;
+                    product.InStock -= item!.Amount;
+                    _dal?.Product.Update(product);
                 }
                 cart.CustomerEmail = null;
                 cart.CustomerName = null;
@@ -159,7 +159,7 @@ internal class Cart : BLApi.ICart
     {
         try
         {
-            DO.Product product = _dal.Product.Get(productID);
+            DO.Product product = (DO.Product)_dal?.Product.Get(productID)!;
 
             if (newAmount < 0)
             {

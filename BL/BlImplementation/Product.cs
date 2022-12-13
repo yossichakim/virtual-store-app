@@ -8,7 +8,7 @@ internal class Product : BLApi.IProduct
     /// <summary>
     /// Access to Dal
     /// </summary>
-    private DalApi.IDal _dal = new Dal.DalList();
+    private DalApi.IDal? _dal = DalApi.Factory.Get();
 
     /// <summary>
     /// Returns a list of filtered products
@@ -27,7 +27,7 @@ internal class Product : BLApi.IProduct
     /// <returns> IEnumerable<BO.ProductForList> </returns>
     public IEnumerable<BO.ProductForList?> GetProductList(Func<BO.ProductForList?, bool>? func = null)
     {
-        var products = _dal.Product.GetAll();
+        var products = _dal?.Product.GetAll();
         bool flag = func is null;
         return (from item in products
                 select new BO.ProductForList()
@@ -55,7 +55,7 @@ internal class Product : BLApi.IProduct
 
         try
         {
-            DO.Product temp = _dal.Product.Get(productID);
+            DO.Product temp = (DO.Product)_dal?.Product.Get(productID)!;
 
             return new BO.Product()
             {
@@ -89,7 +89,7 @@ internal class Product : BLApi.IProduct
 
         try
         {
-            DO.Product temp = _dal.Product.Get(productID);
+            DO.Product temp = (DO.Product)_dal?.Product.Get(productID)!;
 
             int amount = 0;
             if (cart.ItemsList is not null)
@@ -151,7 +151,7 @@ internal class Product : BLApi.IProduct
 
         try
         {
-            _dal.Product.Add(product);
+            _dal?.Product.Add(product);
         }
         catch (DO.AddException ex)
         {
@@ -167,7 +167,7 @@ internal class Product : BLApi.IProduct
     /// <exception cref="BO.NoFoundException"></exception>
     public void RemoveProduct(int productID)
     {
-        if (_dal.OrderItem.GetAll(item => item?.ProductID == productID) == null)
+        if (_dal?.OrderItem.GetAll(item => item?.ProductID == productID) == null)
         {
             throw new BO.ErrorDeleteException("product in the order");
         }
@@ -213,7 +213,7 @@ internal class Product : BLApi.IProduct
         };
         try
         {
-            _dal.Product.Update(product);
+            _dal?.Product.Update(product);
         }
         catch (DO.NoFoundException ex)
         {

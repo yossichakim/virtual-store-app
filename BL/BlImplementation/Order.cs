@@ -5,7 +5,7 @@
 /// </summary>
 internal class Order : BLApi.IOrder
 {
-    private DalApi.IDal _dal = new Dal.DalList();
+    private DalApi.IDal? _dal = DalApi.Factory.Get();
 
     /// <summary>
     /// The function returns a list of all orders
@@ -15,7 +15,7 @@ internal class Order : BLApi.IOrder
     {
         List<BO.OrderForList> returnOrderList = new();
 
-        foreach (var item in _dal.Order.GetAll())
+        foreach (var item in _dal?.Order.GetAll()!)
         {
             if (item is DO.Order order)
             {
@@ -48,7 +48,7 @@ internal class Order : BLApi.IOrder
 
         try
         {
-            DO.Order item = _dal.Order.Get(orderID);
+            DO.Order item = (DO.Order)_dal?.Order.Get(orderID)!;
             (_, double? totalPrice) = amountPriceOrder(item);
             BO.Order order = new()
             {
@@ -80,7 +80,7 @@ internal class Order : BLApi.IOrder
     {
         try
         {
-            DO.Order orderDo = _dal.Order.Get(orderID);
+            DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
             BO.Order orderBo = GetOrderDetails(orderID);
             if (orderDo.ShipDate == null)
             {
@@ -112,7 +112,7 @@ internal class Order : BLApi.IOrder
     {
         try
         {
-            DO.Order orderDo = _dal.Order.Get(orderID);
+            DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
             BO.Order orderBo = GetOrderDetails(orderID);
             if (orderDo.DeliveryDate == null)
             {
@@ -144,7 +144,7 @@ internal class Order : BLApi.IOrder
         BO.OrderTracking orderTracking = new();
         try
         {
-            DO.Order order = _dal.Order.Get(orderID);
+            DO.Order order = (DO.Order)_dal?.Order.Get(orderID)!;
 
             orderTracking.OrderTrackingID = orderID;
             orderTracking.Status = getStatus(order);
@@ -197,7 +197,7 @@ internal class Order : BLApi.IOrder
     {
         List<BO.OrderItem?> items = new();
 
-        foreach (var orderItem in _dal.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID))
+        foreach (var orderItem in _dal?.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID)!)
         {
             if (orderItem is DO.OrderItem _orderItem)
             {
@@ -207,7 +207,7 @@ internal class Order : BLApi.IOrder
                     Amount = _orderItem.Amount,
                     ProductPrice = _orderItem.Price,
                     TotalPrice = _orderItem.Amount * _orderItem.Price,
-                    ProductName = _dal.Product.Get(product => product?.ProductID == _orderItem.ProductID).Name
+                    ProductName = _dal?.Product.Get(product => product?.ProductID == _orderItem.ProductID).Name
                 };
                 items.Add(temp);
             }
@@ -222,7 +222,7 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private (int?, double?) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem?> items = _dal.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList();
+        List<DO.OrderItem?> items = _dal?.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList()!;
 
         double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
         int? amount = items.Sum(element => element?.Amount);
