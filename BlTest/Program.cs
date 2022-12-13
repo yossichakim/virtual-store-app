@@ -1,7 +1,4 @@
-﻿
-using BlImplementation;
-using BO;
-
+﻿using BO;
 namespace BlTest;
 
 internal class Program
