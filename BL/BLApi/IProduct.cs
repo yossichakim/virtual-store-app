@@ -43,13 +43,13 @@ public interface IProduct
     public void AddProduct(Product productTOAdd);
 
     /// <summary>
-    /// Gets a product and delivery entity from the list of products
+    /// Gets a product and delete from the list of products
     /// </summary>
     /// <param name="productID"></param>
     public void RemoveProduct(int productID);
 
     /// <summary>
-    /// Gets a product entity and updates the list of products
+    /// Gets a product and updates the product in list of products
     /// </summary>
     /// <param name="productTOUpdate"></param>
     public void UpdateProduct(Product productTOUpdate);

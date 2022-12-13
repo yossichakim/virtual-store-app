@@ -27,8 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="background-image.jpg" />
-    <Resource Include="manager__icon.png" />
+    <Resource Include="image\background-image.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="image\manager__icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

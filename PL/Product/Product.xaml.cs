@@ -11,8 +11,7 @@ public partial class ProductView : Window
     /// <summary>
     /// Access for the logical layer
     /// </summary>
-    private BLApi.IBl? _bl = BLApi.Factory.Get();
-
+    private BLApi.IBl? _bl;
 
     /// <summary>
     /// Constructor for a window to add a product

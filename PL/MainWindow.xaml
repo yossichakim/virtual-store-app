@@ -10,7 +10,7 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Image Source="/background-image.jpg" Stretch="UniformToFill" />
+        <Image Source="image\background-image.jpg" Stretch="UniformToFill" />
 
             <Grid Margin="0,0,10,10" >
                 <Button HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -28,7 +28,7 @@
                 </Button.Resources>
                     <Grid>
                         <Image VerticalAlignment="Top" Height="190" Width="190"
-                       Source="manager__icon.png" Stretch="Fill" />
+                       Source="image\manager__icon.png" Stretch="Fill" />
                         <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
                     </Grid>
             </Button>
