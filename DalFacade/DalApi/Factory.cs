@@ -3,8 +3,16 @@ using DO;
 using System.Reflection;
 using static DalApi.DalConfig;
 
+/// <summary>
+/// factory of dal
+/// </summary>
 public static class Factory
 {
+    /// <summary>
+    /// access to the implementation of dal
+    /// </summary>
+    /// <returns> object of dal </returns>
+    /// <exception cref="DalConfigException"></exception>
     public static IDal? Get()
     {
         string dalType = s_dalName
