@@ -1,13 +1,26 @@
 ﻿namespace DalApi;
-
 using DO;
 using System.Xml.Linq;
 
+/// <summary>
+/// Loading the data from dalXml
+/// </summary>
 internal static class DalConfig
 {
-    internal static string? s_dalName;
+    /// <summary>
+    /// name of dal
+    /// </summary>
+    internal static string s_dalName;
+
+    /// <summary>
+    ///dal Packages DalList or DalXml 
+    /// </summary>
     internal static Dictionary<string, string> s_dalPackages;
 
+    /// <summary>
+    /// constractor
+    /// </summary>
+    /// <exception cref="DalConfigException"></exception>
     static DalConfig()
     {
         XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml")
