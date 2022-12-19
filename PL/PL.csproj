@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="onlineshopping_117952.ico" />
+    <Resource Include="onlineshopping_117952.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
