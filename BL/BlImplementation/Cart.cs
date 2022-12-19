@@ -1,5 +1,4 @@
 ﻿using SeviceFunction;
-
 namespace BlImplementation;
 
 /// <summary>
