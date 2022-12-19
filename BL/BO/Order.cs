@@ -59,11 +59,12 @@ public class Order
     /// print order
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => $"Customer Name: {CustomerName}\n" +
+    public override string ToString() => $"Order ID: {OrderID}\n" +
+                                         $"Customer Name: {CustomerName}\n" +
                                          $"Customer Email: {CustomerEmail}\n" +
                                          $"Customer Address: {CustomerAddress}\n" +
-                                         $"Order Date: {OrderDate}\n" +
                                          $"Status: {Status}\n" +
+                                         $"Order Date: {OrderDate}\n" +
                                          $"Ship Date: {ShipDate}\n" +
                                          $"Delivery Date: {DeliveryDate}\n" +
                                          $"Items List:\n{string.Join('\n', ItemsList!)}\n" +
