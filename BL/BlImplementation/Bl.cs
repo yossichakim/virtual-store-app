@@ -5,7 +5,7 @@ namespace BlImplementation;
 /// <summary>
 /// Access class to the interfaces of the logical layer
 /// </summary>
-public sealed class Bl : IBl
+internal sealed class Bl : IBl
 {
     /// <summary>
     /// Cart entity interface
