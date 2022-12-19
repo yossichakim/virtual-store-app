@@ -33,5 +33,8 @@
                     </Grid>
             </Button>
             </Grid>
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="696,303,0,0" VerticalAlignment="Top" Click="NewOrder"/>
+        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="696,342,0,0" VerticalAlignment="Top" Click="OrderTracking"/>
+
     </Grid>
 </Window>

@@ -24,4 +24,13 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void AdminAccsess(object sender, RoutedEventArgs e) => new ProductList().Show();
 
+    private void NewOrder(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void OrderTracking(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
