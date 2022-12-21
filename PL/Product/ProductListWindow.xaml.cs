@@ -26,7 +26,7 @@ public partial class ProductList : Window
     public ProductList()
     {
         InitializeComponent();
-        productForLists = _bl.Product.GetProductList();
+        productForLists = _bl?.Product.GetProductList()!;
         ProductListview.ItemsSource = productForLists;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 

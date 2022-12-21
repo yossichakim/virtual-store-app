@@ -10,15 +10,15 @@ internal sealed class Bl : IBl
     /// <summary>
     /// Cart entity interface
     /// </summary>
-    public ICart Cart => new Cart();
+    public ICart Cart { get; } = new Cart();
 
     /// <summary>
     /// Product entity interface
     /// </summary>
-    public IProduct Product => new Product();
+    public IProduct Product { get; } = new Product();
 
     /// <summary>
     /// Order entity interface
     /// </summary>
-    public IOrder Order => new Order();
+    public IOrder Order { get; } = new Order();
 }

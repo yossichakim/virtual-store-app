@@ -9,27 +9,22 @@ internal sealed class DalList : IDal
     /// <summary>
     /// constractor
     /// </summary>
-    private DalList()
-    {
-        this.Product = new DalProduct();
-        this.Order = new DalOrder();
-        this.OrderItem = new DalOrderItem();
-    }
+    private DalList(){}
 
     public static IDal Instance { get; } = new DalList();
 
     /// <summary>
     /// Interface for product list
     /// </summary>
-    public IProduct Product { get; }
+    public IProduct Product { get; } = new DalProduct();
 
     /// <summary>
     /// Interface for order list
     /// </summary>
-    public IOrder Order { get; }
+    public IOrder Order { get; } = new DalOrder();
 
     /// <summary>
     /// Interface for a list of order items
     /// </summary>
-    public IOrderItem OrderItem { get; }
+    public IOrderItem OrderItem { get; } = new DalOrderItem();
 }

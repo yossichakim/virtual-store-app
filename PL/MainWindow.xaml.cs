@@ -1,4 +1,5 @@
-﻿using PL.Product;
+﻿using PL.admin;
+using PL.Product;
 using System.Windows;
 namespace PL;
 
@@ -22,7 +23,8 @@ public partial class MainWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void AdminAccsess(object sender, RoutedEventArgs e) => new ProductList().Show();
+    private void AdminAccsess(object sender, RoutedEventArgs e) => new AdminWindow().Show();
+
 
     private void NewOrder(object sender, RoutedEventArgs e)
     {

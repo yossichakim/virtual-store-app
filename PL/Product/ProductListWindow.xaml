@@ -25,7 +25,7 @@
         <ListView x:Name ="ProductListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateProduct" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width ="100" />

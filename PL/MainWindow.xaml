@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Icon="\image\manager__icon.png"
+        Icon="onlineshopping_117952.ico"
 
         Title="MainWindow" Height="450" Width="800">
 
@@ -28,7 +28,7 @@
                 </Button.Resources>
                     <Grid>
                         <Image VerticalAlignment="Top" Height="190" Width="190"
-                       Source="image\manager__icon.png" Stretch="Fill" />
+                         Source="image\manager__icon.png" Stretch="Fill" />
                         <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
                     </Grid>
             </Button>
