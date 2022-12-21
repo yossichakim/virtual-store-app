@@ -1,4 +1,5 @@
 ﻿using DalApi;
+
 namespace Dal;
 
 /// <summary>
@@ -9,7 +10,8 @@ internal sealed class DalList : IDal
     /// <summary>
     /// constractor
     /// </summary>
-    private DalList(){}
+    private DalList()
+    { }
 
     public static IDal Instance { get; } = new DalList();
 

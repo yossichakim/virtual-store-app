@@ -16,10 +16,11 @@ internal class Product : BLApi.IProduct
     /// <param name="products"></param>
     /// <param name="func"></param>
     /// <returns>Returns a list of filtered products</returns>
-    public IEnumerable<BO.ProductForList?> Filter(IEnumerable<BO.ProductForList?> products, Func<BO.ProductForList?, bool>? func)
+    public IEnumerable<T?> Filter<T>(IEnumerable<T?> products, Func<T?, bool>? func)
     {
         return products.Where(func!);
     }
+
 
     /// <summary>
     /// Returns a list of products - for manager and customer

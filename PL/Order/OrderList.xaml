@@ -8,28 +8,28 @@
         Title="OrderList" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40*" />
+            <RowDefinition Height="500*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
           VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
         </Grid>
-        <ListView x:Name ="OrderListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" Margin="0,29,0,0" >
+        <ListView x:Name ="OrderListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" Margin="0,29,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="Order ID" Width ="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="Order ID" Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding CustomerName}" Header="Customer Name" Width ="150" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status"   Width ="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status"   Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}" Header="Amount Of Items" Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="100" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="Order List" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center" Width="208" FontWeight="Bold" FontSize="20" Height="32"/>
+        <Label Content="Order List" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center" Width="208" FontWeight="Bold" FontSize="20" Height="32" />
     </Grid>
 </Window>

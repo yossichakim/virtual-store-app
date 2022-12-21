@@ -1,4 +1,5 @@
 ﻿using BO;
+
 namespace BlTest;
 
 internal class Program

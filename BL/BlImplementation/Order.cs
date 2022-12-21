@@ -13,25 +13,15 @@ internal class Order : BLApi.IOrder
     /// <returns>returns a list of all orders</returns>
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
-        List<BO.OrderForList> returnOrderList = new();
-
-        foreach (var item in _dal?.Order.GetAll()!)
-        {
-            if (item is DO.Order order)
-            {
-                (int? amount, double? totalPrice) = amountPriceOrder(order);
-                returnOrderList.Add(new()
-                {
-                    OrderID = order.OrderID,
-                    CustomerName = order.CustomerName,
-                    AmountOfItems = (int)amount!,
-                    TotalPrice = (double)totalPrice!,
-                    Status = getStatus(order)
-                });
-            }
-        }
-
-        return returnOrderList;
+        return from order in _dal?.Order.GetAll()
+               select new BO.OrderForList
+               {
+                   OrderID = (int)order?.OrderID!,
+                   CustomerName = order?.CustomerName,
+                   AmountOfItems = (int)amountPriceOrder((DO.Order)order!).Item1!,
+                   TotalPrice = (double)amountPriceOrder((DO.Order)order!).Item2!,
+                   Status = getStatus((DO.Order)order!)
+               };
     }
 
     /// <summary>
@@ -195,24 +185,15 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private IEnumerable<BO.OrderItem?> returnItemsList(DO.Order item)
     {
-        List<BO.OrderItem?> items = new();
-
-        foreach (var orderItem in _dal?.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID)!)
-        {
-            if (orderItem is DO.OrderItem _orderItem)
-            {
-                BO.OrderItem temp = new()
-                {
-                    ProductID = _orderItem.ProductID,
-                    Amount = _orderItem.Amount,
-                    ProductPrice = _orderItem.Price,
-                    TotalPrice = _orderItem.Amount * _orderItem.Price,
-                    ProductName = _dal?.Product.Get(product => product?.ProductID == _orderItem.ProductID).Name
-                };
-                items.Add(temp);
-            }
-        }
-        return items;
+        return from orderItem in _dal?.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID)!
+               select new BO.OrderItem
+               {
+                   ProductID = (int)orderItem?.ProductID!,
+                   Amount = (int)orderItem?.Amount!,
+                   ProductPrice = (double)orderItem?.Price!,
+                   TotalPrice = (int)orderItem?.Amount! * (double)orderItem?.Price!,
+                   ProductName = _dal?.Product.Get(product => product?.ProductID == orderItem?.ProductID).Name
+               };
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 namespace PL.Order;
 
 /// <summary>
@@ -10,5 +11,4 @@ public partial class OrderTracking : Window
     {
         InitializeComponent();
     }
-
 }

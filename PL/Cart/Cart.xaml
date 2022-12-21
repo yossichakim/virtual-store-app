@@ -8,30 +8,28 @@
         Title="Cart" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="281*"/>
-            <RowDefinition Height="153*"/>
+            <RowDefinition Height="281*" />
+            <RowDefinition Height="153*" />
         </Grid.RowDefinitions>
-        <Label Content="Customer Name:" HorizontalAlignment="Left" Margin="102,40,0,0" VerticalAlignment="Top"/>
-        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="102,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="102,120,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="CustomerName" HorizontalAlignment="Left" Margin="229,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="CustomerEmail" HorizontalAlignment="Left" Margin="229,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="CustomerAddress" HorizontalAlignment="Left" Margin="229,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top"/>
-        <TextBox  x:Name ="TotalPriceInCart" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Customer Name:" HorizontalAlignment="Left" Margin="102,40,0,0" VerticalAlignment="Top" />
+        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="102,80,0,0" VerticalAlignment="Top" />
+        <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="102,120,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="CustomerName" HorizontalAlignment="Left" Margin="229,46,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="CustomerEmail" HorizontalAlignment="Left" Margin="229,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="CustomerAddress" HorizontalAlignment="Left" Margin="229,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <Label Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top" />
+        <TextBox  x:Name ="TotalPriceInCart" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
         <ListView x:Name ="ItemsList" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="155" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="155"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="155" />
                     <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount" Width ="155" />
                     <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="155" />
-
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="Items List In Cart" HorizontalAlignment="Left" Margin="320,217,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold"/>
-
+        <Label Content="Items List In Cart" HorizontalAlignment="Left" Margin="320,217,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold" />
     </Grid>
 </Window>

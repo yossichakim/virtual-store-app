@@ -1,6 +1,6 @@
 ﻿using PL.admin;
-using PL.Product;
 using System.Windows;
+
 namespace PL;
 
 /// <summary>
@@ -25,14 +25,11 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void AdminAccsess(object sender, RoutedEventArgs e) => new AdminWindow().Show();
 
-
     private void NewOrder(object sender, RoutedEventArgs e)
     {
-
     }
 
     private void OrderTracking(object sender, RoutedEventArgs e)
     {
-
     }
 }

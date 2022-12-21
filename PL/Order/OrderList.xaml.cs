@@ -19,10 +19,8 @@ public partial class OrderList : Window
         InitializeComponent();
         orderForLists = _bl?.Order.GetOrderList()!;
         OrderListview.ItemsSource = orderForLists;
-
     }
 
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)
     => new Order(_bl, ((BO.OrderForList)OrderListview.SelectedItem).OrderID).Show();
-
 }

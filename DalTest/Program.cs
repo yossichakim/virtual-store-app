@@ -38,6 +38,7 @@ internal class Program
     }
 
     private static DalApi.IDal? dal = DalApi.Factory.Get();
+
     private static void Main(string[] args)
     {
         while (true)

@@ -2,7 +2,6 @@
 using PL.Product;
 using System.Windows;
 
-
 namespace PL.admin;
 
 /// <summary>
@@ -18,6 +17,4 @@ public partial class AdminWindow : Window
     private void ProductList(object sender, RoutedEventArgs e) => new ProductList().Show();
 
     private void OrderList(object sender, RoutedEventArgs e) => new OrderList().Show();
-
-
 }

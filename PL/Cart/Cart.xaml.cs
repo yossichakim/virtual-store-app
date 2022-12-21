@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 namespace PL.Cart;
 
 /// <summary>
@@ -6,7 +7,6 @@ namespace PL.Cart;
 /// </summary>
 public partial class Cart : Window
 {
-
     public Cart()
     {
         InitializeComponent();

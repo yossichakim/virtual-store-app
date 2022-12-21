@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 namespace PL.Product;
 
 /// <summary>
@@ -29,7 +30,6 @@ public partial class ProductList : Window
         productForLists = _bl?.Product.GetProductList()!;
         ProductListview.ItemsSource = productForLists;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
     }
 
     /// <summary>

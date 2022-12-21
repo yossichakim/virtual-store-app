@@ -12,11 +12,11 @@
     <Grid>
         <Image Source="\image\background-image.jpg" Stretch="UniformToFill" />
 
-            <Grid Margin="0,0,10,10" >
+            <Grid Margin="0,0,10,10">
                 <Button HorizontalAlignment="Right" VerticalAlignment="Top"
                 Height="250" Width="200"
                 Background ="Transparent"
-                Click="AdminAccsess" Cursor="Hand" BorderThickness="5" >
+                Click="AdminAccsess" Cursor="Hand" BorderThickness="5">
                 <Button.Resources>
                     <Style TargetType="Button">
                         <Style.Resources>
@@ -29,12 +29,11 @@
                     <Grid>
                         <Image VerticalAlignment="Top" Height="190" Width="190"
                          Source="image\manager__icon.png" Stretch="Fill" />
-                        <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25"/>
+                        <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25" />
                     </Grid>
             </Button>
             </Grid>
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="696,303,0,0" VerticalAlignment="Top" Click="NewOrder"/>
-        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="696,342,0,0" VerticalAlignment="Top" Click="OrderTracking"/>
-
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="696,303,0,0" VerticalAlignment="Top" Click="NewOrder" />
+        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="696,342,0,0" VerticalAlignment="Top" Click="OrderTracking" />
     </Grid>
 </Window>

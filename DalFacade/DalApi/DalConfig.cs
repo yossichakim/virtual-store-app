@@ -1,4 +1,5 @@
 ﻿namespace DalApi;
+
 using DO;
 using System.Xml.Linq;
 
@@ -13,7 +14,7 @@ internal static class DalConfig
     internal static string s_dalName;
 
     /// <summary>
-    ///dal Packages DalList or DalXml 
+    ///dal Packages DalList or DalXml
     /// </summary>
     internal static Dictionary<string, string> s_dalPackages;
 
