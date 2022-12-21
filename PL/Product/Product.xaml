@@ -39,6 +39,7 @@
                 </Style>
             </Button.Resources>
         </Button>
+        <Label Content="Product" HorizontalAlignment="Left" Margin="80,23,0,0" VerticalAlignment="Top" Width="118" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black"/>
 
     </Grid>
 </Window>

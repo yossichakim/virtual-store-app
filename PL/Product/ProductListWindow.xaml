@@ -12,17 +12,17 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-          VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Grid.Row="0" Width="auto" Margin="0,0,0,476" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label Grid.Column="0" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <ComboBox Grid.Column="0" x:Name ="FilterProducts" HorizontalAlignment="Center" VerticalAlignment="Center"
-               Width="100" SelectionChanged="FilterProductsClick"/>
+            <Label Grid.Column="1" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="122,60,0,0" FontWeight="Bold"/>
+            <ComboBox x:Name ="FilterProducts" HorizontalAlignment="Left" VerticalAlignment="Top"
+               Grid.Column="1" Width="100" SelectionChanged="FilterProductsClick" Margin="258,63,0,0"/>
+            <Label Content="Product List" HorizontalAlignment="Left" Margin="32,10,0,0" VerticalAlignment="Top" Width="153" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black"/>
         </Grid>
-        <ListView x:Name ="ProductListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateProduct" >
+        <ListView x:Name ="ProductListview" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100" />

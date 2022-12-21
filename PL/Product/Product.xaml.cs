@@ -42,6 +42,7 @@ public partial class ProductView : Window
         Price.Text = product.ProductPrice.ToString();
         Instock.Text = product.InStock.ToString();
         AddProduct.Visibility = Visibility.Hidden;
+
     }
 
     /// <summary>
