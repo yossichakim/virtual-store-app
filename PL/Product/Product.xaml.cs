@@ -14,6 +14,7 @@ public partial class ProductView : Window
     /// </summary>
     private BLApi.IBl? _bl;
 
+    private BO.Product? product;
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
@@ -35,15 +36,29 @@ public partial class ProductView : Window
         InitializeComponent();
         _bl = bl;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        BO.Product product = _bl?.Product.GetProductManger(updateProductID)!;
-        Id.Text = updateProductID.ToString();
+        product = _bl?.Product.GetProductManger(updateProductID)!;
+        DataContext = product;
         Id.IsEnabled = false;
-        Name.Text = product.ProductName;
         Catgory.SelectedItem = product.Category;
-        Price.Text = product.ProductPrice.ToString();
-        Instock.Text = product.InStock.ToString();
         AddProduct.Visibility = Visibility.Hidden;
     }
+
+
+    public ProductView(BLApi.IBl? bl, int ViewProductID, bool view)
+    {
+        InitializeComponent();
+        _bl = bl;
+        product = _bl?.Product.GetProductManger(ViewProductID)!;
+        DataContext = product;
+        Catgory.SelectedItem = product.Category;
+        AddProduct.Visibility = Visibility.Hidden;
+        UpdateProduct.Visibility = Visibility.Hidden;
+        Id.IsEnabled = false;
+        Name.IsEnabled = false;
+        Price.IsEnabled = false;
+        Instock.IsEnabled = false;
+    }
+
 
     /// <summary>
     /// Adding a product to the product list
@@ -78,7 +93,7 @@ public partial class ProductView : Window
     /// <param name="e"></param>
     private void UpdateProductClick(object sender, RoutedEventArgs e)
     {
-        BO.Product? product = ValidProduct();
+        product = ValidProduct();
 
         if (product == null)
             return;
@@ -105,7 +120,7 @@ public partial class ProductView : Window
     /// <returns> If everything is fine you will return a product entity to add or update </returns>
     private BO.Product? ValidProduct()
     {
-        BO.Product? product;
+
 
         if (!int.TryParse(Instock.Text, out int n1) ||
             !int.TryParse(Id.Text, out int n2) ||

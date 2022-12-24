@@ -36,16 +36,16 @@
             <Label Content="Ship Date:" HorizontalAlignment="Left" Margin="94,250,0,0" VerticalAlignment="Top" />
             <Label Content="Delivery Date:" HorizontalAlignment="Left" Margin="94,290,0,0" VerticalAlignment="Top" />
             <Label Content="Items List" HorizontalAlignment="Left" Margin="294,10,0,0" VerticalAlignment="Top" Width="178" FontWeight="Bold" FontSize="16" Grid.Column="1" />
-            <Label Content="Total Price order:" HorizontalAlignment="Left" Margin="94,347,0,0" VerticalAlignment="Top" />
-            <TextBox x:Name="Id" IsEnabled="False" HorizontalAlignment="Left" Margin="240,10,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="Name" IsEnabled="False" HorizontalAlignment="Left" Margin="240,50,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="Email" IsEnabled="False" HorizontalAlignment="Left" Margin="240,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="Address" IsEnabled="False" HorizontalAlignment="Left" Margin="240,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="Status" IsEnabled="False" HorizontalAlignment="Left" Margin="240,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="OrderDate" IsEnabled="False" HorizontalAlignment="Left" Margin="240,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="ShipDate" IsEnabled="False" HorizontalAlignment="Left" Margin="240,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="DeliveryDate" IsEnabled="False" HorizontalAlignment="Left" Margin="240,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="TotalPrice" IsEnabled="False" HorizontalAlignment="Left" Margin="240,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <Label Content="Total Price order:" HorizontalAlignment="Left" Margin="94,347,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" />
+            <TextBox x:Name="Id" Text="{Binding OrderID}"  IsEnabled="False" HorizontalAlignment="Left" Margin="240,10,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="Name" Text="{Binding CustomerName}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,50,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="Email" Text="{Binding CustomerEmail}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="Address" Text="{Binding CustomerAddress }" IsEnabled="False" HorizontalAlignment="Left" Margin="240,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="Status" Text="{Binding Status}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="OrderDate" Text="{Binding OrderDate}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="ShipDate" Text="{Binding ShipDate }" IsEnabled="False" HorizontalAlignment="Left" Margin="240,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="DeliveryDate" Text="{Binding  DeliveryDate}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox x:Name="TotalPrice" Text="{Binding TotalPrice}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <ListView x:Name ="ItemsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="159,50,10,100" Grid.Column="1">
                 <ListView.View>
                     <GridView>

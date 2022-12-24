@@ -18,11 +18,11 @@
             </Grid.ColumnDefinitions>
 
         </Grid>
-        <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,57,0,0" VerticalAlignment="Top" Width="115"/>
-        <ComboBox x:Name="FilterCatgory" HorizontalAlignment="Left" Margin="195,59,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="592,56,0,0" VerticalAlignment="Top" Height="27" Width="90"/>
+        <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115"/>
+        <ComboBox x:Name="FilterCatgory" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="592,80,0,0" VerticalAlignment="Top" Height="27" Width="90"/>
 
-        <ListView x:Name ="ProductItemListview" Cursor="Hand" Margin="0,0,0,0" Grid.Row="1">
+        <ListView x:Name ="ProductItemListview" Cursor="Hand" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="100" />
@@ -35,8 +35,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label Content="New Order" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" Width="135" Height="40" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black"/>
 
     </Grid>
-
 
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,5 +64,9 @@ public partial class ProductList : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
-    => new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
+    {
+           if (IsMouseCaptureWithin)
+                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
+
+    }
 }

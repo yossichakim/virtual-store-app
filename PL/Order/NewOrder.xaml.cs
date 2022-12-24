@@ -1,19 +1,11 @@
-﻿using BLApi;
-using BO;
-using PL.Cart;
+﻿using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace PL.Order;
 
@@ -36,7 +28,7 @@ public partial class NewOrder : Window
     public NewOrder(string name,string email, string address)
     {
         InitializeComponent();
-        _cart = new BO.Cart { CustomerAddress = address, CustomerEmail = email, CustomerName = name, ItemsList = new() };
+        _cart = new();
 
         productItemLists = from item in _bl?.Product.GetProductList()!
                            select _bl?.Product.GetProductCostumer(item.ProductID, _cart)!;
@@ -47,4 +39,12 @@ public partial class NewOrder : Window
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         => ProductItemListview.ItemsSource = _bl?.Product.Filter(productItemLists,
             item => item?.Categoty == (BO.Category)FilterCatgory.SelectedItem);
+
+    private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        bool view = true;
+
+        if(IsMouseCaptureWithin)
+        new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, view).Show();
+    }
 }

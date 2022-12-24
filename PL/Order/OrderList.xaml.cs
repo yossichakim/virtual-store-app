@@ -22,5 +22,8 @@ public partial class OrderList : Window
     }
 
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)
-    => new Order(_bl, ((BO.OrderForList)OrderListview.SelectedItem).OrderID).Show();
+    { 
+        if(IsMouseCaptureWithin)
+             new Order(_bl, ((BO.OrderForList)OrderListview.SelectedItem).OrderID).Show();
+    }
 }

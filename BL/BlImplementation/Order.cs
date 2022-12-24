@@ -206,7 +206,7 @@ internal class Order : BLApi.IOrder
         List<DO.OrderItem?> items = _dal?.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList()!;
 
         double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
-        int? amount = items.Sum(element => element?.Amount);
+        int? amount = items.Count();
 
         return (amount, totalPrice);
     }
