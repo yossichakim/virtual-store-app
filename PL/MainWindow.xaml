@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="onlineshopping_117952.ico"
 
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" >
 
     <Grid>
         <Image Source="\image\background-image.jpg" Stretch="UniformToFill" />

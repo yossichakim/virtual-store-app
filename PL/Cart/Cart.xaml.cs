@@ -15,6 +15,7 @@ public partial class Cart : Window
     public Cart(BO.Cart cart)
     {
         InitializeComponent();
+        
         _cart = cart;
         ItemsList.ItemsSource = cart.ItemsList;
         DataContext = _cart;
