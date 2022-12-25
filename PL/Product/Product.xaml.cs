@@ -13,7 +13,7 @@ public partial class ProductView : Window
     /// Access for the logical layer
     /// </summary>
     private BLApi.IBl? _bl;
-
+    private BO.Cart? _cart;
     private BO.Product? product;
     /// <summary>
     /// Constructor for a window to add a product
@@ -25,6 +25,10 @@ public partial class ProductView : Window
         _bl = bl;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         UpdateProduct.Visibility = Visibility.Hidden;
+        AddToCart.Visibility = Visibility.Hidden;
+        UpdateCart.Visibility = Visibility.Hidden;
+        UpdateAmountTB.Visibility = Visibility.Hidden;
+        UpdateAmountL.Visibility = Visibility.Hidden;
     }
 
     /// <summary>
@@ -41,24 +45,48 @@ public partial class ProductView : Window
         Id.IsEnabled = false;
         Catgory.SelectedItem = product.Category;
         AddProduct.Visibility = Visibility.Hidden;
+        AddToCart.Visibility = Visibility.Hidden;
+        UpdateCart.Visibility = Visibility.Hidden;
+        UpdateAmountTB.Visibility = Visibility.Hidden;
+        UpdateAmountL.Visibility = Visibility.Hidden;
     }
 
 
-    public ProductView(BLApi.IBl? bl, int ViewProductID, bool view)
+    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart)
     {
         InitializeComponent();
         _bl = bl;
+        _cart = cart;    
         product = _bl?.Product.GetProductManger(ViewProductID)!;
         DataContext = product;
         Catgory.SelectedItem = product.Category;
         AddProduct.Visibility = Visibility.Hidden;
         UpdateProduct.Visibility = Visibility.Hidden;
+        UpdateCart.Visibility = Visibility.Hidden;
+        UpdateAmountTB.Visibility = Visibility.Hidden;
+        UpdateAmountL.Visibility = Visibility.Hidden;
         Id.IsEnabled = false;
         Name.IsEnabled = false;
         Price.IsEnabled = false;
         Instock.IsEnabled = false;
     }
 
+    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string str)
+    {
+        InitializeComponent();
+        _bl = bl;
+        _cart = cart;
+        product = _bl?.Product.GetProductManger(ViewProductID)!;
+        DataContext = product;
+        Catgory.SelectedItem = product.Category;
+        AddProduct.Visibility = Visibility.Hidden;
+        UpdateProduct.Visibility = Visibility.Hidden;
+        AddToCart.Visibility = Visibility.Hidden;
+        Id.IsEnabled = false;
+        Name.IsEnabled = false;
+        Price.IsEnabled = false;
+        Instock.IsEnabled = false;
+    }
 
     /// <summary>
     /// Adding a product to the product list
@@ -140,5 +168,35 @@ public partial class ProductView : Window
             InStock = int.Parse(Instock.Text)
         };
         return product;
+    }
+
+    private void AddToCart_Click(object sender, RoutedEventArgs e)
+    {
+
+        try
+        {
+            _cart = _bl.Cart.AddProductToCart(_cart, product.ProductID);
+            this.Close();
+            new PL.Cart.Cart(_cart).Show();
+        } 
+        catch (Exception)
+        {
+            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void UpdateCart_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            _cart = _bl.Cart.UpdateAmount(_cart, product.ProductID, int.Parse(UpdateAmountTB.Text));
+            this.Close();
+            new PL.Cart.Cart(_cart).Show();
+        } 
+        catch (Exception)
+        {
+
+            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
