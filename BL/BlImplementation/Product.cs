@@ -168,13 +168,13 @@ internal class Product : BLApi.IProduct
     /// <exception cref="BO.NoFoundException"></exception>
     public void RemoveProduct(int productID)
     {
-        if (_dal?.OrderItem.GetAll(item => item?.ProductID == productID) == null)
+        if (_dal?.OrderItem.GetAll(item => item?.ProductID == productID) != null)
         {
             throw new BO.ErrorDeleteException("product in the order");
         }
         try
         {
-            _dal.Product.Delete(productID);
+            _dal?.Product.Delete(productID);
         }
         catch (DO.NoFoundException ex)
         {
