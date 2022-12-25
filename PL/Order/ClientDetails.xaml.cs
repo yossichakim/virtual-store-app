@@ -22,15 +22,34 @@ public partial class ClientDetails : Window
     {
         try
         {
+            _cart.CustomerAddress = Address.Text;
+            _cart.CustomerName = Name.Text;
+            _cart.CustomerEmail = Email.Text;
             _bl?.Cart.ConfirmedOrder(_cart);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             //ASK???
-            this.Close(); // Application.Current.Shutdown();
-        }
-        catch (System.Exception)
-        {
+           
+            this.Close();
+        } 
 
-            throw;
+        catch (BO.NoValidException ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        } 
+        
+        catch (BO.NoFoundException ex )
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        
+        catch (BO.ErrorUpdateCartException ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        
+        catch (BO.AddException ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         //if (string.IsNullOrWhiteSpace(Name.Text) ||
         //   string.IsNullOrWhiteSpace(Email.Text) ||

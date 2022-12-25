@@ -46,4 +46,6 @@ public partial class NewOrder : Window
         if(IsMouseCaptureWithin)
         new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart).Show();
     }
+
+    private void ShowCart(object sender, RoutedEventArgs e) => new Cart.Cart(_cart).Show();
 }

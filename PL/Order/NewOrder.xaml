@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        
         Title="NewOrder" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +21,7 @@
         </Grid>
         <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115"/>
         <ComboBox x:Name="FilterCatgory" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="592,80,0,0" VerticalAlignment="Top" Height="27" Width="90"/>
+        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="592,80,0,0" VerticalAlignment="Top" Height="27" Width="90" Click="ShowCart" />
 
         <ListView x:Name ="ProductItemListview" Cursor="Hand" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
