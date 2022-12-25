@@ -48,6 +48,7 @@ public partial class ProductView : Window
     {
         InitializeComponent();
         _bl = bl;
+        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(ViewProductID)!;
         DataContext = product;
         Catgory.SelectedItem = product.Category;
@@ -57,6 +58,7 @@ public partial class ProductView : Window
         Name.IsEnabled = false;
         Price.IsEnabled = false;
         Instock.IsEnabled = false;
+        Catgory.IsEnabled = false;
     }
 
 
