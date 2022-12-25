@@ -26,7 +26,7 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void AdminAccsess(object sender, RoutedEventArgs e) => new AdminWindow().Show();
 
-    private void NewOrderAccsess(object sender, RoutedEventArgs e) => new ClientDetails().Show();
+    private void NewOrderAccsess(object sender, RoutedEventArgs e) => new NewOrder().Show();
 
 
     private void OrderTracking(object sender, RoutedEventArgs e)

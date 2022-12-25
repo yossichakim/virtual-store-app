@@ -176,7 +176,7 @@ public partial class ProductView : Window
 
         try
         {
-            _cart = _bl.Cart.AddProductToCart(_cart, product.ProductID);
+            _cart = _bl?.Cart.AddProductToCart(_cart, (int)product?.ProductID!);
             this.Close();
             new PL.Cart.Cart(_cart).Show();
         } 
@@ -190,7 +190,7 @@ public partial class ProductView : Window
     {
         try
         {
-            _cart = _bl.Cart.UpdateAmount(_cart, product.ProductID, int.Parse(UpdateAmountTB.Text));
+            _cart = _bl?.Cart.UpdateAmount(_cart, (int)product?.ProductID!, int.Parse(UpdateAmountTB.Text));
             this.Close();
             new PL.Cart.Cart(_cart).Show();
         } 

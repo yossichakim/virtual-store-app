@@ -7,22 +7,40 @@ namespace PL.Order;
 /// </summary>
 public partial class ClientDetails : Window
 {
-    public ClientDetails()
+    private BO.Cart _cart;
+
+    private BLApi.IBl? _bl;
+
+    public ClientDetails(BLApi.IBl? bl, BO.Cart cart)
     {
         InitializeComponent();
+        _bl = bl;   
+        _cart = cart;   
     }
 
     private void ToAddOrder(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(Name.Text) ||
-           string.IsNullOrWhiteSpace(Email.Text) ||
-           string.IsNullOrWhiteSpace(Address.Text) ||
-           !new EmailAddressAttribute().IsValid(Email.Text))
+        try
         {
-            MessageBox.Show("the Name\\Email\\Address is not valid", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
+            _bl?.Cart.ConfirmedOrder(_cart);
+            MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
+            //ASK???
+            this.Close(); // Application.Current.Shutdown();
         }
-        new NewOrder(Name.Text, Email.Text, Address.Text).Show();
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+        //if (string.IsNullOrWhiteSpace(Name.Text) ||
+        //   string.IsNullOrWhiteSpace(Email.Text) ||
+        //   string.IsNullOrWhiteSpace(Address.Text) ||
+        //   !new EmailAddressAttribute().IsValid(Email.Text))
+        //{
+        //    MessageBox.Show("the Name\\Email\\Address is not valid", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    return;
+        //}
+        //new NewOrder(Name.Text, Email.Text, Address.Text).Show();
     }
        
 }

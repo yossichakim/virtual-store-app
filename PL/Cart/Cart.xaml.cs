@@ -1,4 +1,5 @@
 ﻿using BLApi;
+using PL.Order;
 using PL.Product;
 using System.Windows;
 
@@ -16,10 +17,7 @@ public partial class Cart : Window
         InitializeComponent();
         _cart = cart;
         ItemsList.ItemsSource = cart.ItemsList;
-        CustomerName.Text = cart.CustomerName;
-        CustomerEmail.Text = cart.CustomerEmail;
-        CustomerAddress.Text = cart.CustomerAddress;
-        TotalPriceInCart.Text = cart.TotalPriceInCart.ToString();
+        DataContext = _cart;
     }
 
     private void ItemsList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -29,18 +27,6 @@ public partial class Cart : Window
         this.Close();
     }
 
-    private void CheckOut_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            _bl.Cart.ConfirmedOrder(_cart);
-            MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-            //ASK???
-            Application.Current.Shutdown();
-        } catch (System.Exception)
-        {
-
-            throw;
-        }
-    }
+    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart).Show();
+    
 }

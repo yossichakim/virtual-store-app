@@ -11,14 +11,8 @@
             <RowDefinition Height="281*" />
             <RowDefinition Height="153*" />
         </Grid.RowDefinitions>
-        <Label Content="Customer Name:" HorizontalAlignment="Left" Margin="102,40,0,0" VerticalAlignment="Top" />
-        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="102,80,0,0" VerticalAlignment="Top" />
-        <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="102,120,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="CustomerName" IsEnabled="False" HorizontalAlignment="Left" Margin="229,46,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="CustomerEmail" IsEnabled="False" HorizontalAlignment="Left" Margin="229,87,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="CustomerAddress" IsEnabled="False" HorizontalAlignment="Left" Margin="229,127,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <Label Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top" />
-        <TextBox  x:Name ="TotalPriceInCart" IsEnabled="False" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+        <TextBox  x:Name ="TotalPriceInCart" Text="{Binding TotalPriceInCart}" IsEnabled="False" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <ListView x:Name ="ItemsList" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
