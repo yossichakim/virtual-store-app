@@ -28,7 +28,10 @@ public partial class NewOrder : Window
     public NewOrder(string name,string email, string address)
     {
         InitializeComponent();
-        _cart = new();
+        _cart = new() { 
+        CustomerName = name,
+        CustomerEmail = email,
+        CustomerAddress = address};
 
         productItemLists = from item in _bl?.Product.GetProductList()!
                            select _bl?.Product.GetProductCostumer(item.ProductID, _cart)!;
@@ -42,9 +45,9 @@ public partial class NewOrder : Window
 
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        bool view = true;
+        //bool view = true;
 
         if(IsMouseCaptureWithin)
-        new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, view).Show();
+        new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart).Show();
     }
 }
