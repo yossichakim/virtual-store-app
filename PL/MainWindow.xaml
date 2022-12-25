@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Icon="onlineshopping_117952.ico"
-
+        
         Title="MainWindow" Height="450" Width="800" >
-
+        
     <Grid>
         <Image Source="\image\background-image.jpg" Stretch="UniformToFill" />
 
@@ -33,7 +33,6 @@
                     </Grid>
             </Button>
             </Grid>
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="696,303,0,0" VerticalAlignment="Top" Click="NewOrderAccsess" />
-        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="696,342,0,0" VerticalAlignment="Top" Click="OrderTracking" />
+        <Button Content="Customer Accsess" HorizontalAlignment="Left" Margin="656,303,0,0" VerticalAlignment="Top" Click="CustomerAccsess"/>
     </Grid>
 </Window>
