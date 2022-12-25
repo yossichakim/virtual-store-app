@@ -56,7 +56,8 @@ public partial class ProductView : Window
     {
         InitializeComponent();
         _bl = bl;
-        _cart = cart;    
+        _cart = cart;
+        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(ViewProductID)!;
         DataContext = product;
         Catgory.SelectedItem = product.Category;
