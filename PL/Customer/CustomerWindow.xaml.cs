@@ -27,6 +27,6 @@ namespace PL.Customer
 
         private void NewOrder(object sender, RoutedEventArgs e) => new NewOrder().Show();
 
-        private void OrderTracking(object sender, RoutedEventArgs e) => new OrderTracking().Show();
+        private void OrderTracking(object sender, RoutedEventArgs e) => new Track().Show();
     }
 }
