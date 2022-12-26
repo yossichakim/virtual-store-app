@@ -11,7 +11,18 @@
         <Label Content="Order ID:" HorizontalAlignment="Left" Margin="213,130,0,0" VerticalAlignment="Top" FontWeight="Bold" />
         <Label Content="Status:" HorizontalAlignment="Left" Margin="213,161,0,0" VerticalAlignment="Top" FontWeight="Bold" />
         <Label Content="Date and Status:" HorizontalAlignment="Left" Margin="213,191,0,0" VerticalAlignment="Top" FontWeight="Bold" />
-        <Button Content="Order Details" HorizontalAlignment="Left" Margin="213,266,0,0" VerticalAlignment="Top" Click="OrderDetails"/>
+        <Button Content="Order Details" HorizontalAlignment="Left" Margin="213,311,0,0" VerticalAlignment="Top" Click="OrderDetails"/>
+        <TextBlock x:Name="OrderID" HorizontalAlignment="Left" Margin="351,135,0,0" TextWrapping="Wrap" Text="{Binding OrderID}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Status" HorizontalAlignment="Left" Margin="351,166,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top"/>
+        <ListView x:Name="DateAndStatusList" Margin="344,191,233,139">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding DateTime}" Header="Date"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding OrderStatus}" Header="Status"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>
