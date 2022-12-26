@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Order;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +13,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Order
+namespace PL.Customer
 {
     /// <summary>
-    /// Interaction logic for OrderTracking.xaml
+    /// Interaction logic for CustomerWindow.xaml
     /// </summary>
-    public partial class OrderTracking : Window
+    public partial class CustomerWindow : Window
     {
-        public OrderTracking()
+        public CustomerWindow()
         {
             InitializeComponent();
         }
 
-        private void OrderDetails(object sender, RoutedEventArgs e) => new Order.Show();
+        private void NewOrder(object sender, RoutedEventArgs e) => new NewOrder().Show();
+
+        private void OrderTracking(object sender, RoutedEventArgs e) => new OrderTracking().Show();
     }
 }
