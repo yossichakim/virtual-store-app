@@ -13,7 +13,7 @@
         <Label Content="Amount:" HorizontalAlignment="Left" Margin="311,295,0,0" VerticalAlignment="Top" />
         <TextBox x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="400,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Cursor="AppStarting" />
         <TextBox x:Name="Name" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="403,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <ComboBox x:Name="Catgory" HorizontalAlignment="Left" Margin="398,118,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" />
+        <ComboBox x:Name="Catgory" Text="{Binding Category}" HorizontalAlignment="Left" Margin="398,118,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" />
         <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="406,242,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="406,298,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <Button x:Name="AddProduct" Cursor="Hand" Content="Confirm Add" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddProductClick">
