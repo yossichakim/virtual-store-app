@@ -11,7 +11,7 @@ public partial class Order : Window
 
     private BO.Order order;
 
-    public Order(BLApi.IBl? bl, int OrderID)
+    public Order(BLApi.IBl? bl, int OrderID, bool view = false)
     {
         InitializeComponent();
         _bl = bl;
@@ -27,6 +27,12 @@ public partial class Order : Window
 
         if (order.DeliveryDate is not null)
             UpdateDelivery.Visibility = Visibility.Hidden;
+
+        if (view == true)
+        {
+            UpdateShip.Visibility = Visibility.Hidden;
+            UpdateDelivery.Visibility = Visibility.Hidden;
+        }
     }
 
     private void UpdateShipDate(object sender, RoutedEventArgs e)

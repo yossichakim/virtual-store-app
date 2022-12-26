@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,11 +20,19 @@ namespace PL.Order
     /// </summary>
     public partial class OrderTracking : Window
     {
-        public OrderTracking()
+        private BO.OrderTracking _orderTracking;
+        private BLApi.IBl? _bl;
+        public OrderTracking(BO.OrderTracking orderTracking, BLApi.IBl bl)
         {
             InitializeComponent();
+            DataContext = orderTracking;
+            _bl = bl;
+            _orderTracking = orderTracking;
         }
 
-        private void OrderDetails(object sender, RoutedEventArgs e) => new Order.Show();
+        private void OrderDetails(object sender, RoutedEventArgs e) {
+            bool view = true;
+            new Order(_bl, _orderTracking.OrderID, view).Show();
+        }
     }
 }
