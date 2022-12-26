@@ -136,7 +136,7 @@ internal class Order : BLApi.IOrder
         {
             DO.Order order = (DO.Order)_dal?.Order.Get(orderID)!;
 
-            orderTracking.OrderTrackingID = orderID;
+            orderTracking.OrderID = orderID;
             orderTracking.Status = getStatus(order);
             orderTracking.DateAndStatus = new(){
                 Tuple.Create(order.OrderDate, BO.OrderStatus.OrderConfirmed),

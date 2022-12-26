@@ -8,7 +8,7 @@ public class OrderTracking
     /// <summary>
     /// order tracking ID
     /// </summary>
-    public int OrderTrackingID { get; set; }
+    public int OrderID { get; set; }
 
     /// <summary>
     /// status
@@ -27,7 +27,7 @@ public class OrderTracking
     public override string ToString()
     {
         string str = string.Empty;
-        str = $"Order Tracking ID: {OrderTrackingID}\n";
+        str = $"Order ID: {OrderID}\n";
         switch (Status)
         {
             case OrderStatus.OrderConfirmed:
