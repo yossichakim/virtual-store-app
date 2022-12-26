@@ -66,6 +66,8 @@ public partial class ProductView : Window
         UpdateCart.Visibility = Visibility.Hidden;
         UpdateAmountTB.Visibility = Visibility.Hidden;
         UpdateAmountL.Visibility = Visibility.Hidden;
+        if(product.InStock ==0)
+            AddToCart.Visibility= Visibility.Hidden;
         Id.IsEnabled = false;
         Name.IsEnabled = false;
         Price.IsEnabled = false;

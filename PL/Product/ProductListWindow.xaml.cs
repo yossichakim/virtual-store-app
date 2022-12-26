@@ -1,6 +1,6 @@
-﻿using BO;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,7 +10,7 @@ namespace PL.Product;
 /// <summary>
 /// Interaction logic for ProductList.xaml
 /// </summary>
-public partial class ProductList : Window
+public partial class ProductList : Window, INotifyPropertyChanged
 {
     /// <summary>
     /// Access to the logical layer
@@ -22,6 +22,8 @@ public partial class ProductList : Window
     /// </summary>
     private IEnumerable<BO.ProductForList?> productForLists;
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     /// <summary>
     /// constructor for product list
     /// </summary>
@@ -31,6 +33,7 @@ public partial class ProductList : Window
         productForLists = _bl?.Product.GetProductList()!;
         ProductListview.ItemsSource = productForLists;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
     }
 
     /// <summary>
