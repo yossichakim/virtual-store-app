@@ -7,8 +7,14 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="To Product List" HorizontalAlignment="Left" Margin="158,145,0,0" VerticalAlignment="Top" Click="ProductList" Height="161" Width="116" />
-        <Button Content="To Order List" HorizontalAlignment="Left" Margin="479,145,0,0" VerticalAlignment="Top" Height="161" Width="116" Click="OrderList" />
-        <Label Content="Admin Access" HorizontalAlignment="Left" Margin="60,26,0,0" VerticalAlignment="Top" Height="45" Width="176" FontWeight="Bold" FontFamily="Cooper Black" FontSize="20"/>
+        <Label Content="Admin Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50"/>
+
+        <Button Content="Product List" Margin="0,0,10,50"
+                HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Click="ProductList" Cursor="Hand" />
+
+        <Button Content="Order List" Margin="0,0,10,-50"
+                HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                Click="OrderList" Cursor="Hand" />
     </Grid>
 </Window>
