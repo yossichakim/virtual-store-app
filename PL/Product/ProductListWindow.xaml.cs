@@ -19,8 +19,8 @@ public partial class ProductList : Window
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    public static readonly DependencyProperty ListProp = DependencyProperty.Register(nameof(productList), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
-    public IEnumerable<BO.ProductForList?> productList { get => (IEnumerable<BO.ProductForList?>)GetValue(ListProp); set => SetValue(ListProp, value); }
+    public static readonly DependencyProperty ListPropProduct = DependencyProperty.Register(nameof(productList), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductForList?> productList { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
 
 
     /// <summary>
@@ -31,7 +31,6 @@ public partial class ProductList : Window
         InitializeComponent();
         productList = _bl?.Product.GetProductList()!;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
     }
 
     /// <summary>
@@ -67,6 +66,6 @@ public partial class ProductList : Window
     private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
     {
            if (IsMouseCaptureWithin)
-                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID, this ).Show();
+                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID, this).Show();
     }
 }
