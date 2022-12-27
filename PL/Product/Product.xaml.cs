@@ -27,6 +27,7 @@ public partial class ProductView : Window
         _bl = bl;
         ProductListWin = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //Catgory.SelectedIndex = 0;
         UpdateProduct.Visibility = Visibility.Hidden;
         AddToCart.Visibility = Visibility.Hidden;
         UpdateCart.Visibility = Visibility.Hidden;
@@ -165,7 +166,8 @@ public partial class ProductView : Window
         if (!int.TryParse(Instock.Text, out int n1) ||
             !int.TryParse(Id.Text, out int n2) ||
             !double.TryParse(Price.Text, out double n3) ||
-            string.IsNullOrWhiteSpace(Name.Text))
+            string.IsNullOrWhiteSpace(Name.Text)||
+            Catgory.Text == "")
         {
             MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             return null;
