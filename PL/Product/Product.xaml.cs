@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace PL.Product;
@@ -15,14 +16,16 @@ public partial class ProductView : Window
     private BLApi.IBl? _bl;
     private BO.Cart? _cart;
     private BO.Product? product;
+    ProductList ProductListWin;
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
     /// <param name="bl"></param>
-    public ProductView(BLApi.IBl? bl)
+    public ProductView(BLApi.IBl? bl,ProductList sender)
     {
         InitializeComponent();
         _bl = bl;
+        ProductListWin = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         UpdateProduct.Visibility = Visibility.Hidden;
         AddToCart.Visibility = Visibility.Hidden;
@@ -35,10 +38,11 @@ public partial class ProductView : Window
     /// Constructor for a window to update a product
     /// </summary>
     /// <param name="bl"></param>
-    public ProductView(BLApi.IBl? bl, int updateProductID)
+    public ProductView(BLApi.IBl? bl, int updateProductID, ProductList sender)
     {
         InitializeComponent();
         _bl = bl;
+        ProductListWin = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(updateProductID)!;
         DataContext = product;
@@ -108,7 +112,8 @@ public partial class ProductView : Window
         {
             _bl?.Product.AddProduct(product);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+            Close();
+            ProductListWin.productFor = _bl?.Product.GetProductList()!;
         }
         catch (AddException ex)
         {
@@ -137,6 +142,7 @@ public partial class ProductView : Window
             _bl?.Product.UpdateProduct(product);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
+            ProductListWin.productFor = _bl?.Product.GetProductList()!;
         }
         catch (NoFoundException ex)
         {

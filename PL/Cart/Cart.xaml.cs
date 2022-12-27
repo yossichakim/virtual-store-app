@@ -1,5 +1,4 @@
-﻿using BLApi;
-using PL.Order;
+﻿using PL.Order;
 using PL.Product;
 using System.Windows;
 

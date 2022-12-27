@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
@@ -22,7 +23,7 @@
                Grid.Column="1" Width="100" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" />
             <Label Content="Product List" HorizontalAlignment="Left" Margin="32,10,0,0" VerticalAlignment="Top" Width="153" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
         </Grid>
-        <ListView x:Name ="ProductListview" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1">
+        <ListView x:Name ="ProductListview" ItemsSource="{Binding productFor}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="100" />
