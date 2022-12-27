@@ -12,29 +12,14 @@
     <Grid>
         <Image Source="\image\background-image.jpg" Stretch="UniformToFill" />
 
-            <Grid Margin="0,0,10,10">
-                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
-                Height="250" Width="200"
-                Background ="Transparent"
-                Click="AdminAccsess" Cursor="Hand" BorderThickness="5">
-                <Button.Resources>
-                    <Style TargetType="Button">
-                        <Style.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="20" />
-                            </Style>
-                        </Style.Resources>
-                    </Style>
-                </Button.Resources>
-                    <Grid>
-                        <Image VerticalAlignment="Top" Height="190" Width="190"
-                         Source="image\manager__icon.png" Stretch="Fill" />
-                        <TextBlock Text="ADMIN ACCSESS" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,-25" />
-                    </Grid>
-            </Button>
-            </Grid>
-        <Button Content="Customer Accsess" HorizontalAlignment="Left"
-                Margin="656,303,0,0" VerticalAlignment="Top"
+
+        <Button Content="Admin Access" Margin="0,0,10,50"
+                HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Click="AdminAccsess" Cursor="Hand" />
+
+
+        <Button Content="Customer Access" Margin="0,0,10,-50"
+                HorizontalAlignment="Right" VerticalAlignment="Stretch" 
                 Click="CustomerAccsess" Cursor="Hand" />
         
     </Grid>
