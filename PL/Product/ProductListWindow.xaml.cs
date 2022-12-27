@@ -10,7 +10,7 @@ namespace PL.Product;
 /// <summary>
 /// Interaction logic for ProductList.xaml
 /// </summary>
-public partial class ProductList : Window, INotifyPropertyChanged
+public partial class ProductList : Window
 {
     /// <summary>
     /// Access to the logical layer
@@ -20,9 +20,8 @@ public partial class ProductList : Window, INotifyPropertyChanged
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    private IEnumerable<BO.ProductForList?> productForLists;
-
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public static readonly DependencyProperty ListProp = DependencyProperty.Register(nameof(productFor), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductForList?> productFor { get => (IEnumerable<BO.ProductForList?>)GetValue(ListProp); set => SetValue(ListProp, value); }
 
     /// <summary>
     /// constructor for product list
@@ -30,8 +29,8 @@ public partial class ProductList : Window, INotifyPropertyChanged
     public ProductList()
     {
         InitializeComponent();
-        productForLists = _bl?.Product.GetProductList()!;
-        ProductListview.ItemsSource = productForLists;
+        productFor = _bl?.Product.GetProductList()!;
+        //ProductListview.ItemsSource = productFor;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
     }
@@ -42,7 +41,7 @@ public partial class ProductList : Window, INotifyPropertyChanged
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-        ProductListview.ItemsSource = _bl?.Product.Filter(productForLists,
+        ProductListview.ItemsSource = _bl?.Product.Filter(productFor,
             item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
     /// <summary>
@@ -51,7 +50,7 @@ public partial class ProductList : Window, INotifyPropertyChanged
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AccessAddProduct(object sender, RoutedEventArgs e)
-    => new ProductView(_bl).Show();
+    => new ProductView(_bl, this).Show();
 
     /// <summary>
     /// Refreshing the list of products and presenting without filtering
@@ -69,7 +68,7 @@ public partial class ProductList : Window, INotifyPropertyChanged
     private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
     {
            if (IsMouseCaptureWithin)
-                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
+                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID, this ).Show();
 
     }
 }
