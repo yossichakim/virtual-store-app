@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BLApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +22,14 @@ namespace PL.Order
     public partial class OrderTracking : Window
     {
         private BO.OrderTracking _orderTracking;
+
         private BLApi.IBl? _bl;
-        public OrderTracking(BO.OrderTracking orderTracking, BLApi.IBl bl)
+        public OrderTracking(int orderId, BLApi.IBl bl)
         {
             InitializeComponent();
-            DataContext = orderTracking;
             _bl = bl;
-            _orderTracking = orderTracking;
-            DateAndStatusList.ItemsSource = orderTracking.DateAndStatus;
-            
-
+            _orderTracking = _bl?.Order.OrderTrackingManger(orderId)!;
+            DataContext = _orderTracking;
         }
 
         private void OrderDetails(object sender, RoutedEventArgs e) {

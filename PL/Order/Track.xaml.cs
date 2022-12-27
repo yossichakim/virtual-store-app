@@ -1,4 +1,4 @@
-﻿using System;
+﻿using PL.ValidInput;
 using System.Windows;
 
 namespace PL.Order;
@@ -12,10 +12,12 @@ public partial class Track : Window
     //private BO.Order? _order;
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
-    private BO.OrderTracking? _orderTracking;
+    public int OrderId { get; set; }
+
     public Track()
     {
         InitializeComponent();
+        DataContext = this;
     }
 
     private void OrderTracking(object sender, RoutedEventArgs e)
@@ -29,8 +31,7 @@ public partial class Track : Window
 
         try
         {
-            _orderTracking = _bl?.Order.OrderTrackingManger(int.Parse(OrderID.Text));
-            new OrderTracking(_orderTracking, _bl).Show();
+            new OrderTracking(OrderId, _bl).Show();
         }
         catch (BO.NoValidException ex)
         {
@@ -43,5 +44,10 @@ public partial class Track : Window
             OrderID.Text = "";
 
         }
+    }
+
+    private void OrderID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        e.Handled = ValidInput.ValidInputs.isValidNumber(e.Text);
     }
 }
