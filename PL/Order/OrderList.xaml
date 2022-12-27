@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         Title="OrderList" Height="450" Width="800">
     <Grid>
@@ -19,7 +20,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
         </Grid>
-        <ListView x:Name ="OrderListview" Cursor="Hand" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" Margin="0,29,0,0">
+        <ListView x:Name ="OrderListview" Cursor="Hand" ItemsSource="{Binding orderForLists}" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" Margin="0,29,0,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="Order ID" Width ="100" />

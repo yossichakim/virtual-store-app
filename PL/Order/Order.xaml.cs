@@ -11,10 +11,12 @@ public partial class Order : Window
 
     private BO.Order order;
 
-    public Order(BLApi.IBl? bl, int OrderID, bool view = false)
+    OrderList orderList;
+    public Order(BLApi.IBl? bl, int OrderID, bool view = false, OrderList sender = null)
     {
         InitializeComponent();
         _bl = bl;
+        orderList = sender;
         order = _bl?.Order.GetOrderDetails(OrderID)!;
         DataContext = order;
 
@@ -40,6 +42,7 @@ public partial class Order : Window
         order = _bl?.Order.ShippingUpdate(order.OrderID)!;
         DataContext = order;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
+        orderList.orderForLists = _bl?.Order.GetOrderList()!;
         UpdateShip.Visibility = Visibility.Hidden;
         UpdateDelivery.Visibility = Visibility.Visible;
     }
@@ -49,6 +52,7 @@ public partial class Order : Window
         order = _bl?.Order.DeliveryUpdate(order.OrderID)!;
         DataContext = order;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
+        orderList.orderForLists = _bl?.Order.GetOrderList()!;
         UpdateDelivery.Visibility = Visibility.Hidden;
     }
 }

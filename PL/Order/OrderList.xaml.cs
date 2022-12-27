@@ -1,4 +1,4 @@
-﻿using BO;
+﻿
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -12,7 +12,10 @@ public partial class OrderList : Window
 {
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
-    private IEnumerable<OrderForList?> orderForLists;
+    //private IEnumerable<OrderForList?> orderForLists;
+
+    public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(orderForLists), typeof(IEnumerable<BO.OrderForList?>), typeof(OrderList), new PropertyMetadata(null));
+    public IEnumerable<BO.OrderForList?> orderForLists { get => (IEnumerable<BO.OrderForList?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
 
     public OrderList()
     {
@@ -24,6 +27,6 @@ public partial class OrderList : Window
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)
     { 
         if(IsMouseCaptureWithin)
-             new Order(_bl, ((BO.OrderForList)OrderListview.SelectedItem).OrderID).Show();
+             new Order(_bl, ((BO.OrderForList)OrderListview.SelectedItem).OrderID,false, this).Show();
     }
 }
