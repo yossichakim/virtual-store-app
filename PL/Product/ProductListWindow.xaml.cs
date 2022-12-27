@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,8 +19,9 @@ public partial class ProductList : Window
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    public static readonly DependencyProperty ListProp = DependencyProperty.Register(nameof(productFor), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
-    public IEnumerable<BO.ProductForList?> productFor { get => (IEnumerable<BO.ProductForList?>)GetValue(ListProp); set => SetValue(ListProp, value); }
+    public static readonly DependencyProperty ListProp = DependencyProperty.Register(nameof(productList), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductForList?> productList { get => (IEnumerable<BO.ProductForList?>)GetValue(ListProp); set => SetValue(ListProp, value); }
+
 
     /// <summary>
     /// constructor for product list
@@ -29,7 +29,7 @@ public partial class ProductList : Window
     public ProductList()
     {
         InitializeComponent();
-        productFor = _bl?.Product.GetProductList()!;
+        productList = _bl?.Product.GetProductList()!;
       //  ProductListview.ItemsSource = productForL;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
@@ -41,7 +41,7 @@ public partial class ProductList : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-        ProductListview.ItemsSource = _bl?.Product.Filter(productFor,
+        ProductListview.ItemsSource = _bl?.Product.Filter(productList,
             item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
     /// <summary>
@@ -69,6 +69,5 @@ public partial class ProductList : Window
     {
            if (IsMouseCaptureWithin)
                 new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID, this ).Show();
-
     }
 }

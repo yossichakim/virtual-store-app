@@ -113,7 +113,7 @@ public partial class ProductView : Window
             _bl?.Product.AddProduct(product);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
-            ProductListWin.productFor = _bl?.Product.GetProductList()!;
+            ProductListWin.productList = _bl?.Product.GetProductList()!;
         }
         catch (AddException ex)
         {
@@ -142,7 +142,7 @@ public partial class ProductView : Window
             _bl?.Product.UpdateProduct(product);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
-            ProductListWin.productFor = _bl?.Product.GetProductList()!;
+            ProductListWin.productList = _bl?.Product.GetProductList()!;
         }
         catch (NoFoundException ex)
         {

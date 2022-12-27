@@ -25,20 +25,23 @@ public partial class NewOrder : Window
     /// </summary>
     private IEnumerable<BO.ProductItem?> productItemLists;
 
+    private IEnumerable<IGrouping<BO.Category?, BO.ProductItem>> groupings;
     public NewOrder()
     {
         InitializeComponent();
         _cart = new();
-
         productItemLists = _bl.Product.GetProductListCostumer(_cart);
-                          
+        groupings = from item in productItemLists
+                    group item by item.Categoty into x
+                    select x;
         ProductItemListview.ItemsSource = productItemLists;
         FilterCatgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        => ProductItemListview.ItemsSource = _bl?.Product.Filter(productItemLists,
-            item => item?.Categoty == (BO.Category)FilterCatgory.SelectedItem);
+    {
+        ProductItemListview.ItemsSource = groupings.FirstOrDefault(element => element.Key == (BO.Category)FilterCatgory.SelectedItem);
+    }
 
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
