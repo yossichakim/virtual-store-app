@@ -8,10 +8,12 @@
         Icon="onlineshopping_117952.ico"
         
         Title="MainWindow" Height="450" Width="800" >
-        
-    <Grid>
-        <Image Source="\image\background-image.jpg" Stretch="UniformToFill" />
 
+    <Window.Background>
+        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" />
+    </Window.Background>
+    
+    <Grid>
 
         <Button Content="Admin Access" Margin="0,0,10,50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch"
