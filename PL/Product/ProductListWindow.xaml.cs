@@ -20,7 +20,8 @@ public partial class ProductList : Window
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    private IEnumerable<BO.ProductForList?> productForLists;
+    public static readonly DependencyProperty ListProp = DependencyProperty.Register(nameof(productFor), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductForList?> productFor { get => (IEnumerable<BO.ProductForList?>)GetValue(ListProp); set => SetValue(ListProp, value); }
 
     /// <summary>
     /// constructor for product list
@@ -28,8 +29,8 @@ public partial class ProductList : Window
     public ProductList()
     {
         InitializeComponent();
-        productForLists = _bl?.Product.GetProductList()!;
-        ProductListview.ItemsSource = productForLists;
+        productFor = _bl?.Product.GetProductList()!;
+      //  ProductListview.ItemsSource = productForL;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
     }
@@ -40,7 +41,7 @@ public partial class ProductList : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-        ProductListview.ItemsSource = _bl?.Product.Filter(productForLists,
+        ProductListview.ItemsSource = _bl?.Product.Filter(productFor,
             item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
     /// <summary>
