@@ -20,7 +20,7 @@ public partial class ProductList : Window, INotifyPropertyChanged
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    private IEnumerable<BO.ProductForList?> productForLists;
+    private IEnumerable<BO.ProductForList?> productForList;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -30,8 +30,8 @@ public partial class ProductList : Window, INotifyPropertyChanged
     public ProductList()
     {
         InitializeComponent();
-        productForLists = _bl?.Product.GetProductList()!;
-        ProductListview.ItemsSource = productForLists;
+        productForList = _bl?.Product.GetProductList()!;
+        ProductListview.ItemsSource = productForList;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
     }
@@ -42,7 +42,7 @@ public partial class ProductList : Window, INotifyPropertyChanged
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-        ProductListview.ItemsSource = _bl?.Product.Filter(productForLists,
+        ProductListview.ItemsSource = _bl?.Product.Filter(productForList,
             item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
 
     /// <summary>

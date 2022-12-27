@@ -28,6 +28,9 @@ namespace PL.Order
             DataContext = orderTracking;
             _bl = bl;
             _orderTracking = orderTracking;
+            DateAndStatusList.ItemsSource = orderTracking.DateAndStatus;
+            
+
         }
 
         private void OrderDetails(object sender, RoutedEventArgs e) {
