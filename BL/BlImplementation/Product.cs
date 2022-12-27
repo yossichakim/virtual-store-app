@@ -23,7 +23,7 @@ internal class Product : BLApi.IProduct
 
 
     /// <summary>
-    /// Returns a list of products - for manager and customer
+    /// Returns a list of products - for manager
     /// </summary>
     /// <returns> IEnumerable<BO.ProductForList> </returns>
     public IEnumerable<BO.ProductForList?> GetProductList(Func<BO.ProductForList?, bool>? func = null)
@@ -38,6 +38,20 @@ internal class Product : BLApi.IProduct
                     Category = (BO.Category)item?.Category!,
                     ProductPrice = (double)item?.Price!
                 }).Where(element => flag ? flag : func!(element));
+    }
+
+    /// <summary>
+    ///  Returns a list of products - for  customer
+    /// </summary>
+    /// <param name="func"></param>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem?> GetProductListCostumer( BO.Cart cart,Func<BO.ProductItem?, bool>? func = null)
+    {
+        var products = _dal?.Product.GetAll();
+        bool flag = func is null;
+        return (from item in products
+                select GetProductCostumer((int)item?.ProductID!, cart)).Where(element => flag ? flag : func!(element));
     }
 
     /// <summary>

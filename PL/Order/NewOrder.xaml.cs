@@ -30,8 +30,8 @@ public partial class NewOrder : Window
         InitializeComponent();
         _cart = new();
 
-        productItemLists = from item in _bl?.Product.GetProductList()!
-                           select _bl?.Product.GetProductCostumer(item.ProductID, _cart)!;
+        productItemLists = _bl.Product.GetProductListCostumer(_cart);
+                          
         ProductItemListview.ItemsSource = productItemLists;
         FilterCatgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }

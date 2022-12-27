@@ -13,6 +13,8 @@ public interface IProduct
     /// <returns></returns>
     public IEnumerable<ProductForList?> GetProductList(Func<ProductForList?, bool>? func = null);
 
+    public IEnumerable<ProductItem?> GetProductListCostumer(Cart cart, Func<BO.ProductItem?, bool>? func = null);
+
     /// <summary>
     /// Returns a list of filtered products
     /// </summary>
@@ -53,4 +55,5 @@ public interface IProduct
     /// </summary>
     /// <param name="productTOUpdate"></param>
     public void UpdateProduct(Product productTOUpdate);
+
 }
