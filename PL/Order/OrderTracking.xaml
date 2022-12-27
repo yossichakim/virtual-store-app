@@ -14,11 +14,11 @@
         <Button Content="Order Details" HorizontalAlignment="Left" Margin="213,311,0,0" VerticalAlignment="Top" Click="OrderDetails"/>
         <TextBlock x:Name="OrderID" HorizontalAlignment="Left" Margin="351,135,0,0" TextWrapping="Wrap" Text="{Binding OrderID}" VerticalAlignment="Top"/>
         <TextBlock x:Name="Status" HorizontalAlignment="Left" Margin="351,166,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top"/>
-        <ListView x:Name="DateAndStatusList" Margin="344,191,233,139">
+        <ListView x:Name="DateAndStatusList" Margin="344,191,64,65" ItemsSource="{Binding DateAndStatus}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding DateTime}" Header="Date"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding OrderStatus}" Header="Status"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item1}" Header="Date"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Item2}" Header="Status"/>
 
                 </GridView>
             </ListView.View>

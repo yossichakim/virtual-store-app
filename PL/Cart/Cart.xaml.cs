@@ -27,6 +27,6 @@ public partial class Cart : Window
         this.Close();
     }
 
-    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart).Show();
+    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart, () => Close()).Show();
     
 }

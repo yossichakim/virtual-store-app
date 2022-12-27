@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HandyControls" Version="3.4.4" />
+    <PackageReference Include="materialdesignthemes" Version="4.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
