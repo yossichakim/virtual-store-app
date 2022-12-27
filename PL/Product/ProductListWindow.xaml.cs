@@ -30,7 +30,6 @@ public partial class ProductList : Window
     {
         InitializeComponent();
         productList = _bl?.Product.GetProductList()!;
-      //  ProductListview.ItemsSource = productForL;
         FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
     }
