@@ -17,12 +17,12 @@
 
         <Button Content="Admin Access" Margin="0,0,10,50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                Click="AdminAccsess" Cursor="Hand" />
+                Click="AdminAccsess"/>
 
 
         <Button Content="Customer Access" Margin="0,0,10,-50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch" 
-                Click="CustomerAccsess" Cursor="Hand" />
+                Click="CustomerAccsess"/>
         
     </Grid>
 </Window>
