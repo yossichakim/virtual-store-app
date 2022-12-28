@@ -55,15 +55,7 @@ public partial class ClientDetails : Window
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        //if (string.IsNullOrWhiteSpace(Name.Text) ||
-        //   string.IsNullOrWhiteSpace(Email.Text) ||
-        //   string.IsNullOrWhiteSpace(Address.Text) ||
-        //   !new EmailAddressAttribute().IsValid(Email.Text))
-        //{
-        //    MessageBox.Show("the Name\\Email\\Address is not valid", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    return;
-        //}
-        //new NewOrder(Name.Text, Email.Text, Address.Text).Show();
+
     }
        
 }

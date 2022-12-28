@@ -80,7 +80,7 @@ internal class Cart : BLApi.ICart
             throw new BO.NoValidException("name / email / address");
         }
 
-        if (cart.ItemsList is not null)
+        if (cart.ItemsList is not null && cart.ItemsList.Count() != 0)
         {
             foreach (var item in cart.ItemsList)
             {

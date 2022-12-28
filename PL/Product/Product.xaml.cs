@@ -1,6 +1,5 @@
 ﻿using BO;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace PL.Product;
@@ -16,7 +15,7 @@ public partial class ProductView : Window
     private BLApi.IBl? _bl;
     private BO.Cart? _cart;
     private BO.Product? product;
-    ProductList ProductListWin;
+    private ProductList ProductListWin;
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
@@ -71,7 +70,7 @@ public partial class ProductView : Window
         UpdateCart.Visibility = Visibility.Hidden;
         UpdateAmountTB.Visibility = Visibility.Hidden;
         UpdateAmountL.Visibility = Visibility.Hidden;
-        if(product.InStock ==0)
+        if(product.InStock == 0)
             AddToCart.Visibility= Visibility.Hidden;
         Id.IsEnabled = false;
         Name.IsEnabled = false;
@@ -80,7 +79,7 @@ public partial class ProductView : Window
         Catgory.IsEnabled = false;
     }
 
-    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string str)
+    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string updateCart)
     {
         InitializeComponent();
         _bl = bl;
