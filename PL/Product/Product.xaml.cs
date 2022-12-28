@@ -1,4 +1,5 @@
-﻿using BO;
+﻿
+using HandyControl.Tools.Extension;
 using System;
 using System.Windows;
 
@@ -14,7 +15,7 @@ public partial class ProductView : Window
     /// </summary>
     private BLApi.IBl? _bl;
     private BO.Cart? _cart;
-    private BO.Product? product;
+    private BO.Product? product = new();
     private ProductList ProductListWin;
     /// <summary>
     /// Constructor for a window to add a product
@@ -26,7 +27,8 @@ public partial class ProductView : Window
         _bl = bl;
         ProductListWin = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        //Catgory.SelectedIndex = 0;
+        product.Category = BO.Category.Screens;
+        DataContext = product;
         UpdateProduct.Visibility = Visibility.Hidden;
         AddToCart.Visibility = Visibility.Hidden;
         UpdateCart.Visibility = Visibility.Hidden;
@@ -47,7 +49,6 @@ public partial class ProductView : Window
         product = _bl?.Product.GetProductManger(updateProductID)!;
         DataContext = product;
         Id.IsEnabled = false;
-        Catgory.SelectedItem = product.Category;
         AddProduct.Visibility = Visibility.Hidden;
         AddToCart.Visibility = Visibility.Hidden;
         UpdateCart.Visibility = Visibility.Hidden;
@@ -115,11 +116,11 @@ public partial class ProductView : Window
             Close();
             ProductListWin.productList = _bl?.Product.GetProductList()!;
         }
-        catch (AddException ex)
+        catch (BO.AddException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        catch (NoValidException ex)
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -144,11 +145,11 @@ public partial class ProductView : Window
             this.Close();
             ProductListWin.productList = _bl?.Product.GetProductList()!;
         }
-        catch (NoFoundException ex)
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        catch (NoValidException ex)
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
