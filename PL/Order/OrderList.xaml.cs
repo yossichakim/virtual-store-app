@@ -12,8 +12,6 @@ public partial class OrderList : Window
 {
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
-    //private IEnumerable<OrderForList?> orderForLists;
-
     public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(orderForLists), typeof(IEnumerable<BO.OrderForList?>), typeof(OrderList), new PropertyMetadata(null));
     public IEnumerable<BO.OrderForList?> orderForLists { get => (IEnumerable<BO.OrderForList?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
 
