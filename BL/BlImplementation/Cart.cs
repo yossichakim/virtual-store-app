@@ -30,7 +30,7 @@ internal class Cart : BLApi.ICart
         }
 
         if (product.InStock <= 0)
-            throw new BO.NoValidException("product stock");
+            throw new BO.NoValidException("PRODUCT STOCK");
 
         if (cart.ItemsList is null)
             cart.ItemsList = new();
@@ -77,7 +77,7 @@ internal class Cart : BLApi.ICart
             string.IsNullOrWhiteSpace(cart.CustomerAddress) ||
             !cart.CustomerEmail.IsValidEmail())
         {
-            throw new BO.NoValidException("name / email / address");
+            throw new BO.NoValidException("NAME / EMAIL / ADDRESS");
         }
 
         if (cart.ItemsList is not null && cart.ItemsList.Count() != 0)
@@ -86,7 +86,7 @@ internal class Cart : BLApi.ICart
             {
                 if (item?.Amount <= 0)
                 {
-                    throw new BO.NoValidException("product amount");
+                    throw new BO.NoValidException("PRODUCT AMOUNT");
                 }
 
                 try
@@ -94,7 +94,7 @@ internal class Cart : BLApi.ICart
                     DO.Product? product = _dal?.Product.Get(item!.ProductID);
 
                     if (item?.Amount > product?.InStock)
-                        throw new BO.NoValidException("product stock");
+                        throw new BO.NoValidException("PRODUCT STOCK");
                 }
                 catch (DO.NoFoundException ex)
                 {
@@ -142,7 +142,7 @@ internal class Cart : BLApi.ICart
         }
         else
         {
-            throw new BO.ErrorUpdateCartException("is empty");
+            throw new BO.ErrorUpdateCartException("IS EMPTY");
         }
     }
 
@@ -163,14 +163,14 @@ internal class Cart : BLApi.ICart
 
             if (newAmount < 0)
             {
-                throw new BO.NoValidException("product amount");
+                throw new BO.NoValidException("PRODUCT AMOUNT");
             }
             BO.OrderItem item;
 
             if (cart.ItemsList is null || !cart.ItemsList.Exists(element => element!.ProductID == productID))
             {
                 Exception ex = new("");
-                throw new BO.NoFoundException(ex, "the product no found in cart");
+                throw new BO.NoFoundException(ex, "THE PRODUCT NO FOUND IN CART");
             }
 
             item = cart.ItemsList.First(element => element!.ProductID == product.ProductID)!;
@@ -188,7 +188,7 @@ internal class Cart : BLApi.ICart
                 {
                     if (product.InStock < newAmount)
                     {
-                        throw new BO.NoValidException("product stock");
+                        throw new BO.NoValidException("PRODUCT STOCK");
                     }
                     difference = newAmount - item.Amount;
                     item.Amount = newAmount;
