@@ -16,17 +16,7 @@
         <ComboBox x:Name="Catgory" Text="{Binding Category}" HorizontalAlignment="Left" Margin="398,118,0,0" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="406,242,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="406,298,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <Button x:Name="AddProduct" Cursor="Hand" Content="Confirm Add" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddProductClick">
-            <Button.Resources>
-                <Style TargetType="Button">
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5" />
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Button x:Name="AddProduct" Cursor="Hand" Content="Confirm Add" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddProductClick"/>
         <Button x:Name="UpdateProduct" Cursor="Hand" Content="Confirm Update" Margin="5" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateProductClick"/>
         <Label Content="Product" HorizontalAlignment="Left" Margin="80,23,0,0" VerticalAlignment="Top" Width="118" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
     </Grid>
