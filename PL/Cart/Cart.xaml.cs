@@ -11,10 +11,11 @@ public partial class Cart : Window
 {
     private BO.Cart _cart;
     private BLApi.IBl? _bl = BLApi.Factory.Get();
-    public Cart(BO.Cart cart)
+    private NewOrder _newOrder;
+    public Cart(BO.Cart cart, NewOrder newOrder)
     {
         InitializeComponent();
-        
+        _newOrder = newOrder;
         _cart = cart;
         ItemsList.ItemsSource = cart.ItemsList;
         DataContext = _cart;
@@ -23,10 +24,10 @@ public partial class Cart : Window
     private void ItemsList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (IsMouseCaptureWithin)
-            new ProductView(_bl, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _cart, "updateCart").Show();
+            new ProductView(_bl, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _cart, "updateCart", _newOrder).Show();
         this.Close();
     }
 
-    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart, () => Close()).Show();
+    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart, _newOrder, () => Close()).Show();
     
 }

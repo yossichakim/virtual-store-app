@@ -23,9 +23,11 @@ public partial class NewOrder : Window
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    private IEnumerable<BO.ProductItem?> productItemLists;
-
     private IEnumerable<IGrouping<BO.Category?, BO.ProductItem>> groupings;
+
+    public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(productItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductItem?> productItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
+
     public NewOrder()
     {
         InitializeComponent();
@@ -34,21 +36,20 @@ public partial class NewOrder : Window
         groupings = from item in productItemLists
                     group item by item.Categoty into x
                     select x;
-        ProductItemListview.ItemsSource = productItemLists;
         FilterCatgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductItemListview.ItemsSource = groupings.FirstOrDefault(element => element.Key == (BO.Category)FilterCatgory.SelectedItem);
+        productItemLists = groupings.FirstOrDefault(element => element.Key == (BO.Category)FilterCatgory.SelectedItem)!;
     }
 
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
 
         if(IsMouseCaptureWithin)
-        new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart).Show();
+         new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart,this).Show();
     }
 
-    private void ShowCart(object sender, RoutedEventArgs e) => new Cart.Cart(_cart).Show();
+    private void ShowCart(object sender, RoutedEventArgs e) => new Cart.Cart(_cart,this).Show();
 }

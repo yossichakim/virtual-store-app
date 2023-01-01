@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         
-        Title="NewOrder" Height="450" Width="800">
+        Title="NewOrder" Height="450" Width="850">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200*" />
@@ -21,17 +22,17 @@
         </Grid>
         <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115"/>
         <ComboBox x:Name="FilterCatgory" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
-        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="592,80,0,0" VerticalAlignment="Top" Height="27" Width="90" Click="ShowCart" />
+        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="645,80,0,0" VerticalAlignment="Top" Height="27" Width="90" Click="ShowCart" />
 
-        <ListView x:Name ="ProductItemListview" Cursor="Hand" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
+        <ListView x:Name ="ProductItemListview" ItemsSource="{Binding productItemLists}" Cursor="Hand" Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Product Price"   Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Categoty}" Header="Categoty" Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding AmountInCart}" Header="Amount In Cart" Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding InStock}" Header="InStock" Width ="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="150" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width ="150" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Product Price"   Width ="150" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Categoty}" Header="Categoty" Width ="120" />
+                    <GridViewColumn DisplayMemberBinding="{Binding AmountInCart}" Header="Amount In Cart" Width ="155" />
+                    <GridViewColumn DisplayMemberBinding="{Binding InStock}" Header="InStock" Width ="120" />
 
                 </GridView>
             </ListView.View>

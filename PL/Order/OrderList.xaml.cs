@@ -12,13 +12,13 @@ public partial class OrderList : Window
 {
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
-    public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(orderForLists), typeof(IEnumerable<BO.OrderForList?>), typeof(OrderList), new PropertyMetadata(null));
-    public IEnumerable<BO.OrderForList?> orderForLists { get => (IEnumerable<BO.OrderForList?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
+    public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(orderForList), typeof(IEnumerable<BO.OrderForList?>), typeof(OrderList), new PropertyMetadata(null));
+    public IEnumerable<BO.OrderForList?> orderForList { get => (IEnumerable<BO.OrderForList?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
 
     public OrderList()
     {
         InitializeComponent();
-        orderForLists = _bl?.Order.GetOrderList()!;
+        orderForList = _bl?.Order.GetOrderList()!;
     }
 
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)

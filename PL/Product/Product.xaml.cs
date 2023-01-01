@@ -1,5 +1,6 @@
 ﻿
 using HandyControl.Tools.Extension;
+using PL.Order;
 using System;
 using System.Windows;
 
@@ -17,6 +18,8 @@ public partial class ProductView : Window
     private BO.Cart? _cart;
     private BO.Product? product = new();
     private ProductList ProductListWin;
+    private NewOrder newOrder;
+
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
@@ -57,11 +60,12 @@ public partial class ProductView : Window
     }
 
 
-    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart)
+    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart,NewOrder sender)
     {
         InitializeComponent();
         _bl = bl;
         _cart = cart;
+        newOrder = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(ViewProductID)!;
         DataContext = product;
@@ -80,11 +84,12 @@ public partial class ProductView : Window
         Catgory.IsEnabled = false;
     }
 
-    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string updateCart)
+    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string updateCart, NewOrder sender)
     {
         InitializeComponent();
         _bl = bl;
         _cart = cart;
+        newOrder = sender;
         Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(ViewProductID)!;
         DataContext = product;
@@ -189,13 +194,18 @@ public partial class ProductView : Window
 
         try
         {
-            _cart = _bl?.Cart.AddProductToCart(_cart, (int)product?.ProductID!);
+            _cart = _bl?.Cart.AddProductToCart(_cart!, (int)product?.ProductID!);
             this.Close();
-            new PL.Cart.Cart(_cart).Show();
+            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
+            new PL.Cart.Cart(_cart!, newOrder).Show();
         } 
-        catch (Exception)
+        catch (BO.NoFoundException ex)
         {
-            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch(BO.NoValidException ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -203,14 +213,18 @@ public partial class ProductView : Window
     {
         try
         {
-            _cart = _bl?.Cart.UpdateAmount(_cart, (int)product?.ProductID!, int.Parse(UpdateAmountTB.Text));
+            _cart = _bl?.Cart.UpdateAmount(_cart!, (int)product?.ProductID!, int.Parse(UpdateAmountTB.Text));
             this.Close();
-            new PL.Cart.Cart(_cart).Show();
+            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
+            new PL.Cart.Cart(_cart!,newOrder).Show();
         } 
-        catch (Exception)
+        catch (BO.NoValidException ex)
         {
-
-            MessageBox.Show("ERROR - ONE FIELD IN INCORECT INPUT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        catch(BO.NoFoundException ex)
+        {
+            MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

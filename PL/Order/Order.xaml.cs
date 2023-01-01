@@ -42,7 +42,7 @@ public partial class Order : Window
         order = _bl?.Order.ShippingUpdate(order.OrderID)!;
         DataContext = order;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-        orderList.orderForLists = _bl?.Order.GetOrderList()!;
+        orderList.orderForList = _bl?.Order.GetOrderList()!;
         UpdateShip.Visibility = Visibility.Hidden;
         UpdateDelivery.Visibility = Visibility.Visible;
     }
@@ -52,7 +52,7 @@ public partial class Order : Window
         order = _bl?.Order.DeliveryUpdate(order.OrderID)!;
         DataContext = order;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-        orderList.orderForLists = _bl?.Order.GetOrderList()!;
+        orderList.orderForList = _bl?.Order.GetOrderList()!;
         UpdateDelivery.Visibility = Visibility.Hidden;
     }
 }

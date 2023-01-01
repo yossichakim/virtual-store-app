@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.ComponentModel.DataAnnotations;
 using System;
 
 namespace PL.Order;
@@ -13,13 +12,14 @@ public partial class ClientDetails : Window
 
     private BLApi.IBl? _bl;
     private Action action;
-
-    public ClientDetails(BLApi.IBl? bl, BO.Cart cart, Action action)
+    private NewOrder _newOrder;
+    public ClientDetails(BLApi.IBl? bl, BO.Cart cart,NewOrder newOrder, Action action)
     {
         InitializeComponent();
         this.action = action;    
         _bl = bl;   
-        _cart = cart;   
+        _cart = cart;  
+        _newOrder = newOrder;   
     }
 
     private void ToAddOrder(object sender, RoutedEventArgs e)
@@ -34,6 +34,7 @@ public partial class ClientDetails : Window
             //ASK???
             action();
             this.Close();
+            _newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
         } 
 
         catch (BO.NoValidException ex)

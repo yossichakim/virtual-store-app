@@ -1,5 +1,4 @@
 ﻿using SeviceFunction;
-
 namespace BlImplementation;
 
 /// <summary>
@@ -41,12 +40,17 @@ internal class Cart : BLApi.ICart
 
         if (item != null)
         {
+            if (item.Amount + 1 > product.InStock)
+            {
+                throw new BO.NoValidException("product stock");
+            }
             item.Amount++;
             item.TotalPrice += item.ProductPrice;
             cart.TotalPriceInCart += item.ProductPrice;
         }
         else
         {
+
             cart.ItemsList!.Add(
             new BO.OrderItem()
             {

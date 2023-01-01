@@ -25,7 +25,7 @@
             </ListView.View>
         </ListView>
         <Label Content="Items List In Cart" HorizontalAlignment="Left" Margin="320,217,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold" />
-        <Button x:Name ="CheckOut" Content="Check Out" HorizontalAlignment="Left" Margin="741,16,0,0" VerticalAlignment="Top" Click="CheckOut_Click"/>
+        <Button x:Name ="CheckOut" Content="Check Out" HorizontalAlignment="Left" Margin="683,46,0,0" VerticalAlignment="Top" Click="CheckOut_Click"/>
         <Label Content="Cart" HorizontalAlignment="Left" Margin="79,26,0,0" VerticalAlignment="Top" Height="37" Width="108" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black"/>
     </Grid>
 </Window>
