@@ -48,8 +48,12 @@ public partial class NewOrder : Window
     {
 
         if(IsMouseCaptureWithin)
-         new ProductView(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart,this).Show();
+         new ProductItem(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart,this).Show();
     }
 
     private void ShowCart(object sender, RoutedEventArgs e) => new Cart.Cart(_cart,this).Show();
+
+    private void AllCategory(object sender, RoutedEventArgs e)
+    => productItemLists = _bl?.Product.GetProductListCostumer(_cart)!;
+    
 }

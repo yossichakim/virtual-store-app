@@ -26,7 +26,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="Order ID" Width ="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding CustomerName}" Header="Customer Name" Width ="170" />
                     <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status"   Width ="170" />
-                    <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}" Header="Amount Of Items" Width ="150" />
+                    <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}" Header="Amount Of Items" Width ="170" />
                     <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="150" />
                 </GridView>
             </ListView.View>

@@ -1,0 +1,25 @@
+﻿<Window x:Class="PL.Order.ProductItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Order"
+        mc:Ignorable="d"
+        Title="ProductItem" Height="450" Width="800">
+    <Grid>
+        <Label Content="Product ID:" HorizontalAlignment="Left" Margin="300,67,0,0" VerticalAlignment="Top" />
+        <Label Content="Product Name:" HorizontalAlignment="Left" Margin="300,118,0,0" VerticalAlignment="Top" />
+        <Label Content="Product Price:" HorizontalAlignment="Left" Margin="300,232,0,0" VerticalAlignment="Top" />
+        <Label Content="Category:" HorizontalAlignment="Left" Margin="300,180,0,0" VerticalAlignment="Top" />
+        <Label Content="In Stock:" HorizontalAlignment="Left" Margin="300,280,0,0" VerticalAlignment="Top" />
+        <Label Content="Amount In Cart:" HorizontalAlignment="Left" Margin="300,330,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="398,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Cursor="AppStarting" IsEnabled="False"/>
+        <TextBox x:Name="Name" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="398,118,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <ComboBox x:Name="Catgory" Text="{Binding Categoty}" HorizontalAlignment="Left" Margin="398,183,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="398,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="398,283,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="AmountInCart" Text="{Binding AmountInCart}" HorizontalAlignment="Left" Margin="398,325,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="AddToCart" Cursor="Hand" Content="Add To Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddToCart_Click"/>
+        <Button x:Name="UpdateCart" Cursor="Hand" Content="Update Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateCart_Click"/>
+    </Grid>
+</Window>

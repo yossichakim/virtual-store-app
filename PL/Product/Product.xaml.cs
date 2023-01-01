@@ -1,7 +1,4 @@
-﻿
-using HandyControl.Tools.Extension;
-using PL.Order;
-using System;
+﻿using System;
 using System.Windows;
 
 namespace PL.Product;
@@ -15,28 +12,26 @@ public partial class ProductView : Window
     /// Access for the logical layer
     /// </summary>
     private BLApi.IBl? _bl;
-    private BO.Cart? _cart;
     private BO.Product? product = new();
     private ProductList ProductListWin;
-    private NewOrder newOrder;
-
+    public ProductView(BLApi.IBl? bl)
+    {
+        InitializeComponent();
+        _bl = bl;
+        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        product.Category = BO.Category.Screens;
+        DataContext = product;
+    }
     /// <summary>
     /// Constructor for a window to add a product
     /// </summary>
     /// <param name="bl"></param>
     public ProductView(BLApi.IBl? bl,ProductList sender)
+        :this(bl)
     {
         InitializeComponent();
-        _bl = bl;
         ProductListWin = sender;
-        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        product.Category = BO.Category.Screens;
-        DataContext = product;
         UpdateProduct.Visibility = Visibility.Hidden;
-        AddToCart.Visibility = Visibility.Hidden;
-        UpdateCart.Visibility = Visibility.Hidden;
-        UpdateAmountTB.Visibility = Visibility.Hidden;
-        UpdateAmountL.Visibility = Visibility.Hidden;
     }
 
     /// <summary>
@@ -44,64 +39,14 @@ public partial class ProductView : Window
     /// </summary>
     /// <param name="bl"></param>
     public ProductView(BLApi.IBl? bl, int updateProductID, ProductList sender)
+        :this(bl) 
     {
         InitializeComponent();
-        _bl = bl;
         ProductListWin = sender;
-        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         product = _bl?.Product.GetProductManger(updateProductID)!;
         DataContext = product;
         Id.IsEnabled = false;
         AddProduct.Visibility = Visibility.Hidden;
-        AddToCart.Visibility = Visibility.Hidden;
-        UpdateCart.Visibility = Visibility.Hidden;
-        UpdateAmountTB.Visibility = Visibility.Hidden;
-        UpdateAmountL.Visibility = Visibility.Hidden;
-    }
-
-
-    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart,NewOrder sender)
-    {
-        InitializeComponent();
-        _bl = bl;
-        _cart = cart;
-        newOrder = sender;
-        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        product = _bl?.Product.GetProductManger(ViewProductID)!;
-        DataContext = product;
-        Catgory.SelectedItem = product.Category;
-        AddProduct.Visibility = Visibility.Hidden;
-        UpdateProduct.Visibility = Visibility.Hidden;
-        UpdateCart.Visibility = Visibility.Hidden;
-        UpdateAmountTB.Visibility = Visibility.Hidden;
-        UpdateAmountL.Visibility = Visibility.Hidden;
-        if(product.InStock == 0)
-            AddToCart.Visibility= Visibility.Hidden;
-        Id.IsEnabled = false;
-        Name.IsEnabled = false;
-        Price.IsEnabled = false;
-        Instock.IsEnabled = false;
-        Catgory.IsEnabled = false;
-    }
-
-    public ProductView(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string updateCart, NewOrder sender)
-    {
-        InitializeComponent();
-        _bl = bl;
-        _cart = cart;
-        newOrder = sender;
-        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        product = _bl?.Product.GetProductManger(ViewProductID)!;
-        DataContext = product;
-        Catgory.SelectedItem = product.Category;
-        AddProduct.Visibility = Visibility.Hidden;
-        UpdateProduct.Visibility = Visibility.Hidden;
-        AddToCart.Visibility = Visibility.Hidden;
-        Id.IsEnabled = false;
-        Name.IsEnabled = false;
-        Price.IsEnabled = false;
-        Instock.IsEnabled = false;
-        Catgory.IsEnabled = false;
     }
 
     /// <summary>
@@ -189,42 +134,4 @@ public partial class ProductView : Window
         return product;
     }
 
-    private void AddToCart_Click(object sender, RoutedEventArgs e)
-    {
-
-        try
-        {
-            _cart = _bl?.Cart.AddProductToCart(_cart!, (int)product?.ProductID!);
-            this.Close();
-            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
-            new PL.Cart.Cart(_cart!, newOrder).Show();
-        } 
-        catch (BO.NoFoundException ex)
-        {
-            MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch(BO.NoValidException ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    private void UpdateCart_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            _cart = _bl?.Cart.UpdateAmount(_cart!, (int)product?.ProductID!, int.Parse(UpdateAmountTB.Text));
-            this.Close();
-            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
-            new PL.Cart.Cart(_cart!,newOrder).Show();
-        } 
-        catch (BO.NoValidException ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch(BO.NoFoundException ex)
-        {
-            MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
 }

@@ -24,7 +24,7 @@ public partial class Cart : Window
     private void ItemsList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (IsMouseCaptureWithin)
-            new ProductView(_bl, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _cart, "updateCart", _newOrder).Show();
+            new ProductItem(_bl, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _cart, "updateCart", _newOrder).Show();
         this.Close();
     }
 
