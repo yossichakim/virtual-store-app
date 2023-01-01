@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Order" Height="458" Width="813">
+        Title="Order" Height="458" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="67*" />
@@ -36,7 +36,7 @@
             <Label Content="Ship Date:" HorizontalAlignment="Left" Margin="94,250,0,0" VerticalAlignment="Top" />
             <Label Content="Delivery Date:" HorizontalAlignment="Left" Margin="94,290,0,0" VerticalAlignment="Top" />
             <Label Content="Items List" HorizontalAlignment="Left" Margin="294,10,0,0" VerticalAlignment="Top" Width="178" FontWeight="Bold" FontSize="16" Grid.Column="1" />
-            <Label Content="Total Price order:" HorizontalAlignment="Left" Margin="94,347,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" />
+            <Label Content="Total Price order:" HorizontalAlignment="Left" Margin="66,353,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" Height="31" FontSize="18" />
             <TextBox x:Name="Id" Text="{Binding OrderID}"  IsEnabled="False" HorizontalAlignment="Left" Margin="240,10,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="Name" Text="{Binding CustomerName}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,50,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="Email" Text="{Binding CustomerEmail}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
@@ -49,16 +49,16 @@
             <ListView x:Name ="ItemsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="159,50,10,100" Grid.Column="1">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="70" />
-                        <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width ="85" />
-                        <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Product Price" Width ="80" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount"   Width ="55" />
-                        <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="95" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="150" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width ="150" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Product Price" Width ="150" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount"   Width ="150" />
+                        <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="150" />
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="UpdateShip" Content="Update Ship Date" Grid.Column="1" HorizontalAlignment="Left" Margin="358,348,0,0" VerticalAlignment="Top" Height="25" Width="102" Click="UpdateShipDate" />
-            <Button x:Name="UpdateDelivery" Content="Update Delivery Date" Grid.Column="1" HorizontalAlignment="Left" Margin="358,348,0,0" VerticalAlignment="Top" Height="25" Width="124" Click="UpdateDeliveryDate" />
+            <Button x:Name="UpdateShip" Content="Update Ship Date" Grid.Column="1" HorizontalAlignment="Left" Margin="432,348,0,0" VerticalAlignment="Top" Height="25" Width="150" Click="UpdateShipDate" />
+            <Button x:Name="UpdateDelivery" Content="Update Delivery Date" Grid.Column="1" HorizontalAlignment="Left" Margin="414,348,0,0" VerticalAlignment="Top" Height="25" Width="185" Click="UpdateDeliveryDate" />
         </Grid>
         <Label Content="Order" HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center" Width="77" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" Grid.ColumnSpan="2" />
     </Grid>

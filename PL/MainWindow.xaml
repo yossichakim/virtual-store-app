@@ -15,6 +15,7 @@
     </Window.Background>
     
     <Grid>
+        <Label Content="Benny And Yossi" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0"/>
 
         <Button Content="Admin Access" Margin="0,0,10,50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch"

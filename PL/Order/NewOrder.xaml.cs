@@ -25,8 +25,8 @@ public partial class NewOrder : Window
     /// </summary>
     private IEnumerable<IGrouping<BO.Category?, BO.ProductItem>> groupings;
 
-    public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(productItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder), new PropertyMetadata(null));
-    public IEnumerable<BO.ProductItem?> productItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
+    public static readonly DependencyProperty ListPropProductItem = DependencyProperty.Register(nameof(productItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder), new PropertyMetadata(null));
+    public IEnumerable<BO.ProductItem?> productItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropProductItem); set => SetValue(ListPropProductItem, value); }
 
     public NewOrder()
     {
