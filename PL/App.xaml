@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:bo="clr-namespace:BO;assembly=BL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         
@@ -19,7 +21,11 @@
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
-            
+            <ObjectDataProvider x:Key="ProductCategory" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="bo:Category" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
