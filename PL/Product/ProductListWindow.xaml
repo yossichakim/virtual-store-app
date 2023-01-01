@@ -33,27 +33,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name = "AddProduct" Cursor="Hand" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AccessAddProduct">
-            <Button.Resources>
-                <Style TargetType="Button">
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5" />
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </Button.Resources>
-        </Button>
-        <Button x:Name = "AllCatgory" Cursor="Hand" Content="All Category" HorizontalAlignment="Left" Margin="5" Padding="5" Grid.Row="2" VerticalAlignment="Top" Click = "AllCatgoryClick">
-            <Button.Resources>
-                <Style TargetType="Button">
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5" />
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </Button.Resources>
-        </Button>
+
+
+        <Button x:Name = "AddProduct" Content="Add New Product"
+                HorizontalAlignment="Right" Margin="5"
+                Grid.Row="2" Click = "AccessAddProduct"/>
+        
+        <Button x:Name = "AllCatgory" Content="All Category"
+                HorizontalAlignment="Left" Margin="5"
+                Grid.Row="2" Click = "AllCatgoryClick"/>
     </Grid>
 </Window>
