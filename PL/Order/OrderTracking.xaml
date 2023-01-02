@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding OrderTrackingProp, RelativeSource={RelativeSource self}}"
         Title="OrderTracking" Height="450" Width="800">
     <Grid>
         <Label Content="Order Tracking" HorizontalAlignment="Center" VerticalAlignment="Top" Width="176" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" Height="33" />

@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        DataContext="{Binding OrderProp, RelativeSource={RelativeSource self}}"
         Title="Order" Height="458" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -46,7 +47,7 @@
             <TextBox x:Name="ShipDate" Text="{Binding ShipDate }" IsEnabled="False" HorizontalAlignment="Left" Margin="240,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="DeliveryDate" Text="{Binding  DeliveryDate}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="TotalPrice" Text="{Binding TotalPrice}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <ListView x:Name ="ItemsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="159,50,10,100" Grid.Column="1">
+            <ListView x:Name ="ItemsListView"  Margin="159,50,10,100" Grid.Column="1">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="150" />

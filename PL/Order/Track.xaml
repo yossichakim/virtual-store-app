@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="Track" HorizontalAlignment="Left" Margin="67,30,0,0" VerticalAlignment="Top" Width="176" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" Height="33" />
         <Label Content="Enter Order ID:" HorizontalAlignment="Left" Margin="213,130,0,0" VerticalAlignment="Top" FontWeight="Bold" />
-        <TextBox x:Name="OrderID" InputScope="Number"  HorizontalAlignment="Left" Margin="328,135,0,0" TextWrapping="Wrap" Text="{Binding OrderId}" PreviewTextInput="OrderID_PreviewTextInput" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="OrderID" InputScope="Number"  HorizontalAlignment="Left" Margin="328,135,0,0" TextWrapping="Wrap" PreviewTextInput="OrderID_PreviewTextInput" VerticalAlignment="Top" Width="120" />
         <Button Content="Track" HorizontalAlignment="Left" Margin="314,299,0,0" VerticalAlignment="Top" Height="39" Width="148" Click="OrderTracking" />
 
     </Grid>

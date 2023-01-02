@@ -1,33 +1,31 @@
-﻿using System.Windows;
+﻿namespace PL.Order;
+using System.Windows;
 
-namespace PL.Order;
 
 /// <summary>
 /// Interaction logic for Order.xaml
 /// </summary>
 public partial class Order : Window
 {
-    private BLApi.IBl? _bl;
+    private BLApi.IBl? _bl = BLApi.Factory.Get();
 
-    private BO.Order order;
+    public static readonly DependencyProperty OrderDep = DependencyProperty.Register(nameof(OrderProp), typeof(BO.Order), typeof(Order));
+    public BO.Order? OrderProp { get => (BO.Order?)GetValue(OrderDep); set => SetValue(OrderDep, value); }
 
-    OrderList orderList;
-    public Order(BLApi.IBl? bl, int OrderID, bool view = false, OrderList sender = null)
+    private event Action? _orderChanged;
+    public Order(int OrderID, bool view = false, Action? orderChanged = null)
     {
         InitializeComponent();
-        _bl = bl;
-        orderList = sender;
-        order = _bl?.Order.GetOrderDetails(OrderID)!;
-        DataContext = order;
+        _orderChanged = orderChanged;
+        OrderProp = _bl!.Order.GetOrderDetails(OrderID)!;
+        ItemsListView.ItemsSource = OrderProp.ItemsList;
 
-        ItemsListView.ItemsSource = order.ItemsList;
-
-        if (order.ShipDate is not null)
+        if (OrderProp.ShipDate is not null)
             UpdateShip.Visibility = Visibility.Hidden;
         else
             UpdateDelivery.Visibility = Visibility.Hidden;
 
-        if (order.DeliveryDate is not null)
+        if (OrderProp.DeliveryDate is not null)
             UpdateDelivery.Visibility = Visibility.Hidden;
 
         if (view == true)
@@ -39,20 +37,18 @@ public partial class Order : Window
 
     private void UpdateShipDate(object sender, RoutedEventArgs e)
     {
-        order = _bl?.Order.ShippingUpdate(order.OrderID)!;
-        DataContext = order;
+        OrderProp = _bl!.Order.ShippingUpdate(OrderProp!.OrderID)!;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-        orderList.orderForList = _bl?.Order.GetOrderList()!;
+        _orderChanged!.Invoke();
         UpdateShip.Visibility = Visibility.Hidden;
         UpdateDelivery.Visibility = Visibility.Visible;
     }
 
     private void UpdateDeliveryDate(object sender, RoutedEventArgs e)
     {
-        order = _bl?.Order.DeliveryUpdate(order.OrderID)!;
-        DataContext = order;
+        OrderProp = _bl!.Order.DeliveryUpdate(OrderProp!.OrderID)!;
         MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-        orderList.orderForList = _bl?.Order.GetOrderList()!;
+        _orderChanged!.Invoke();
         UpdateDelivery.Visibility = Visibility.Hidden;
     }
 }
