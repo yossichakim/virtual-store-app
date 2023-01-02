@@ -1,33 +1,34 @@
-﻿using PL.Order;
-using PL.Product;
+﻿namespace PL.Cart;
+using PL.Order;
 using System.Windows;
 
-namespace PL.Cart;
 
 /// <summary>
 /// Interaction logic for Cart.xaml
 /// </summary>
 public partial class Cart : Window
 {
-    private BO.Cart _cart;
-    private BLApi.IBl? _bl = BLApi.Factory.Get();
-    private NewOrder _newOrder;
-    public Cart(BO.Cart cart, NewOrder newOrder)
+    private static BLApi.IBl? _bl = BLApi.Factory.Get();
+
+
+    public static readonly DependencyProperty CartDep = DependencyProperty.Register(nameof(CartProp), typeof(BO.Cart), typeof(Cart));
+    public BO.Cart? CartProp { get => (BO.Cart?)GetValue(CartDep); set => SetValue(CartDep, value); }
+
+    private event Action _productItemChange;
+    public Cart(BO.Cart cart, Action productItemChange)
     {
         InitializeComponent();
-        _newOrder = newOrder;
-        _cart = cart;
-        ItemsList.ItemsSource = cart.ItemsList;
-        DataContext = _cart;
+        _productItemChange = productItemChange;
+        CartProp = cart;
     }
 
     private void ItemsList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (IsMouseCaptureWithin)
-            new ProductItem(_bl, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _cart, "updateCart", _newOrder).Show();
+            new ProductItem(CartProp!, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _productItemChange, false).Show();
         this.Close();
     }
 
-    private void CheckOut_Click(object sender, RoutedEventArgs e) => new ClientDetails(_bl, _cart, _newOrder, () => Close()).Show();
+    private void CheckOut_Click(object sender, RoutedEventArgs e) { new ClientDetails(CartProp!, () => Close(), _productItemChange).Show(); }
     
 }

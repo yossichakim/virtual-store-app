@@ -1,57 +1,53 @@
-﻿using System;
+﻿namespace PL.Order;
 using System.Windows;
-namespace PL.Order;
 
 /// <summary>
 /// Interaction logic for ProductItem.xaml
 /// </summary>
 public partial class ProductItem : Window
 {
-    private BLApi.IBl? _bl;
+    private static BLApi.IBl? s_bl = BLApi.Factory.Get();
+
     private BO.Cart? _cart;
-    private BO.ProductItem? productItem = new();
-    private NewOrder newOrder;
-    public ProductItem(BLApi.IBl? bl, BO.Cart cart, NewOrder sender)
+
+    public static readonly DependencyProperty ProductItemDep = DependencyProperty.Register(nameof(ProductItemProp),
+                                                                                   typeof(BO.ProductItem),
+                                                                                  typeof(ProductItem));
+    public BO.ProductItem? ProductItemProp { get => (BO.ProductItem?)GetValue(ProductItemDep); set => SetValue(ProductItemDep, value); }
+
+    private event Action _productItemChanged;
+    public ProductItem(BO.Cart cart,int ViewProductID, Action productItemChanged, bool flag = true)
     {
         InitializeComponent();
-        _bl = bl;
+        _productItemChanged = productItemChanged;
         _cart = cart;
-        newOrder = sender;
-        Catgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        Catgory.SelectedItem = productItem.Categoty;
-    }
-    public ProductItem(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, NewOrder sender)
-        : this(bl,cart,sender)
-    {
-        productItem = _bl?.Product.GetProductCostumer(ViewProductID, _cart)!;
-        DataContext = productItem;
-        AmountInCart.IsEnabled = false;
-        if (productItem.InStock == false)
+        ProductItemProp = s_bl?.Product.GetProductCostumer(ViewProductID, _cart)!;
+        if (flag)
+        {
+            if (ProductItemProp.InStock == false)
+                AddToCart.Visibility = Visibility.Hidden;
+            UpdateCart.Visibility = Visibility.Hidden;
+            AmountInCart.IsEnabled = false;
+        }
+        else
             AddToCart.Visibility = Visibility.Hidden;
-        UpdateCart.Visibility = Visibility.Hidden;
-        AmountInCart.IsEnabled = false;
     }
-    public ProductItem(BLApi.IBl? bl, int ViewProductID, BO.Cart cart, string updateCart, NewOrder sender)
-        : this(bl, cart, sender)
-    {
-        productItem = _bl?.Product.GetProductCostumer(ViewProductID, _cart)!;
-        DataContext = productItem;
-        AddToCart.Visibility = Visibility.Hidden;
-    }
+
 
     private void AddToCart_Click(object sender, RoutedEventArgs e)
     {
 
         try
         {
-            _cart = _bl?.Cart.AddProductToCart(_cart!, (int)productItem?.ProductID!);
+            _cart = s_bl?.Cart.AddProductToCart(_cart!, (int)ProductItemProp?.ProductID!);
             this.Close();
-            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
-            new PL.Cart.Cart(_cart!, newOrder).Show();
-        } catch (BO.NoFoundException ex)
+            _productItemChanged.Invoke();
+        } 
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -59,12 +55,14 @@ public partial class ProductItem : Window
 
     private void UpdateCart_Click(object sender, RoutedEventArgs e)
     {
+        if (!int.TryParse( AmountInCart.Text, out int n))
+            MessageBox.Show("ENTER A VALID AMOUNT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
         try
         {
-            _cart = _bl?.Cart.UpdateAmount(_cart!, (int)productItem?.ProductID!, int.Parse(AmountInCart.Text));
+            _cart = s_bl?.Cart.UpdateAmount(_cart!, (int)ProductItemProp?.ProductID!, int.Parse(AmountInCart.Text));
             this.Close();
-            newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
-            new PL.Cart.Cart(_cart!, newOrder).Show();
+            _productItemChanged.Invoke();
         } 
         catch (BO.NoValidException ex)
         {
@@ -76,5 +74,3 @@ public partial class ProductItem : Window
         }
     }
 }
-
-

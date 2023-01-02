@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
+        xmlns:bo="clr-namespace:BO;assembly=BL"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         
@@ -22,10 +23,10 @@
 
         </Grid>
         <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115"/>
-        <ComboBox x:Name="FilterCatgory" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
+        <ComboBox x:Name="FilterCatgory" ItemsSource="{x:Static local:NewOrder.Categories}" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
         <Button Content="Your Cart" HorizontalAlignment="Left" Margin="707,16,0,0" VerticalAlignment="Top" Height="31" Width="98" Click="ShowCart" Grid.Row="2"/>
 
-        <ListView x:Name ="ProductItemListview" ItemsSource="{Binding productItemLists}" Cursor="Hand"  Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
+        <ListView x:Name ="ProductItemListview" ItemsSource="{Binding ProductItemLists}" Cursor="Hand"  Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="150" />

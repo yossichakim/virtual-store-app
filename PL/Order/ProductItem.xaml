@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
+        DataContext="{Binding ProductItemProp, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="ProductItem" Height="450" Width="800">
     <Grid>
@@ -15,7 +16,7 @@
         <Label Content="Amount In Cart:" HorizontalAlignment="Left" Margin="300,330,0,0" VerticalAlignment="Top" />
         <TextBox x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="398,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Cursor="AppStarting" IsEnabled="False"/>
         <TextBox x:Name="Name" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="398,118,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <ComboBox x:Name="Catgory" Text="{Binding Categoty}" HorizontalAlignment="Left" Margin="398,183,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <ComboBox x:Name="Catgory" Text="{Binding Categoty}" ItemsSource="{Binding Source={StaticResource ProductCategory}}"  HorizontalAlignment="Left" Margin="398,183,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="398,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="398,283,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <TextBox x:Name="AmountInCart" Text="{Binding AmountInCart}" HorizontalAlignment="Left" Margin="398,325,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>

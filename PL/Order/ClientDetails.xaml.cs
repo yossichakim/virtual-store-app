@@ -8,33 +8,31 @@ namespace PL.Order;
 /// </summary>
 public partial class ClientDetails : Window
 {
-    private BO.Cart _cart;
+    private BO.Cart? _cart;
 
-    private BLApi.IBl? _bl;
-    private Action action;
-    private NewOrder _newOrder;
-    public ClientDetails(BLApi.IBl? bl, BO.Cart cart,NewOrder newOrder, Action action)
+    private static BLApi.IBl? s_bl = BLApi.Factory.Get();
+    private Action _action;
+    private Action _productItemChange;
+    public ClientDetails( BO.Cart cart, Action action, Action productItemChange)
     {
         InitializeComponent();
-        this.action = action;    
-        _bl = bl;   
+        _productItemChange = productItemChange;
+        _action = action;    
         _cart = cart;  
-        _newOrder = newOrder;   
     }
 
     private void ToAddOrder(object sender, RoutedEventArgs e)
     {
         try
         {
-            _cart.CustomerAddress = Address.Text;
+            _cart!.CustomerAddress = Address.Text;
             _cart.CustomerName = Name.Text;
             _cart.CustomerEmail = Email.Text;
-            _bl?.Cart.ConfirmedOrder(_cart);
+            s_bl!.Cart.ConfirmedOrder(_cart);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-            //ASK???
-            action();
+            _action();
+            _productItemChange();
             this.Close();
-            _newOrder.productItemLists = _bl?.Product.GetProductListCostumer(_cart!)!;
         } 
 
         catch (BO.NoValidException ex)

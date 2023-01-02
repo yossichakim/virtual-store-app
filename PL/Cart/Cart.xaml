@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
+        DataContext="{Binding CartProp, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="Cart" Height="450" Width="800">
     <Grid>
@@ -13,7 +14,7 @@
         </Grid.RowDefinitions>
         <Label Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top" />
         <TextBox  x:Name ="TotalPriceInCart" Text="{Binding TotalPriceInCart}" IsEnabled="False" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <ListView x:Name ="ItemsList" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
+        <ListView x:Name ="ItemsList" ItemsSource="{Binding ItemsList}" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155" />

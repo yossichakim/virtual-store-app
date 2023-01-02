@@ -1,59 +1,69 @@
-﻿using PL.Product;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace PL.Order;
+
+using PL.Product;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 
-namespace PL.Order;
 
 /// <summary>
 /// Interaction logic for NewOrder.xaml
 /// </summary>
 public partial class NewOrder : Window
 {
-    private BO.Cart _cart;
+    private BO.Cart? _cart;
     /// <summary>
     /// Access to the logical layer
     /// </summary>
-    private BLApi.IBl? _bl = BLApi.Factory.Get();
+    private static BLApi.IBl? s_bl = BLApi.Factory.Get();
+
+    public static readonly DependencyProperty CategoryProp = DependencyProperty.Register(nameof(Category), typeof(BO.Category?), typeof(NewOrder));
+    public BO.Category? Category { get => (BO.Category?)GetValue(CategoryProp); set => SetValue(CategoryProp, value); }
+    public static BO.Category[] Categories { get; } = (BO.Category[])Enum.GetValues(typeof(BO.Category));
 
     /// <summary>
     /// Saving the list of products
     /// </summary>
     private IEnumerable<IGrouping<BO.Category?, BO.ProductItem>> groupings;
 
-    public static readonly DependencyProperty ListPropProductItem = DependencyProperty.Register(nameof(productItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder), new PropertyMetadata(null));
-    public IEnumerable<BO.ProductItem?> productItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropProductItem); set => SetValue(ListPropProductItem, value); }
+    public static readonly DependencyProperty ListPropProductItem = DependencyProperty.Register(nameof(ProductItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder));
+    public IEnumerable<BO.ProductItem?> ProductItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropProductItem); set => SetValue(ListPropProductItem, value); }
 
     public NewOrder()
     {
         InitializeComponent();
+        Category = null;
         _cart = new();
-        productItemLists = _bl.Product.GetProductListCostumer(_cart);
-        groupings = from item in productItemLists
+        ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart);
+        groupings = from item in ProductItemLists
                     group item by item.Categoty into x
                     select x;
-        FilterCatgory.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
-    private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void updateProductItems()
     {
-        productItemLists = groupings.FirstOrDefault(element => element.Key == (BO.Category)FilterCatgory.SelectedItem)!;
+        if (Category == null)
+            ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!);
+        else
+            ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!, item => item!.Categoty == Category);
     }
+    private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e) => updateProductItems();
 
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-
         if(IsMouseCaptureWithin)
-         new ProductItem(_bl, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, _cart,this).Show();
+         new ProductItem(_cart!, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, updateProductItems).Show();
     }
 
-    private void ShowCart(object sender, RoutedEventArgs e) => new Cart.Cart(_cart,this).Show();
+    private void ShowCart(object sender, RoutedEventArgs e)
+    {
+        new Cart.Cart(_cart!, updateProductItems).Show();
+    }
 
     private void AllCategory(object sender, RoutedEventArgs e)
-    => productItemLists = _bl?.Product.GetProductListCostumer(_cart)!;
-    
+    {
+        Category = null;
+        updateProductItems();
+    }    
 }
