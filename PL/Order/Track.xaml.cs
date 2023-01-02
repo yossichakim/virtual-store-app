@@ -8,7 +8,7 @@ namespace PL.Order;
 /// </summary>
 public partial class Track : Window
 {
-   // private BLApi.IBl? _bl;
+   // private BLApi.IBl? s_bl;
     //private BO.Order? _order;
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 

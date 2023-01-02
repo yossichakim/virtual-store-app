@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace PL.Product;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace PL.Product;
-
 /// <summary>
-/// Interaction logic for ProductList.xaml
+/// Interaction logic for Products.xaml
 /// </summary>
 public partial class ProductList : Window
 {
@@ -16,12 +13,15 @@ public partial class ProductList : Window
     /// </summary>
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
+    public static readonly DependencyProperty CategoryProp = DependencyProperty.Register(nameof(Category), typeof(BO.Category?), typeof(ProductList));
+    public BO.Category? Category { get => (BO.Category?)GetValue(CategoryProp); set => SetValue(CategoryProp, value); }
+    public static BO.Category[] Categories { get; } = (BO.Category[])Enum.GetValues(typeof(BO.Category));
+
     /// <summary>
     /// Saving the list of products
     /// </summary>
-    public static readonly DependencyProperty ListPropProduct = DependencyProperty.Register(nameof(productList), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList), new PropertyMetadata(null));
-    public IEnumerable<BO.ProductForList?> productList { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
-
+    public static readonly DependencyProperty ListPropProduct = DependencyProperty.Register(nameof(Products), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList));
+    public IEnumerable<BO.ProductForList?> Products { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
 
     /// <summary>
     /// constructor for product list
@@ -29,26 +29,30 @@ public partial class ProductList : Window
     public ProductList()
     {
         InitializeComponent();
-        productList = _bl?.Product.GetProductList()!;
-        FilterProducts.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        Category = null;
+        Products = _bl!.Product.GetProductList()!;
     }
 
+    private void updateProductList()
+    {
+        if (Category == null)
+            Products = _bl!.Product.GetProductList();
+        else
+            Products = _bl!.Product.GetProductList(item => item!.Category == Category);
+    }
     /// <summary>
     /// Filter the list of products by category
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void FilterProductsClick(object sender, SelectionChangedEventArgs e) =>
-        ProductListview.ItemsSource = _bl?.Product.Filter(productList,
-            item => item!.Category == (BO.Category)FilterProducts.SelectedItem);
+    private void FilterProductsClick(object sender, SelectionChangedEventArgs e) => updateProductList();
 
     /// <summary>
     /// Access for adding a product
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void AccessAddProduct(object sender, RoutedEventArgs e)
-    => new ProductView(_bl, this).Show();
+    private void AccessAddProduct(object sender, RoutedEventArgs e) => new ProductView(updateProductList).Show();
 
     /// <summary>
     /// Refreshing the list of products and presenting without filtering
@@ -56,7 +60,10 @@ public partial class ProductList : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AllCatgoryClick(object sender, RoutedEventArgs e)
-    => ProductListview.ItemsSource = _bl?.Product.GetProductList();
+    {
+        Category = null;
+        updateProductList();
+    }
 
     /// <summary>
     /// Access for product update
@@ -65,7 +72,7 @@ public partial class ProductList : Window
     /// <param name="e"></param>
     private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
     {
-           if (IsMouseCaptureWithin)
-                new ProductView(_bl, ((BO.ProductForList)ProductListview.SelectedItem).ProductID, this).Show();
+        if (IsMouseCaptureWithin)
+            new ProductView(updateProductList, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
     }
 }

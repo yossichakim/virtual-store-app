@@ -38,7 +38,7 @@
             <Label Content="Items List" HorizontalAlignment="Left" Margin="294,10,0,0" VerticalAlignment="Top" Width="178" FontWeight="Bold" FontSize="16" Grid.Column="1" />
             <Label Content="Total Price order:" HorizontalAlignment="Left" Margin="66,353,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" Height="31" FontSize="18" />
             <TextBox x:Name="Id" Text="{Binding OrderID}"  IsEnabled="False" HorizontalAlignment="Left" Margin="240,10,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
-            <TextBox x:Name="Name" Text="{Binding CustomerName}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,50,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
+            <TextBox Text="{Binding CustomerName}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,50,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="Email" Text="{Binding CustomerEmail}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,90,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="Address" Text="{Binding CustomerAddress }" IsEnabled="False" HorizontalAlignment="Left" Margin="240,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
             <TextBox x:Name="Status" Text="{Binding Status}" IsEnabled="False" HorizontalAlignment="Left" Margin="240,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" />
