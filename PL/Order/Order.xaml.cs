@@ -1,6 +1,6 @@
 ﻿namespace PL.Order;
-using System.Windows;
 
+using System.Windows;
 
 /// <summary>
 /// Interaction logic for Order.xaml
@@ -13,6 +13,7 @@ public partial class Order : Window
     public BO.Order? OrderProp { get => (BO.Order?)GetValue(OrderDep); set => SetValue(OrderDep, value); }
 
     private event Action? _orderChanged;
+
     public Order(int OrderID, bool view = false, Action? orderChanged = null)
     {
         InitializeComponent();

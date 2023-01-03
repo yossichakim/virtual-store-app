@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System;
 
 namespace PL.Order;
 
@@ -13,12 +12,13 @@ public partial class ClientDetails : Window
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
     private Action _action;
     private Action _productItemChange;
-    public ClientDetails( BO.Cart cart, Action action, Action productItemChange)
+
+    public ClientDetails(BO.Cart cart, Action action, Action productItemChange)
     {
         InitializeComponent();
         _productItemChange = productItemChange;
-        _action = action;    
-        _cart = cart;  
+        _action = action;
+        _cart = cart;
     }
 
     private void ToAddOrder(object sender, RoutedEventArgs e)
@@ -33,28 +33,18 @@ public partial class ClientDetails : Window
             _action();
             _productItemChange();
             this.Close();
-        } 
-
-        catch (BO.NoValidException ex)
+        } catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } 
-        
-        catch (BO.NoFoundException ex )
+        } catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        
-        catch (BO.ErrorUpdateCartException ex)
+        } catch (BO.ErrorUpdateCartException ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        } catch (BO.AddException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        
-        catch (BO.AddException ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
     }
-       
 }

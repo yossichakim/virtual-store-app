@@ -7,13 +7,12 @@
         mc:Ignorable="d"
         Title="CustomerWindow" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill"/>
+        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" />
     </Window.Background>
     <Grid>
-        <Label Content="Customer Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0"/>
+        <Label Content="Customer Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0" />
 
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="680,267,0,0" VerticalAlignment="Top" Click="NewOrder"/>
-        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="656,217,0,0" VerticalAlignment="Top" Click="OrderTracking"/>
-
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="680,267,0,0" VerticalAlignment="Top" Click="NewOrder" />
+        <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="656,217,0,0" VerticalAlignment="Top" Click="OrderTracking" />
     </Grid>
 </Window>

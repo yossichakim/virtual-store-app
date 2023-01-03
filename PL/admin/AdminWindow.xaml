@@ -9,18 +9,18 @@
         ResizeMode="NoResize"
         Title="AdminWindow" Height="550" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill"/>
+        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" />
     </Window.Background>
-    
+
     <Grid>
-        <Label Content="Admin Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0"/>
+        <Label Content="Admin Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0" />
 
         <Button Content="Product List" Margin="0,0,10,50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch"
                 Click="ProductList" Cursor="Hand" />
 
         <Button Content="Order List" Margin="0,0,10,-50"
-                HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                HorizontalAlignment="Right" VerticalAlignment="Stretch"
                 Click="OrderList" Cursor="Hand" />
     </Grid>
 </Window>

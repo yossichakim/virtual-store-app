@@ -54,8 +54,7 @@ internal class Order : BLApi.IOrder
                 TotalPrice = (double)totalPrice!,
             };
             return order;
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -84,8 +83,7 @@ internal class Order : BLApi.IOrder
             {
                 throw new BO.ErrorUpdateException("shipped");
             }
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -116,8 +114,7 @@ internal class Order : BLApi.IOrder
             {
                 throw new BO.ErrorUpdateException("delivered");
             }
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -144,8 +141,7 @@ internal class Order : BLApi.IOrder
                 Tuple.Create(order.DeliveryDate, BO.OrderStatus.OrderProvided)
             };
             return orderTracking;
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }

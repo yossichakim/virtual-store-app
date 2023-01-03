@@ -7,7 +7,7 @@
         xmlns:bo="clr-namespace:BO;assembly=BL"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
-        
+
         Title="NewOrder" Height="450" Width="850">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,11 +20,10 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
         </Grid>
-        <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115"/>
-        <ComboBox x:Name="FilterCatgory" ItemsSource="{x:Static local:NewOrder.Categories}" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged"/>
-        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="707,16,0,0" VerticalAlignment="Top" Height="31" Width="98" Click="ShowCart" Grid.Row="2"/>
+        <Label Content="FILTR BY CATEGORY" HorizontalAlignment="Left" Margin="75,79,0,0" VerticalAlignment="Top" Width="115" />
+        <ComboBox x:Name="FilterCatgory" ItemsSource="{x:Static local:NewOrder.Categories}" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged" />
+        <Button Content="Your Cart" HorizontalAlignment="Left" Margin="707,16,0,0" VerticalAlignment="Top" Height="31" Width="98" Click="ShowCart" Grid.Row="2" />
 
         <ListView x:Name ="ProductItemListview" ItemsSource="{Binding ProductItemLists}" Cursor="Hand"  Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
@@ -35,13 +34,10 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Categoty}" Header="Categoty" Width ="120" />
                     <GridViewColumn DisplayMemberBinding="{Binding AmountInCart}" Header="Amount In Cart" Width ="155" />
                     <GridViewColumn DisplayMemberBinding="{Binding InStock}" Header="InStock" Width ="120" />
-
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="New Order" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" Height="31" Width="129" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black"/>
-        <Button Content="All Category" HorizontalAlignment="Left" Margin="35,16,0,0" VerticalAlignment="Top" Grid.Row="2" RenderTransformOrigin="0.508,-0.75" Click="AllCategory"/>
-
+        <Label Content="New Order" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" Height="31" Width="129" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
+        <Button Content="All Category" HorizontalAlignment="Left" Margin="35,16,0,0" VerticalAlignment="Top" Grid.Row="2" RenderTransformOrigin="0.508,-0.75" Click="AllCategory" />
     </Grid>
-
 </Window>

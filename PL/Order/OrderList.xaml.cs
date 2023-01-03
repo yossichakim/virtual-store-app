@@ -1,8 +1,8 @@
 ﻿namespace PL.Order;
+
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-
 
 /// <summary>
 /// Interaction logic for OrderList.xaml
@@ -14,7 +14,6 @@ public partial class OrderList : Window
     public static readonly DependencyProperty ListPropOrder = DependencyProperty.Register(nameof(orderForList), typeof(IEnumerable<BO.OrderForList?>), typeof(OrderList), new PropertyMetadata(null));
     public IEnumerable<BO.OrderForList?> orderForList { get => (IEnumerable<BO.OrderForList?>)GetValue(ListPropOrder); set => SetValue(ListPropOrder, value); }
 
-
     public OrderList()
     {
         InitializeComponent();
@@ -25,9 +24,10 @@ public partial class OrderList : Window
     {
         orderForList = _bl!.Order.GetOrderList()!;
     }
+
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)
-    { 
-        if(IsMouseCaptureWithin)
-             new Order(((BO.OrderForList)OrderListview.SelectedItem).OrderID, false, updateOrderList).Show();
+    {
+        if (IsMouseCaptureWithin)
+            new Order(((BO.OrderForList)OrderListview.SelectedItem).OrderID, false, updateOrderList).Show();
     }
 }

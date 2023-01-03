@@ -1,4 +1,5 @@
 ﻿namespace PL.Product;
+
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ public partial class ProductList : Window
     /// Saving the list of products
     /// </summary>
     public static readonly DependencyProperty ListPropProduct = DependencyProperty.Register(nameof(Products), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList));
+
     public IEnumerable<BO.ProductForList?> Products { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
 
     /// <summary>
@@ -40,6 +42,7 @@ public partial class ProductList : Window
         else
             Products = _bl!.Product.GetProductList(item => item!.Category == Category);
     }
+
     /// <summary>
     /// Filter the list of products by category
     /// </summary>

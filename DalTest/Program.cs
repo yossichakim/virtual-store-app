@@ -70,12 +70,10 @@ internal class Program
                         Console.WriteLine("\nenter a number between 0 - 3\n");
                         break;
                 }
-            }
-            catch (AddException ex)
+            } catch (AddException ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            catch (NoFoundException ex)
+            } catch (NoFoundException ex)
             {
                 Console.WriteLine(ex.Message);
             }
