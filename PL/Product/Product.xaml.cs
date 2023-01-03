@@ -54,10 +54,12 @@ public partial class ProductView : Window
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
             _productChanged?.Invoke();
-        } catch (BO.AddException ex)
+        }
+        catch (BO.AddException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -81,10 +83,12 @@ public partial class ProductView : Window
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             _productChanged?.Invoke();
-        } catch (BO.NoFoundException ex)
+        }
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }

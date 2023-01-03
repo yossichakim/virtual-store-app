@@ -81,22 +81,28 @@ internal class Program
                         Console.WriteLine("\nenter a number between 0 - 3\n");
                         break;
                 }
-            } catch (AddException ex) when (ex.InnerException is not null)
+            }
+            catch (AddException ex) when (ex.InnerException is not null)
             {
                 Console.WriteLine(ex.Message + ex.InnerException.Message);
-            } catch (NoFoundException ex) when (ex.InnerException is not null)
+            }
+            catch (NoFoundException ex) when (ex.InnerException is not null)
             {
                 Console.WriteLine(ex.Message + ex.InnerException.Message);
-            } catch (NoValidException ex)
+            }
+            catch (NoValidException ex)
             {
                 Console.WriteLine(ex.Message);
-            } catch (ErrorDeleteException ex)
+            }
+            catch (ErrorDeleteException ex)
             {
                 Console.WriteLine(ex.Message);
-            } catch (ErrorUpdateException ex)
+            }
+            catch (ErrorUpdateException ex)
             {
                 Console.WriteLine(ex.Message);
-            } catch (ErrorUpdateCartException ex)
+            }
+            catch (ErrorUpdateCartException ex)
             {
                 Console.WriteLine(ex.Message);
             }

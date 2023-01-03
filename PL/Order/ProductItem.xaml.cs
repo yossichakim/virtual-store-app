@@ -43,10 +43,12 @@ public partial class ProductItem : Window
             _cart = s_bl?.Cart.AddProductToCart(_cart!, (int)ProductItemProp?.ProductID!);
             this.Close();
             _productItemChanged.Invoke();
-        } catch (BO.NoFoundException ex)
+        }
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -62,10 +64,12 @@ public partial class ProductItem : Window
             _cart = s_bl?.Cart.UpdateAmount(_cart!, (int)ProductItemProp?.ProductID!, int.Parse(AmountInCart.Text));
             this.Close();
             _productItemChanged.Invoke();
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoFoundException ex)
+        }
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
