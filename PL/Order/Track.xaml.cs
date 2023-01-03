@@ -26,11 +26,13 @@ public partial class Track : Window
         try
         {
             new OrderTracking(int.Parse(OrderID.Text)).Show();
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             OrderID.Text = "";
-        } catch (BO.NoFoundException ex)
+        }
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             OrderID.Text = "";

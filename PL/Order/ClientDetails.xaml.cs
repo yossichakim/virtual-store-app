@@ -33,16 +33,20 @@ public partial class ClientDetails : Window
             _action();
             _productItemChange();
             this.Close();
-        } catch (BO.NoValidException ex)
+        }
+        catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.NoFoundException ex)
+        }
+        catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.ErrorUpdateCartException ex)
+        }
+        catch (BO.ErrorUpdateCartException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        } catch (BO.AddException ex)
+        }
+        catch (BO.AddException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
