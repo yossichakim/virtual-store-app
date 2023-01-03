@@ -30,8 +30,8 @@ public partial class ClientDetails : Window
             _cart.CustomerEmail = Email.Text;
             s_bl!.Cart.ConfirmedOrder(_cart);
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
-            _action();
-            _productItemChange();
+            _action.Invoke();
+            _productItemChange.Invoke();
             this.Close();
         }
         catch (BO.NoValidException ex)

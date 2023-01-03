@@ -30,5 +30,7 @@ public partial class Cart : Window
     }
 
     private void CheckOut_Click(object sender, RoutedEventArgs e)
-    { new ClientDetails(CartProp!, () => Close(), _productItemChange).Show(); }
+    { 
+        new ClientDetails(CartProp!, () => Close(), _productItemChange).Show(); 
+    }
 }
