@@ -1,11 +1,8 @@
 ﻿namespace PL.Order;
 
-using PL.Product;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
-
 
 /// <summary>
 /// Interaction logic for NewOrder.xaml
@@ -13,6 +10,7 @@ using System.Windows.Input;
 public partial class NewOrder : Window
 {
     private BO.Cart? _cart;
+
     /// <summary>
     /// Access to the logical layer
     /// </summary>
@@ -48,12 +46,13 @@ public partial class NewOrder : Window
         else
             ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!, item => item!.Categoty == Category);
     }
+
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e) => updateProductItems();
 
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if(IsMouseCaptureWithin)
-         new ProductItem(_cart!, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, updateProductItems).Show();
+        if (IsMouseCaptureWithin)
+            new ProductItem(_cart!, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, updateProductItems).Show();
     }
 
     private void ShowCart(object sender, RoutedEventArgs e)
@@ -65,5 +64,5 @@ public partial class NewOrder : Window
     {
         Category = null;
         updateProductItems();
-    }    
+    }
 }

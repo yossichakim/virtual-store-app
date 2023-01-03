@@ -14,13 +14,13 @@
         <Label Content="Category:" HorizontalAlignment="Left" Margin="300,180,0,0" VerticalAlignment="Top" />
         <Label Content="In Stock:" HorizontalAlignment="Left" Margin="300,280,0,0" VerticalAlignment="Top" />
         <Label Content="Amount In Cart:" HorizontalAlignment="Left" Margin="300,330,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="398,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Cursor="AppStarting" IsEnabled="False"/>
-        <TextBox x:Name="Name" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="398,118,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <ComboBox x:Name="Catgory" Text="{Binding Categoty}" ItemsSource="{Binding Source={StaticResource ProductCategory}}"  HorizontalAlignment="Left" Margin="398,183,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="398,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="398,283,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <TextBox x:Name="AmountInCart" Text="{Binding AmountInCart}" HorizontalAlignment="Left" Margin="398,325,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="AddToCart" Cursor="Hand" Content="Add To Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddToCart_Click"/>
-        <Button x:Name="UpdateCart" Cursor="Hand" Content="Update Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateCart_Click"/>
+        <TextBox x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="398,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Cursor="AppStarting" IsEnabled="False" />
+        <TextBox x:Name="Name" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="398,118,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False" />
+        <ComboBox x:Name="Catgory" Text="{Binding Categoty}" ItemsSource="{Binding Source={StaticResource ProductCategory}}"  HorizontalAlignment="Left" Margin="398,183,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False" />
+        <TextBox x:Name="Price" Text="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="398,229,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False" />
+        <TextBox x:Name="Instock" Text="{Binding InStock}" HorizontalAlignment="Left" Margin="398,283,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False" />
+        <TextBox x:Name="AmountInCart" Text="{Binding AmountInCart}" HorizontalAlignment="Left" Margin="398,325,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+        <Button x:Name="AddToCart" Cursor="Hand" Content="Add To Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddToCart_Click" />
+        <Button x:Name="UpdateCart" Cursor="Hand" Content="Update Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateCart_Click" />
     </Grid>
 </Window>

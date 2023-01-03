@@ -21,7 +21,6 @@ internal class Product : BLApi.IProduct
         return products.Where(func!);
     }
 
-
     /// <summary>
     /// Returns a list of products - for manager
     /// </summary>
@@ -46,7 +45,7 @@ internal class Product : BLApi.IProduct
     /// <param name="func"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem?> GetProductListCostumer( BO.Cart cart,Func<BO.ProductItem?, bool>? func = null)
+    public IEnumerable<BO.ProductItem?> GetProductListCostumer(BO.Cart cart, Func<BO.ProductItem?, bool>? func = null)
     {
         var products = _dal?.Product.GetAll();
         bool flag = func is null;
@@ -80,8 +79,7 @@ internal class Product : BLApi.IProduct
                 ProductID = productID,
                 InStock = temp.InStock
             };
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -126,8 +124,7 @@ internal class Product : BLApi.IProduct
                 InStock = (temp.InStock > 0) ? true : false,
                 AmountInCart = amount
             };
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -167,8 +164,7 @@ internal class Product : BLApi.IProduct
         try
         {
             _dal?.Product.Add(product);
-        }
-        catch (DO.AddException ex)
+        } catch (DO.AddException ex)
         {
             throw new BO.AddException(ex);
         }
@@ -189,8 +185,7 @@ internal class Product : BLApi.IProduct
         try
         {
             _dal?.Product.Delete(productID);
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -229,8 +224,7 @@ internal class Product : BLApi.IProduct
         try
         {
             _dal?.Product.Update(product);
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }

@@ -1,4 +1,5 @@
 ﻿using SeviceFunction;
+
 namespace BlImplementation;
 
 /// <summary>
@@ -22,8 +23,7 @@ internal class Cart : BLApi.ICart
         try
         {
             product = (DO.Product)_dal?.Product.Get(productID)!;
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }
@@ -50,7 +50,6 @@ internal class Cart : BLApi.ICart
         }
         else
         {
-
             cart.ItemsList!.Add(
             new BO.OrderItem()
             {
@@ -99,8 +98,7 @@ internal class Cart : BLApi.ICart
 
                     if (item?.Amount > product?.InStock)
                         throw new BO.NoValidException("PRODUCT STOCK");
-                }
-                catch (DO.NoFoundException ex)
+                } catch (DO.NoFoundException ex)
                 {
                     throw new BO.NoFoundException(ex);
                 }
@@ -138,8 +136,7 @@ internal class Cart : BLApi.ICart
                 cart.CustomerAddress = null;
                 cart.ItemsList.Clear();
                 cart.TotalPriceInCart = 0;
-            }
-            catch (DO.AddException ex)
+            } catch (DO.AddException ex)
             {
                 throw new BO.AddException(ex);
             }
@@ -207,8 +204,7 @@ internal class Cart : BLApi.ICart
                     cart.TotalPriceInCart -= difference * item.ProductPrice;
                 }
             }
-        }
-        catch (DO.NoFoundException ex)
+        } catch (DO.NoFoundException ex)
         {
             throw new BO.NoFoundException(ex);
         }

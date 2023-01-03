@@ -55,5 +55,4 @@ public interface IProduct
     /// </summary>
     /// <param name="productTOUpdate"></param>
     public void UpdateProduct(Product productTOUpdate);
-
 }

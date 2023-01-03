@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace PL.ValidInput
 {
-    static class ValidInputs
+    internal static class ValidInputs
     {
         private static Regex validNumber;
 

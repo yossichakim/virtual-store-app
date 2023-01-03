@@ -8,23 +8,21 @@
         Icon="onlineshopping_117952.ico"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="550" Width="800" >
+        Title="MainWindow" Height="550" Width="800">
 
     <Window.Background>
         <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" />
     </Window.Background>
-    
+
     <Grid>
-        <Label Content="Benny And Yossi" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0"/>
+        <Label Content="Benny And Yossi" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0" />
 
         <Button Content="Admin Access" Margin="0,0,10,50"
                 HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                Click="AdminAccsess"/>
-
+                Click="AdminAccsess" />
 
         <Button Content="Customer Access" Margin="0,0,10,-50"
-                HorizontalAlignment="Right" VerticalAlignment="Stretch" 
-                Click="CustomerAccsess"/>
-        
+                HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Click="CustomerAccsess" />
     </Grid>
 </Window>

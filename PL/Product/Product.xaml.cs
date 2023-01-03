@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace PL.Product;
 
@@ -17,6 +15,7 @@ public partial class ProductView : Window
     public static readonly DependencyProperty ProductDep = DependencyProperty.Register(nameof(Product),
                                                                                        typeof(BO.Product),
                                                                                       typeof(ProductView));
+
     public BO.Product? Product { get => (BO.Product?)GetValue(ProductDep); set => SetValue(ProductDep, value); }
 
     private event Action _productChanged;
@@ -24,12 +23,11 @@ public partial class ProductView : Window
     public ProductView(Action productChanged, int id = 0)
     {
         InitializeComponent();
-        _productChanged = productChanged;   
+        _productChanged = productChanged;
         if (id == 0)
         {
             Product = new() { Category = BO.Category.Screens };
             UpdateProduct.Visibility = Visibility.Hidden;
-
         }
         else
         {
@@ -38,7 +36,6 @@ public partial class ProductView : Window
             AddProduct.Visibility = Visibility.Hidden;
         }
     }
-
 
     /// <summary>
     /// Adding a product to the product list
@@ -57,13 +54,10 @@ public partial class ProductView : Window
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
             _productChanged?.Invoke();
-
-        }
-        catch (BO.AddException ex)
+        } catch (BO.AddException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch (BO.NoValidException ex)
+        } catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -87,12 +81,10 @@ public partial class ProductView : Window
             MessageBox.Show("SUCCSES", "SUCCSES", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
             _productChanged?.Invoke();
-        }
-        catch (BO.NoFoundException ex)
+        } catch (BO.NoFoundException ex)
         {
             MessageBox.Show(ex.Message + ex.InnerException!.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch (BO.NoValidException ex)
+        } catch (BO.NoValidException ex)
         {
             MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
