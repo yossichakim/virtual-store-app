@@ -1,7 +1,7 @@
-﻿using DalApi;
-using DO;
+﻿namespace Dal;
 
-namespace Dal;
+using DalApi;
+using DO;
 
 /// <summary>
 /// class for menage product

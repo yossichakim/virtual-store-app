@@ -16,14 +16,6 @@ public interface IProduct
     public IEnumerable<ProductItem?> GetProductListCostumer(Cart cart, Func<BO.ProductItem?, bool>? func = null);
 
     /// <summary>
-    /// Returns a list of filtered products
-    /// </summary>
-    /// <param name="products"></param>
-    /// <param name="func"></param>
-    /// <returns>Returns a list of filtered products</returns>
-    public IEnumerable<T?> Filter<T>(IEnumerable<T?> products, Func<T?, bool>? func);
-
-    /// <summary>
     /// Gets a product ID and returns a product entity - for a manager
     /// </summary>
     /// <param name="productID"></param>

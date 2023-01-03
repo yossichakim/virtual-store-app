@@ -1,6 +1,6 @@
-﻿using SeviceFunction;
+﻿namespace BlImplementation;
 
-namespace BlImplementation;
+using SeviceFunction;
 
 /// <summary>
 /// Cart interface implementation class

@@ -11,17 +11,6 @@ internal class Product : BLApi.IProduct
     private DalApi.IDal? _dal = DalApi.Factory.Get();
 
     /// <summary>
-    /// Returns a list of filtered products
-    /// </summary>
-    /// <param name="products"></param>
-    /// <param name="func"></param>
-    /// <returns>Returns a list of filtered products</returns>
-    public IEnumerable<T?> Filter<T>(IEnumerable<T?> products, Func<T?, bool>? func)
-    {
-        return products.Where(func!);
-    }
-
-    /// <summary>
     /// Returns a list of products - for manager
     /// </summary>
     /// <returns> IEnumerable<BO.ProductForList> </returns>
