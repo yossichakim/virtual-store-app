@@ -40,4 +40,7 @@ public interface IOrder
     /// <param name="orderID"></param>
     /// <returns>Returns an order tracking entity with the order details</returns>
     public OrderTracking OrderTrackingManger(int orderID);
+
+
+    public IEnumerable<StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy();
 }

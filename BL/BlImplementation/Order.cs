@@ -212,4 +212,19 @@ internal class Order : BLApi.IOrder
     }
 
     #endregion service function
+
+    public IEnumerable<BO.StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy()
+    {
+        IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
+
+        return from order in orders
+               let year = order?.OrderDate?.Year
+               group order by year into newGroup
+               orderby newGroup.Key
+               select new BO.StatisticsOrdersByYear
+               {
+                   Year = newGroup.Key,
+                   CountOrderPerYear = newGroup.Count()
+               };
+    }
 }
