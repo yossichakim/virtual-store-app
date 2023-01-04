@@ -1,7 +1,9 @@
 ﻿namespace PL.Order;
 
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 /// <summary>
@@ -20,23 +22,22 @@ public partial class NewOrder : Window
     public BO.Category? Category { get => (BO.Category?)GetValue(CategoryProp); set => SetValue(CategoryProp, value); }
     public static BO.Category[] Categories { get; } = (BO.Category[])Enum.GetValues(typeof(BO.Category));
 
-    /// <summary>
-    /// Saving the list of products
-    /// </summary>
-    private IEnumerable<IGrouping<BO.Category?, BO.ProductItem>> groupings;
 
     public static readonly DependencyProperty ListPropProductItem = DependencyProperty.Register(nameof(ProductItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder));
     public IEnumerable<BO.ProductItem?> ProductItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropProductItem); set => SetValue(ListPropProductItem, value); }
 
+    public ICollectionView ProductItemsCollectionView { set; get; }
+
+    private PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
     public NewOrder()
     {
         InitializeComponent();
         Category = null;
         _cart = new();
+      
         ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart);
-        groupings = from item in ProductItemLists
-                    group item by item.Categoty into x
-                    select x;
+        ProductItemsCollectionView = CollectionViewSource.GetDefaultView(ProductItemLists);
+
     }
 
     private void updateProductItems()
@@ -44,7 +45,16 @@ public partial class NewOrder : Window
         if (Category == null)
             ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!);
         else
-            ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!, item => item!.Categoty == Category);
+            ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart!, item => item!.Category == Category);
+
+        ProductItemsCollectionView = CollectionViewSource.GetDefaultView(ProductItemLists);
+
+
+        if (CheckBoxGrop.IsChecked == true)
+            ProductItemsCollectionView.GroupDescriptions.Add(groupDescription);
+        else
+            ProductItemsCollectionView.GroupDescriptions.Remove(groupDescription);
+
     }
 
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e) => updateProductItems();
@@ -64,5 +74,14 @@ public partial class NewOrder : Window
     {
         Category = null;
         updateProductItems();
+    }
+
+    private void CheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+        ProductItemsCollectionView.GroupDescriptions.Add(groupDescription);
+    }
+    private void UnCheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+        ProductItemsCollectionView.GroupDescriptions.Remove(groupDescription);
     }
 }

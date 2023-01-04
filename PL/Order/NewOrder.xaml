@@ -25,19 +25,52 @@
         <ComboBox x:Name="FilterCatgory" ItemsSource="{x:Static local:NewOrder.Categories}" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="195,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="FilterCatgory_SelectionChanged" />
         <Button Content="Your Cart" HorizontalAlignment="Left" Margin="707,16,0,0" VerticalAlignment="Top" Height="31" Width="98" Click="ShowCart" Grid.Row="2" />
 
+
+
+
+
+
+
         <ListView x:Name ="ProductItemListview" ItemsSource="{Binding ProductItemLists}" Cursor="Hand"  Margin="0,0,0,0" Grid.Row="1" MouseDoubleClick="ProductItemListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="Product ID" Width ="150" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Product Name" Width ="150" />
                     <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Product Price"   Width ="150" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Categoty}" Header="Categoty" Width ="120" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Categoty" Width ="120" />
                     <GridViewColumn DisplayMemberBinding="{Binding AmountInCart}" Header="Amount In Cart" Width ="155" />
                     <GridViewColumn DisplayMemberBinding="{Binding InStock}" Header="InStock" Width ="120" />
                 </GridView>
             </ListView.View>
+
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="18" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text="{Binding ItemCount}" FontSize="16" Foreground="{DynamicResource PrimaryHueLightBrush}" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text=" item(s)" FontSize="12" Foreground="{DynamicResource PrimaryHueLightBrush}" FontStyle="Italic" VerticalAlignment="Bottom"  />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
         <Label Content="New Order" HorizontalAlignment="Left" Margin="61,16,0,0" VerticalAlignment="Top" Height="31" Width="129" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
         <Button Content="All Category" HorizontalAlignment="Left" Margin="35,16,0,0" VerticalAlignment="Top" Grid.Row="2" RenderTransformOrigin="0.508,-0.75" Click="AllCategory" />
+        <CheckBox x:Name="CheckBoxGrop" Content="Groping View"  HorizontalAlignment="Left" Margin="711,0,0,0" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="UnCheckBox_Checked"/>
     </Grid>
 </Window>
