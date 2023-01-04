@@ -17,4 +17,6 @@ public partial class AdminWindow : Window
     private void ProductList(object sender, RoutedEventArgs e) => new ProductList().Show();
 
     private void OrderList(object sender, RoutedEventArgs e) => new OrderList().Show();
+
+    private void StatisticsOrders(object sender, RoutedEventArgs e) => new StatisticsOrders().Show();
 }
