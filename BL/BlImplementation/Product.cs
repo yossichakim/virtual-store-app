@@ -110,7 +110,7 @@ internal class Product : BLApi.IProduct
                 ProductID = temp.ProductID,
                 ProductName = temp.Name,
                 ProductPrice = temp.Price,
-                Categoty = (BO.Category)temp.Category!,
+                Category = (BO.Category)temp.Category!,
                 InStock = (temp.InStock > 0) ? true : false,
                 AmountInCart = amount
             };

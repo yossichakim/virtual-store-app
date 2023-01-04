@@ -23,7 +23,7 @@ public class ProductItem
     /// <summary>
     /// categoty
     /// </summary>
-    public Category? Categoty { get; set; }
+    public Category? Category { get; set; }
 
     /// <summary>
     /// amount in cart
@@ -42,7 +42,7 @@ public class ProductItem
     public override string ToString() => $"Product ID: {ProductID}\n" +
                                          $"Product Name: {ProductName}\n" +
                                          $"Product Price: {ProductPrice}\n" +
-                                         $"Category: {Categoty}\n" +
+                                         $"Category: {Category}\n" +
                                          $"Amount In Cart: {AmountInCart}\n" +
                                          $"Amount in stock: {InStock}\n";
 }
