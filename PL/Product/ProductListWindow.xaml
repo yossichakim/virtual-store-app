@@ -24,13 +24,33 @@
                Grid.Column="1" Width="100" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" />
             <Label Content="Product List" HorizontalAlignment="Left" Margin="32,10,0,0" VerticalAlignment="Top" Width="153" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
         </Grid>
-        <ListView x:Name ="ProductListview" ItemsSource="{Binding Products}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1">
+        <ListView x:Name ="ProductListview"   ItemsSource="{Binding Products}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="200" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="200" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="200" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category" Width ="200" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Width ="200">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="ProductID" Click="SortByColmun">ID</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Width ="200" >
+                    <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="ProductName" Click="SortByColmun">Name</GridViewColumnHeader>
+                    </GridViewColumn.Header>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Width ="200" >
+                    <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="ProductPrice" Click="SortByColmun">Price</GridViewColumnHeader>
+                    </GridViewColumn.Header>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Width ="200" >
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Category" Click="SortByColmun">Category</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>

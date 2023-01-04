@@ -1,7 +1,10 @@
 ﻿namespace PL.Product;
 
+using Microsoft.VisualBasic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 /// <summary>
@@ -25,6 +28,7 @@ public partial class ProductList : Window
 
     public IEnumerable<BO.ProductForList?> Products { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
 
+
     /// <summary>
     /// constructor for product list
     /// </summary>
@@ -33,6 +37,7 @@ public partial class ProductList : Window
         InitializeComponent();
         Category = null;
         Products = _bl!.Product.GetProductList()!;
+
     }
 
     private void updateProductList()
@@ -75,7 +80,19 @@ public partial class ProductList : Window
     /// <param name="e"></param>
     private void AccessUpdateProduct(object sender, MouseButtonEventArgs e)
     {
-        if (IsMouseCaptureWithin)
-            new ProductView(updateProductList, ((BO.ProductForList)ProductListview.SelectedItem).ProductID).Show();
+        BO.ProductForList productForList = (BO.ProductForList)ProductListview.SelectedItem;
+        if (IsMouseCaptureWithin && productForList is not null)
+            new ProductView(updateProductList, (productForList).ProductID).Show();
+    }
+
+    private void SortByColmun(object sender, RoutedEventArgs e)
+    {
+        GridViewColumnHeader gridViewColumnHeader = (sender as GridViewColumnHeader)!;
+        if (gridViewColumnHeader is not null)
+        {
+            string tag = (gridViewColumnHeader.Tag as string)!;
+            ProductListview.Items.SortDescriptions.Clear();
+            ProductListview.Items.SortDescriptions.Add(new SortDescription(tag, ListSortDirection.Ascending));
+        }   
     }
 }
