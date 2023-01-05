@@ -4,63 +4,91 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+
         xmlns:local="clr-namespace:PL.Product"
         xmlns:bo="clr-namespace:BO;assembly=BL"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="ProductListWindow" Height="640" Width="850">
-    <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*" />
-            <RowDefinition Height="500*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Grid.Row="0" Width="auto" Margin="0,0,0,476" Grid.RowSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="122,60,0,0" FontWeight="Bold" />
-            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{x:Static local:ProductList.Categories}" SelectedItem="{Binding Category}"
-               Grid.Column="1" Width="100" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" />
-            <Label Content="Product List" HorizontalAlignment="Left" Margin="32,10,0,0" VerticalAlignment="Top" Width="153" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
-        </Grid>
-        <ListView x:Name ="ProductListview"   ItemsSource="{Binding Products}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Width ="200">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="ProductID" Click="SortByColmun">ID</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Width ="200" >
-                    <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="ProductName" Click="SortByColmun">Name</GridViewColumnHeader>
-                    </GridViewColumn.Header>
-                    </GridViewColumn>
+    <!--<Window.Background>
+        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" Opacity="0.8" />
+    </Window.Background>-->
 
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Width ="200" >
-                    <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="ProductPrice" Click="SortByColmun">Price</GridViewColumnHeader>
-                    </GridViewColumn.Header>
-                    </GridViewColumn>
+    <Border>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding Category}" Width ="200" >
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Category" Click="SortByColmun">Category</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
+        <Border.Background>
+            <ImageBrush ImageSource="\image\background-image.jpg"/>
+        </Border.Background>
+        <Border Opacity="0.95">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#462Ad8" Offset="0"/>
+                    <GradientStop Color="#da34ae" Offset="0.5"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Name="MainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40*" />
+                    <RowDefinition Height="500*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Name="UpGrid" Grid.Row="0" Width="auto" Margin="0,0,0,476" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="1" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="129,65,0,0" FontWeight="Bold" Foreground="AntiqueWhite" />
+                    <ComboBox HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{x:Static local:ProductList.Categories}" SelectedItem="{Binding Category}" 
+               Grid.Column="1" Width="150" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" FontWeight="Bold" Foreground="#FF673AB7"  HorizontalContentAlignment="Center" >
 
-                </GridView>
-            </ListView.View>
-        </ListView>
 
-        <Button x:Name = "AddProduct" Content="Add New Product"
+                    </ComboBox>
+                    <Label Content="Product List" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"  FontWeight="Bold" FontSize="50" FontFamily="Cooper Black" Foreground="AntiqueWhite" Grid.ColumnSpan="2" Margin="263,0,0,0"/>
+
+                </Grid>
+                <ListView x:Name ="ProductListview" ItemsSource="{Binding Products}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1" FontWeight="Bold" Foreground="AntiqueWhite">
+                    <ListView.View >
+                        <GridView  >
+
+                            <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Width ="200" >
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader FontWeight="Bold" Foreground="AntiqueWhite"  HorizontalContentAlignment="Center" Tag="ProductID" Click="SortByColmun">ID</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Width ="200" >
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader FontWeight="Bold" Foreground="AntiqueWhite"  HorizontalContentAlignment="Center" Tag="ProductName" Click="SortByColmun">Name</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Width ="200" >
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader FontWeight="Bold" Foreground="AntiqueWhite"  HorizontalContentAlignment="Center" Tag="ProductPrice" Click="SortByColmun">Price</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+
+                            <GridViewColumn DisplayMemberBinding="{Binding Category}" Width ="200" >
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader FontWeight="Bold" Foreground="AntiqueWhite"  HorizontalContentAlignment="Center" Tag="Category" Click="SortByColmun">Category</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Button x:Name = "AddProduct" Content="Add New Product"
                 HorizontalAlignment="Right" Margin="5"
                 Grid.Row="2" Click = "AccessAddProduct" />
 
-        <Button x:Name = "AllCatgory" Content="All Category"
+                <Button x:Name = "AllCatgory" Content="All Category"
                 HorizontalAlignment="Left" Margin="5"
                 Grid.Row="2" Click = "AllCatgoryClick" />
-    </Grid>
+            </Grid>
+        </Border>
+    </Border>
 </Window>
