@@ -1,6 +1,4 @@
 ﻿namespace PL.Product;
-
-using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
