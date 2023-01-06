@@ -8,9 +8,14 @@ using System.Windows;
 /// </summary>
 public partial class StatisticsOrders : Window
 {
+    /// <summary>
+    /// Access to the logical layer
+    /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
-   
+   /// <summary>
+   /// constructor
+   /// </summary>
     public StatisticsOrders()
     {
         InitializeComponent();

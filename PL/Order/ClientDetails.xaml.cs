@@ -7,12 +7,32 @@ namespace PL.Order;
 /// </summary>
 public partial class ClientDetails : Window
 {
+    /// <summary>
+    /// Object for shopping cart
+    /// </summary>
     private BO.Cart? _cart;
 
+    /// <summary>
+    /// Access to the logical layer
+    /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
+
+    /// <summary>
+    /// for closing a previous window
+    /// </summary>
     private Action _action;
+
+    /// <summary>
+    /// For updating the product item list
+    /// </summary>
     private Action _productItemChange;
 
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="action"></param>
+    /// <param name="productItemChange"></param>
     public ClientDetails(BO.Cart cart, Action action, Action productItemChange)
     {
         InitializeComponent();
@@ -21,6 +41,11 @@ public partial class ClientDetails : Window
         _cart = cart;
     }
 
+    /// <summary>
+    /// for order confirmation
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ToAddOrder(object sender, RoutedEventArgs e)
     {
         try

@@ -151,6 +151,26 @@ internal class Order : BLApi.IOrder
         }
     }
 
+
+    /// <summary>
+    /// list of Statistics Orders By Year for manager
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy()
+    {
+        IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
+
+        return from order in orders
+               let year = order?.OrderDate?.Year
+               group order by year into newGroup
+               orderby newGroup.Key
+               select new BO.StatisticsOrdersByYear
+               {
+                   Year = newGroup.Key,
+                   CountOrderPerYear = newGroup.Count()
+               };
+    }
+
     #region service function
 
     /// <summary>
@@ -213,18 +233,5 @@ internal class Order : BLApi.IOrder
 
     #endregion service function
 
-    public IEnumerable<BO.StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy()
-    {
-        IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
 
-        return from order in orders
-               let year = order?.OrderDate?.Year
-               group order by year into newGroup
-               orderby newGroup.Key
-               select new BO.StatisticsOrdersByYear
-               {
-                   Year = newGroup.Key,
-                   CountOrderPerYear = newGroup.Count()
-               };
-    }
 }

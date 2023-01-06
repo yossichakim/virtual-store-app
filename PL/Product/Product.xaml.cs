@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-
 namespace PL.Product;
 
 /// <summary>
@@ -12,14 +11,27 @@ public partial class ProductView : Window
     /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
+    /// <summary>
+    ///  Dependency Property for Product
+    /// </summary>
     public static readonly DependencyProperty ProductDep = DependencyProperty.Register(nameof(Product),
                                                                                        typeof(BO.Product),
                                                                                       typeof(ProductView));
-
+    /// <summary>
+    /// A product object
+    /// </summary>
     public BO.Product? Product { get => (BO.Product?)GetValue(ProductDep); set => SetValue(ProductDep, value); }
 
+    /// <summary>
+    /// If the product is updated, the list will be updated
+    /// </summary>
     private event Action _productChanged;
 
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="productChanged"></param>
+    /// <param name="id"></param>
     public ProductView(Action productChanged, int id = 0)
     {
         InitializeComponent();

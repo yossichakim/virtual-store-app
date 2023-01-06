@@ -1,7 +1,8 @@
-﻿using PL.admin;
+﻿namespace PL;
+using PL.admin;
 using System.Windows;
 
-namespace PL;
+
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -19,11 +20,16 @@ public partial class MainWindow : Window
     public MainWindow() => InitializeComponent();
 
     /// <summary>
-    /// Admin access to product list
+    /// Admin access
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AdminAccsess(object sender, RoutedEventArgs e) => new AdminWindow().Show();
 
+    /// <summary>
+    /// customer access
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CustomerAccsess(object sender, RoutedEventArgs e) => new Customer.CustomerWindow().Show();
 }

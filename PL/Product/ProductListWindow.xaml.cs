@@ -1,8 +1,8 @@
 ﻿namespace PL.Product;
+
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 /// <summary>
@@ -15,8 +15,19 @@ public partial class ProductList : Window
     /// </summary>
     private BLApi.IBl? _bl = BLApi.Factory.Get();
 
+    /// <summary>
+    ///Dependency Property for Category
+    /// </summary>
     public static readonly DependencyProperty CategoryProp = DependencyProperty.Register(nameof(Category), typeof(BO.Category?), typeof(ProductList));
+
+    /// <summary>
+    /// object for a category
+    /// </summary>
     public BO.Category? Category { get => (BO.Category?)GetValue(CategoryProp); set => SetValue(CategoryProp, value); }
+
+    /// <summary>
+    /// Displaying the list of categories via a display link
+    /// </summary>
     public static BO.Category[] Categories { get; } = (BO.Category[])Enum.GetValues(typeof(BO.Category));
 
     /// <summary>
@@ -24,8 +35,10 @@ public partial class ProductList : Window
     /// </summary>
     public static readonly DependencyProperty ListPropProduct = DependencyProperty.Register(nameof(Products), typeof(IEnumerable<BO.ProductForList?>), typeof(ProductList));
 
+    /// <summary>
+    /// For the list of products
+    /// </summary>
     public IEnumerable<BO.ProductForList?> Products { get => (IEnumerable<BO.ProductForList?>)GetValue(ListPropProduct); set => SetValue(ListPropProduct, value); }
-
 
     /// <summary>
     /// constructor for product list
@@ -38,6 +51,9 @@ public partial class ProductList : Window
 
     }
 
+    /// <summary>
+    /// Getting the updated list from the logical layer
+    /// </summary>
     private void updateProductList()
     {
         if (Category == null)
@@ -83,6 +99,11 @@ public partial class ProductList : Window
             new ProductView(updateProductList, (productForList).ProductID).Show();
     }
 
+    /// <summary>
+    /// Sort the list by column
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void SortByColmun(object sender, RoutedEventArgs e)
     {
         GridViewColumnHeader gridViewColumnHeader = (sender as GridViewColumnHeader)!;

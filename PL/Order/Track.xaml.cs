@@ -7,13 +7,24 @@ using System.Windows;
 /// </summary>
 public partial class Track : Window
 {
+    /// <summary>
+    /// Access to the logical layer
+    /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
+    /// <summary>
+    /// constructor
+    /// </summary>
     public Track()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Go to the order tracking window by entering the order number
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderTracking(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(OrderID.Text) || !int.TryParse(OrderID.Text, out int n1))
@@ -39,6 +50,11 @@ public partial class Track : Window
         }
     }
 
+    /// <summary>
+    /// for input only numbers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
         e.Handled = ValidInput.ValidInputs.isValidNumber(e.Text);

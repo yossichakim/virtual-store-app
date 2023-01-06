@@ -11,6 +11,9 @@ using System.Windows.Input;
 /// </summary>
 public partial class NewOrder : Window
 {
+    /// <summary>
+    /// Object for shopping cart
+    /// </summary>
     private BO.Cart? _cart;
 
     /// <summary>
@@ -18,17 +21,44 @@ public partial class NewOrder : Window
     /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
+    /// <summary>
+    /// Dependency Property for Category
+    /// </summary>
     public static readonly DependencyProperty CategoryProp = DependencyProperty.Register(nameof(Category), typeof(BO.Category?), typeof(NewOrder));
+
+    /// <summary>
+    ///  Category
+    /// </summary>
     public BO.Category? Category { get => (BO.Category?)GetValue(CategoryProp); set => SetValue(CategoryProp, value); }
+
+    /// <summary>
+    /// for present enum of Categories
+    /// </summary>
     public static BO.Category[] Categories { get; } = (BO.Category[])Enum.GetValues(typeof(BO.Category));
 
-
+    /// <summary>
+    /// Dependency Property for update product item list
+    /// </summary>
     public static readonly DependencyProperty ListPropProductItem = DependencyProperty.Register(nameof(ProductItemLists), typeof(IEnumerable<BO.ProductItem?>), typeof(NewOrder));
+
+    /// <summary>
+    /// Object for product item list
+    /// </summary>
     public IEnumerable<BO.ProductItem?> ProductItemLists { get => (IEnumerable<BO.ProductItem?>)GetValue(ListPropProductItem); set => SetValue(ListPropProductItem, value); }
 
+    /// <summary>
+    /// for present by grouping
+    /// </summary>
     public ICollectionView ProductItemsCollectionView { set; get; }
 
+    /// <summary>
+    /// Dependency Property for grouping
+    /// </summary>
     private PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+
+    /// <summary>
+    /// constructor
+    /// </summary>
     public NewOrder()
     {
         InitializeComponent();
@@ -40,6 +70,9 @@ public partial class NewOrder : Window
 
     }
 
+    /// <summary>
+    /// update product item 
+    /// </summary>
     private void updateProductItems()
     {
         if (Category == null)
@@ -57,29 +90,60 @@ public partial class NewOrder : Window
 
     }
 
+    /// <summary>
+    /// Filter by category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e) => updateProductItems();
 
+    /// <summary>
+    /// access to product item window 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (IsMouseCaptureWithin)
             new ProductItem(_cart!, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, updateProductItems).Show();
     }
 
+    /// <summary>
+    /// access to cart window 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ShowCart(object sender, RoutedEventArgs e)
     {
         new Cart.Cart(_cart!, updateProductItems).Show();
     }
 
+    /// <summary>
+    /// present all category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AllCategory(object sender, RoutedEventArgs e)
     {
         Category = null;
         updateProductItems();
     }
 
+    /// <summary>
+    ///CheckBox to present by grouping
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CheckBox_Checked(object sender, RoutedEventArgs e)
     {
         ProductItemsCollectionView.GroupDescriptions.Add(groupDescription);
     }
+
+    /// <summary>
+    /// UnCheckBox to present not by category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UnCheckBox_Checked(object sender, RoutedEventArgs e)
     {
         ProductItemsCollectionView.GroupDescriptions.Remove(groupDescription);

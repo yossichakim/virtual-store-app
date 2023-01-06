@@ -41,6 +41,9 @@ public interface IOrder
     /// <returns>Returns an order tracking entity with the order details</returns>
     public OrderTracking OrderTrackingManger(int orderID);
 
-
+    /// <summary>
+    /// list of Statistics Orders By Year for manager
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy();
 }

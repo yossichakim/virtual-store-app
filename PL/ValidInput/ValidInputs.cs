@@ -1,16 +1,29 @@
-﻿using System.Text.RegularExpressions;
+﻿namespace PL.ValidInput;
+using System.Text.RegularExpressions;
 
-namespace PL.ValidInput
+
+/// <summary>
+/// for input valid number
+/// </summary>
+internal static class ValidInputs
 {
-    internal static class ValidInputs
+    /// <summary>
+    /// define valid Number
+    /// </summary>
+    private static Regex validNumber;
+
+    /// <summary>
+    /// constructor
+    /// </summary>
+    static ValidInputs()
     {
-        private static Regex validNumber;
-
-        static ValidInputs()
-        {
-            validNumber = new Regex("^[0-9]+$");
-        }
-
-        internal static bool isValidNumber(this string input) => !int.TryParse(input, out int n);
+        validNumber = new Regex("^[0-9]+$");
     }
+
+    /// <summary>
+    /// check if is valid number
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    internal static bool isValidNumber(this string input) => !int.TryParse(input, out int n);
 }

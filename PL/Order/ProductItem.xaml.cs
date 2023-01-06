@@ -7,18 +7,40 @@ using System.Windows;
 /// </summary>
 public partial class ProductItem : Window
 {
+    /// <summary>
+    /// Access to the logical layer
+    /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
+    /// <summary>
+    /// Object for shopping cart
+    /// </summary>
     private BO.Cart? _cart;
 
+    /// <summary>
+    /// Product item link for display if updated
+    /// </summary>
     public static readonly DependencyProperty ProductItemDep = DependencyProperty.Register(nameof(ProductItemProp),
                                                                                    typeof(BO.ProductItem),
                                                                                   typeof(ProductItem));
 
+    /// <summary>
+    /// object for a product item
+    /// </summary>
     public BO.ProductItem? ProductItemProp { get => (BO.ProductItem?)GetValue(ProductItemDep); set => SetValue(ProductItemDep, value); }
 
+    /// <summary>
+    /// If a product is updated, the list is also updated
+    /// </summary>
     private event Action _productItemChanged;
 
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="ViewProductID"></param>
+    /// <param name="productItemChanged"></param>
+    /// <param name="flag"></param>
     public ProductItem(BO.Cart cart, int ViewProductID, Action productItemChanged, bool flag = true)
     {
         InitializeComponent();
@@ -36,6 +58,11 @@ public partial class ProductItem : Window
             AddToCart.Visibility = Visibility.Hidden;
     }
 
+    /// <summary>
+    /// Adding a product to the cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddToCart_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -54,6 +81,11 @@ public partial class ProductItem : Window
         }
     }
 
+    /// <summary>
+    /// Update a product in cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateCart_Click(object sender, RoutedEventArgs e)
     {
         if (!int.TryParse(AmountInCart.Text, out int n))

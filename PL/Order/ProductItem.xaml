@@ -22,5 +22,6 @@
         <TextBox x:Name="AmountInCart" Text="{Binding AmountInCart}" HorizontalAlignment="Left" Margin="398,325,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <Button x:Name="AddToCart" Cursor="Hand" Content="Add To Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddToCart_Click" />
         <Button x:Name="UpdateCart" Cursor="Hand" Content="Update Cart" Margin="5"  Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="UpdateCart_Click" />
+        <Label Content="Product Item" HorizontalAlignment="Left" Margin="78,29,0,0" VerticalAlignment="Top" FontFamily="Cooper Black" FontSize="20"/>
     </Grid>
 </Window>
