@@ -99,6 +99,6 @@ internal class DalProduct : IProduct
         if (func is null)
             return products.Select(item => item);
 
-            return products.Where(func);
+        return products.Where(func);
     }
 }

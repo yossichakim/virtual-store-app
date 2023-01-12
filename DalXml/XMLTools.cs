@@ -1,4 +1,6 @@
 ﻿namespace Dal;
+
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 static class XMLTools
@@ -41,6 +43,41 @@ static class XMLTools
         catch (Exception ex)
         {
             throw new Exception("An error occurred while deserializing the file: " + ex.Message);
+        }
+    }
+
+    public static void SaveListToXMLElement(XElement rootElem, string entity)
+    {
+        string filePath = $"{s_dir + entity}.xml";
+        try
+        {
+            rootElem.Save(filePath);
+        }
+        catch (Exception ex)
+        {
+            // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
+            throw new Exception($"fail to create xml file: {filePath}", ex);
+        }
+
+    }
+
+    public static XElement LoadListFromXMLElement(string entity)
+    {
+        string filePath = $"{s_dir + entity}.xml";
+        try
+        {
+            if (File.Exists(filePath))
+                return XElement.Load(filePath);
+
+            XElement rootElem = new(entity);
+            rootElem.Save(filePath);
+            return rootElem;
+            
+        }
+        catch (Exception ex)
+        {
+            //new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file:{ filePath} ", ex);
+            throw new Exception($"fail to load xml file: {filePath} ", ex);
         }
     }
 }

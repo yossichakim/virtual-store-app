@@ -3,6 +3,8 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Xml;
 using System.Xml.Linq;
 
 internal class DalOrder : IOrder
@@ -11,7 +13,7 @@ internal class DalOrder : IOrder
     private string configIdPath = @"..\xml\ConfigNumbers.xml";
     private string? orderID = @"OrderID";
 
-    private List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(@"..\xml\Order.xml");
+    //private List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(@"..\xml\Order.xml");
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
     /// </summary>
@@ -20,12 +22,24 @@ internal class DalOrder : IOrder
     /// <exception cref="AddException"> if the array of orders are full </exception>
     public int Add(Order addOrder)
     {
-        if (orders.Exists(element => element?.OrderID == addOrder.OrderID))
-            throw new AddException("ORDER");
 
-        //initialize Running ID number
-        addOrder.OrderID = int.Parse(XElement.Load(configIdPath).Element(orderID!)!.Value) + 1; 
-        orders.Add(addOrder);
+        addOrder.OrderID = int.Parse(XElement.Load(configIdPath).Element(orderID!)!.Value) + 1;
+
+        XElement.Load(configIdPath).Element(orderID!)!.SetValue(addOrder.OrderID);
+
+        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
+
+        XElement order = new XElement("Order", new XElement("OrderID", addOrder.OrderID),
+                                               new XElement("CustomerName", addOrder.CustomerName),
+                                               new XElement("CustomerEmail", addOrder.CustomerEmail),
+                                               new XElement("CustomerAddress", addOrder.CustomerAddress),
+                                               new XElement("OrderDate", addOrder.OrderDate),
+                                               new XElement("ShipDate", addOrder.ShipDate),
+                                               new XElement("DeliveryDate", addOrder.DeliveryDate));
+
+        orders.Add(order);
+
+        XMLTools.SaveListToXMLElement(orders, orderPath);
 
         return addOrder.OrderID;
     }
@@ -37,10 +51,18 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Delete(int orderID)
     {
-        if (!orders.Exists(element => element?.OrderID == orderID))
+        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
+        
+        if (!orders.Elements().ToList().Exists(element => int.Parse(element.Element("OrderID")!.Value) == orderID))
             throw new NoFoundException("ORDER");
 
-        orders.RemoveAll(element => element?.OrderID == orderID);
+        XElement orderToDelete = (from item in orders.Elements()
+                                  where int.Parse(item.Element("OrderID")!.Value) == orderID
+                                  select item).FirstOrDefault()!;
+        orderToDelete.Remove();
+
+        XMLTools.SaveListToXMLElement(orders, orderPath);
+
     }
 
     /// <summary>
@@ -51,7 +73,20 @@ internal class DalOrder : IOrder
     public void Update(Order updateOrder)
     {
         Delete(updateOrder.OrderID);
-        orders.Add(updateOrder);
+
+        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
+
+        XElement order = new XElement("Order", new XElement("OrderID", updateOrder.OrderID),
+                                               new XElement("CustomerName", updateOrder.CustomerName),
+                                               new XElement("CustomerEmail", updateOrder.CustomerEmail),
+                                               new XElement("CustomerAddress", updateOrder.CustomerAddress),
+                                               new XElement("OrderDate", updateOrder.OrderDate),
+                                               new XElement("ShipDate", updateOrder.ShipDate),
+                                               new XElement("DeliveryDate", updateOrder.DeliveryDate));
+
+        orders.Add(order);
+
+        XMLTools.SaveListToXMLElement(orders, orderPath);
     }
 
     /// <summary>

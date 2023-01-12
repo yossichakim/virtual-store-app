@@ -9,7 +9,7 @@ internal class DalOrderItem : IOrderItem
 {
     private string orderItemPath = @"..\xml\OrderItem.xml";
     private string configIdPath = @"..\xml\ConfigNumbers.xml";
-    private string? OrderItemID = @"OrderItemID";
+    private string OrderItemID = @"OrderItemID";
 
 
     /// <summary>
@@ -20,7 +20,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AddException"> if the array of orders items are full </exception>
     public int Add(OrderItem addOrderItem)
     {
-        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(@"..\xml\OrderItem.xml");
+        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         //initialize Running ID number
         addOrderItem.OrderItemID = int.Parse(XElement.Load(configIdPath).Element(OrderItemID!)!.Value) + 1;
@@ -39,7 +39,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Delete(int orderItemID)
     {
-        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(@"..\xml\OrderItem.xml");
+        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         if (!orderItems.Exists(element => element?.OrderItemID == orderItemID))
             throw new NoFoundException("ORDER ITEM");
@@ -56,7 +56,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Update(OrderItem updateOrderItem)
     {
-        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(@"..\xml\OrderItem.xml");
+        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         Delete(updateOrderItem.OrderItemID);
         orderItems.Add(updateOrderItem);
@@ -85,7 +85,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotImplementedException"></exception>
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
-        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(@"..\xml\OrderItem.xml");
+        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         if (orderItems.FirstOrDefault(func!) is OrderItem orderItem)
             return orderItem;
@@ -98,7 +98,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
-        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(@"..\xml\OrderItem.xml");
+        List<OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         if (func is null)
             return orderItems.Select(item => item);
