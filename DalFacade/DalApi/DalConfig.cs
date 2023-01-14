@@ -19,7 +19,7 @@ internal static class DalConfig
     internal static Dictionary<string, string> s_dalPackages;
 
     /// <summary>
-    /// constractor
+    /// constructor
     /// </summary>
     /// <exception cref="DalConfigException"></exception>
     static DalConfig()
