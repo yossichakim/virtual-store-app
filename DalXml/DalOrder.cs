@@ -126,9 +126,9 @@ internal class DalOrder : IOrder
                                    CustomerAddress = item.Element("CustomerAddress")!.Value,
                                    CustomerEmail = item.Element("CustomerEmail")!.Value,
                                    CustomerName = item.Element("CustomerName")!.Value,
-                                   OrderDate = DateTime.Parse(item.Element("OrderDate")!.Value),
-                                   ShipDate = DateTime.Parse(item.Element("ShipDate")!.Value),
-                                   DeliveryDate = DateTime.Parse(item.Element("DeliveryDate")!.Value)
+                                   OrderDate = Convert.ToDateTime(item.Element("OrderDate")!.Value),
+                                   ShipDate = Convert.ToDateTime(item.Element("ShipDate")!.Value),
+                                   DeliveryDate = Convert.ToDateTime(item.Element("DeliveryDate")!.Value)
                                }).ToList();
 
         if (func is null)

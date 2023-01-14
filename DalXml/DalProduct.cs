@@ -6,7 +6,7 @@ using System;
 internal class DalProduct : IProduct
 {
     private string productPath = @"Product";
-
+    List<Product?> products;
     /// <summary>
     /// The function receives a new product and adds it
     /// </summary>
@@ -15,7 +15,7 @@ internal class DalProduct : IProduct
     /// <exception cref="AddException"> if the product id already exist </exception>
     public int Add(Product addProduct)
     {
-        List<Product?> products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+        products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         if (products.Exists(element => element?.ProductID == addProduct.ProductID))
             throw new AddException("PRODUCT");
@@ -34,14 +34,14 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Delete(int productId)
     {
-        List<Product?> products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+       products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         if (!products.Exists(element => element?.ProductID == productId))
             throw new NoFoundException("PRODUCT");
 
         products.RemoveAll(element => element?.ProductID == productId);
 
-        XMLTools.SaveListToXMLSerializer(products, productPath);
+       XMLTools.SaveListToXMLSerializer(products, productPath);
 
     }
 
@@ -52,12 +52,12 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
-        List<Product?> products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+       products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         Delete(updateProduct.ProductID);
         products.Add(updateProduct);
 
-        XMLTools.SaveListToXMLSerializer(products, productPath);
+       XMLTools.SaveListToXMLSerializer(products, productPath);
 
     }
 
@@ -81,7 +81,7 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"></exception>
     public Product Get(Func<Product?, bool>? func)
     {
-        List<Product?> products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+        products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         if (products.FirstOrDefault(func!) is Product product)
             return product;
@@ -94,7 +94,7 @@ internal class DalProduct : IProduct
     /// </summary>
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
     {
-        List<Product?> products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+        products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         if (func is null)
             return products.Select(item => item);
