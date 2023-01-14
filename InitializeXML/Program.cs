@@ -5,6 +5,7 @@ using DO;
 
 internal class Program
 {
+
     private static IDal dallist = Factory.Get()!;
 
     static void Main(string[] args)

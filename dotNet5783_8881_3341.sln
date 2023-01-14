@@ -24,16 +24,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{FE39
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{0CCA1263-93C7-4E75-8F1D-2272754E20A8}"
 	ProjectSection(SolutionItems) = preProject
-		ConfigNumbers.xml = ConfigNumbers.xml
+		xml\ConfigNumbers.xml = xml\ConfigNumbers.xml
 		xml\dal-config.xml = xml\dal-config.xml
-		Order.xml = Order.xml
-		OrderItem.xml = OrderItem.xml
-		Product.xml = Product.xml
+		xml\Order.xml = xml\Order.xml
+		xml\OrderItem.xml = xml\OrderItem.xml
+		xml\Product.xml = xml\Product.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{7C3D18DF-23ED-4C16-B445-BA3EF62AE791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{7C3D18DF-23ED-4C16-B445-BA3EF62AE791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeXML", "InitializeXML\InitializeXML.csproj", "{44F6FEE1-6312-4202-8688-392E9EB2244A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeXML", "InitializeXML\InitializeXML.csproj", "{44F6FEE1-6312-4202-8688-392E9EB2244A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
