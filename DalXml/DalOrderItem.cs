@@ -7,8 +7,8 @@ using System.Xml.Linq;
 
 internal class DalOrderItem : IOrderItem
 {
-    private string orderItemPath = @"..\xml\OrderItem.xml";
-    private string configIdPath = @"..\xml\ConfigNumbers.xml";
+    private string orderItemPath = @"OrderItem";
+    private string configIdPath = @"ConfigNumbers";
     private string OrderItemID = @"OrderItemID";
 
 
@@ -103,6 +103,6 @@ internal class DalOrderItem : IOrderItem
         if (func is null)
             return orderItems.Select(item => item);
 
-         return orderItems.Where(func);
+        return orderItems.Where(func);
     }
 }

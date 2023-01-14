@@ -3,14 +3,13 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Xml;
+using System.Linq;
 using System.Xml.Linq;
 
 internal class DalOrder : IOrder
 {
-    private string orderPath = @"..\xml\Order.xml";
-    private string configIdPath = @"..\xml\ConfigNumbers.xml";
+    private string orderPath = @"Order";
+    private string configIdPath = @"ConfigNumbers";
     private string? orderID = @"OrderID";
 
     //private List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(@"..\xml\Order.xml");
@@ -52,7 +51,7 @@ internal class DalOrder : IOrder
     public void Delete(int orderID)
     {
         XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
-        
+
         if (!orders.Elements().ToList().Exists(element => int.Parse(element.Element("OrderID")!.Value) == orderID))
             throw new NoFoundException("ORDER");
 
@@ -68,7 +67,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// Updating an order whose details have changed
     /// </summary>
-    /// <param name="updateOrder"></param>
+    /// <param name="updateOrder"></param>  
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Update(Order updateOrder)
     {
@@ -110,16 +109,32 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"></exception>
     public Order Get(Func<Order?, bool>? func)
     {
-        if (orders.FirstOrDefault(func!) is Order order)
-            return order;
-
-        throw new NoFoundException("ORDER");
+        return GetAll(func).FirstOrDefault() ?? throw new NoFoundException("ORDER");
     }
 
     /// <summary>
     /// <returns>  Returns the order list in condition </returns>
     /// </summary>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
-     => func is null ? orders.Select(item => item) :
-       orders.Where(func);
+    {
+        XElement elementRoot = XMLTools.LoadListFromXMLElement(orderPath);
+
+        List<Order?> orders = (from item in elementRoot.Elements()
+                               select (Order?)new Order
+                               {
+                                   OrderID = int.Parse(item.Element("OrderID")!.Value),
+                                   CustomerAddress = item.Element("CustomerAddress")!.Value,
+                                   CustomerEmail = item.Element("CustomerEmail")!.Value,
+                                   CustomerName = item.Element("CustomerName")!.Value,
+                                   OrderDate = DateTime.Parse(item.Element("OrderDate")!.Value),
+                                   ShipDate = DateTime.Parse(item.Element("ShipDate")!.Value),
+                                   DeliveryDate = DateTime.Parse(item.Element("DeliveryDate")!.Value)
+                               }).ToList();
+
+        if (func is null)
+            return orders.Select(item => item);
+
+        return orders.Where(func);
+    }
+
 }

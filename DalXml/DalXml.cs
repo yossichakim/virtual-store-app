@@ -1,7 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 
-sealed internal class DalXml:IDal
+sealed internal class DalXml : IDal
 {
     private DalXml() { }
 
