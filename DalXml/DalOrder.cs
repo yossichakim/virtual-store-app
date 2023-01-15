@@ -5,14 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml;
 
 internal class DalOrder : IOrder
 {
     private string orderPath = @"Order";
-    private string configIdPath = @"ConfigNumbers";
+    private string configIdPath = @"..\xml\ConfigNumbers.xml";
     private string? orderID = @"OrderID";
 
-    //private List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(@"..\xml\Order.xml");
+    List<Order?> orders;
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
     /// </summary>
@@ -21,24 +22,17 @@ internal class DalOrder : IOrder
     /// <exception cref="AddException"> if the array of orders are full </exception>
     public int Add(Order addOrder)
     {
+        orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
 
+        if (orders.Exists(element => element?.OrderID == addOrder.OrderID))
+            throw new AddException("ORDER");
+
+        //initialize Running ID number
         addOrder.OrderID = int.Parse(XElement.Load(configIdPath).Element(orderID!)!.Value) + 1;
-
         XElement.Load(configIdPath).Element(orderID!)!.SetValue(addOrder.OrderID);
+        orders.Add(addOrder);
 
-        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
-
-        XElement order = new XElement("Order", new XElement("OrderID", addOrder.OrderID),
-                                               new XElement("CustomerName", addOrder.CustomerName),
-                                               new XElement("CustomerEmail", addOrder.CustomerEmail),
-                                               new XElement("CustomerAddress", addOrder.CustomerAddress),
-                                               new XElement("OrderDate", addOrder.OrderDate),
-                                               new XElement("ShipDate", addOrder.ShipDate),
-                                               new XElement("DeliveryDate", addOrder.DeliveryDate));
-
-        orders.Add(order);
-
-        XMLTools.SaveListToXMLElement(orders, orderPath);
+        XMLTools.SaveListToXMLSerializer(orders, orderPath);
 
         return addOrder.OrderID;
     }
@@ -50,42 +44,31 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Delete(int orderID)
     {
-        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
+        orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
 
-        if (!orders.Elements().ToList().Exists(element => int.Parse(element.Element("OrderID")!.Value) == orderID))
+        if (!orders.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("ORDER");
 
-        XElement orderToDelete = (from item in orders.Elements()
-                                  where int.Parse(item.Element("OrderID")!.Value) == orderID
-                                  select item).FirstOrDefault()!;
-        orderToDelete.Remove();
+         orders.RemoveAll(element => element?.OrderID == orderID);
 
-        XMLTools.SaveListToXMLElement(orders, orderPath);
+        XMLTools.SaveListToXMLSerializer(orders, orderPath);
 
     }
 
     /// <summary>
     /// Updating an order whose details have changed
     /// </summary>
-    /// <param name="updateOrder"></param>  
+    /// <param name="updateOrder"></param>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
     public void Update(Order updateOrder)
     {
+        orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
+
         Delete(updateOrder.OrderID);
+        orders.Add(updateOrder);
 
-        XElement orders = XMLTools.LoadListFromXMLElement(orderPath);
+        XMLTools.SaveListToXMLSerializer(orders, orderPath);
 
-        XElement order = new XElement("Order", new XElement("OrderID", updateOrder.OrderID),
-                                               new XElement("CustomerName", updateOrder.CustomerName),
-                                               new XElement("CustomerEmail", updateOrder.CustomerEmail),
-                                               new XElement("CustomerAddress", updateOrder.CustomerAddress),
-                                               new XElement("OrderDate", updateOrder.OrderDate),
-                                               new XElement("ShipDate", updateOrder.ShipDate),
-                                               new XElement("DeliveryDate", updateOrder.DeliveryDate));
-
-        orders.Add(order);
-
-        XMLTools.SaveListToXMLElement(orders, orderPath);
     }
 
     /// <summary>
@@ -109,7 +92,12 @@ internal class DalOrder : IOrder
     /// <exception cref="NoFoundException"></exception>
     public Order Get(Func<Order?, bool>? func)
     {
-        return GetAll(func).FirstOrDefault() ?? throw new NoFoundException("ORDER");
+        orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
+
+        if (orders.FirstOrDefault(func!) is Order order)
+            return order;
+
+        throw new NoFoundException("ORDER");
     }
 
     /// <summary>
@@ -117,24 +105,12 @@ internal class DalOrder : IOrder
     /// </summary>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
     {
-        XElement elementRoot = XMLTools.LoadListFromXMLElement(orderPath);
-
-        List<Order?> orders = (from item in elementRoot.Elements()
-                               select (Order?)new Order
-                               {
-                                   OrderID = int.Parse(item.Element("OrderID")!.Value),
-                                   CustomerAddress = item.Element("CustomerAddress")!.Value,
-                                   CustomerEmail = item.Element("CustomerEmail")!.Value,
-                                   CustomerName = item.Element("CustomerName")!.Value,
-                                   OrderDate = Convert.ToDateTime(item.Element("OrderDate")!.Value),
-                                   ShipDate = Convert.ToDateTime(item.Element("ShipDate")!.Value),
-                                   DeliveryDate = Convert.ToDateTime(item.Element("DeliveryDate")!.Value)
-                               }).ToList();
+        orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
 
         if (func is null)
             return orders.Select(item => item);
 
-        return orders.Where(func);
+         return orders.Where(func);
     }
 
 }

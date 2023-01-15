@@ -217,15 +217,6 @@
     <DeliveryDate>2021-07-14T22:08:48</DeliveryDate>
   </Order>
   <Order>
-    <OrderID>100024</OrderID>
-    <CustomerName>Kaine Gunston</CustomerName>
-    <CustomerEmail>hridingso@com.com</CustomerEmail>
-    <CustomerAddress>74022 Buena Vista Park</CustomerAddress>
-    <OrderDate>2022-01-21T19:53:29</OrderDate>
-    <ShipDate>2022-01-31T19:53:29</ShipDate>
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <OrderID>100025</OrderID>
     <CustomerName>Arabel Kalinowsky</CustomerName>
     <CustomerEmail>ssteerp@scientificamerican.com</CustomerEmail>
@@ -307,29 +298,11 @@
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
-    <OrderID>100034</OrderID>
-    <CustomerName>Kary Whitta</CustomerName>
-    <CustomerEmail>hhardimany@nsw.gov.au</CustomerEmail>
-    <CustomerAddress>5 Cascade Crossing</CustomerAddress>
-    <OrderDate>2021-09-11T00:09:50</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <OrderID>100035</OrderID>
     <CustomerName>Tressa Imore</CustomerName>
     <CustomerEmail>jmackayz@woothemes.com</CustomerEmail>
     <CustomerAddress>48621 Mallory Plaza</CustomerAddress>
     <OrderDate>2021-11-08T11:46:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <OrderID>100036</OrderID>
-    <CustomerName>Melany Woodruff</CustomerName>
-    <CustomerEmail>tbavester10@netscape.com</CustomerEmail>
-    <CustomerAddress>81 Ridge Oak Plaza</CustomerAddress>
-    <OrderDate>2022-10-13T22:08:27</OrderDate>
     <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
@@ -358,6 +331,33 @@
     <CustomerAddress>6407 Knutson Drive</CustomerAddress>
     <OrderDate>2022-08-19T06:40:51</OrderDate>
     <ShipDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <OrderID>100034</OrderID>
+    <CustomerName>Kary Whitta</CustomerName>
+    <CustomerEmail>hhardimany@nsw.gov.au</CustomerEmail>
+    <CustomerAddress>5 Cascade Crossing</CustomerAddress>
+    <OrderDate>2021-09-11T00:09:50</OrderDate>
+    <ShipDate>2023-01-15T01:54:05.1558593+02:00</ShipDate>
+    <DeliveryDate>2023-01-15T01:54:09.7607499+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <OrderID>100024</OrderID>
+    <CustomerName>Kaine Gunston</CustomerName>
+    <CustomerEmail>hridingso@com.com</CustomerEmail>
+    <CustomerAddress>74022 Buena Vista Park</CustomerAddress>
+    <OrderDate>2022-01-21T19:53:29</OrderDate>
+    <ShipDate>2022-01-31T19:53:29</ShipDate>
+    <DeliveryDate>2023-01-15T01:55:00.8691945+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <OrderID>100036</OrderID>
+    <CustomerName>Melany Woodruff</CustomerName>
+    <CustomerEmail>tbavester10@netscape.com</CustomerEmail>
+    <CustomerAddress>81 Ridge Oak Plaza</CustomerAddress>
+    <OrderDate>2022-10-13T22:08:27</OrderDate>
+    <ShipDate>2023-01-15T01:55:38.4255407+02:00</ShipDate>
     <DeliveryDate xsi:nil="true" />
   </Order>
 </ArrayOfOrder>

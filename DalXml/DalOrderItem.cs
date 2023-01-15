@@ -8,10 +8,8 @@ using System.Xml.Linq;
 internal class DalOrderItem : IOrderItem
 {
     private string orderItemPath = @"OrderItem";
-    private string configIdPath = @"ConfigNumbers";
+    private string configIdPath = @"..\xml\ConfigNumbers.xml";
     private string OrderItemID = @"OrderItemID";
-
-    List<OrderItem?> orderItems;
 
     /// <summary>
     /// Adding order items to the list of order items
@@ -21,15 +19,24 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AddException"> if the array of orders items are full </exception>
     public int Add(OrderItem addOrderItem)
     {
-       orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
         //initialize Running ID number
         addOrderItem.OrderItemID = int.Parse(XElement.Load(configIdPath).Element(OrderItemID!)!.Value) + 1;
-        orderItems.Add(addOrderItem);
 
         XElement.Load(configIdPath).Element(OrderItemID!)!.SetValue(addOrderItem.OrderItemID);
 
-        XMLTools.SaveListToXMLSerializer(orderItems, orderItemPath);
+        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+
+        XElement orderItems = new XElement("OrderItem", new XElement("OrderItemID", addOrderItem.OrderItemID),
+                                                        new XElement("ProductID", addOrderItem.ProductID),
+                                                        new XElement("OrderID", addOrderItem.OrderID),
+                                                        new XElement("Price", addOrderItem.Price),
+                                                        new XElement("Amount", addOrderItem.Amount));
+
+        element.Add(orderItems);
+
+        XMLTools.SaveListToXMLElement(element, orderItemPath);
+
         return addOrderItem.OrderItemID;
     }
 
@@ -40,13 +47,18 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Delete(int orderItemID)
     {
-        orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
 
-        if (!orderItems.Exists(element => element?.OrderItemID == orderItemID))
+        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+
+        if (!element.Elements().ToList().Exists(element => int.Parse(element.Element("OrderItemID")!.Value) == orderItemID))
             throw new NoFoundException("ORDER ITEM");
 
-        orderItems.RemoveAll(element => element?.OrderItemID == orderItemID);
-        XMLTools.SaveListToXMLSerializer(orderItems, orderItemPath);
+        XElement orderItemToDelete = (from item in element.Elements()
+                                      where int.Parse(item.Element("OrderItemID")!.Value) == orderItemID
+                                      select item).FirstOrDefault()!;
+        orderItemToDelete.Remove();
+
+        XMLTools.SaveListToXMLElement(element, orderItemPath);
 
     }
 
@@ -57,12 +69,19 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
     public void Update(OrderItem updateOrderItem)
     {
-        orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
-
         Delete(updateOrderItem.OrderItemID);
-        orderItems.Add(updateOrderItem);
 
-        XMLTools.SaveListToXMLSerializer(orderItems, orderItemPath);
+        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+
+        XElement orderItems = new XElement("OrderItem", new XElement("ProductID", updateOrderItem.OrderItemID),
+                                                        new XElement("ProductID", updateOrderItem.ProductID),
+                                                        new XElement("OrderID", updateOrderItem.OrderID),
+                                                        new XElement("Price", updateOrderItem.Price),
+                                                        new XElement("Amount", updateOrderItem.Amount));
+
+        element.Add(orderItems);
+
+        XMLTools.SaveListToXMLElement(element, orderItemPath);
 
     }
 
@@ -86,12 +105,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotImplementedException"></exception>
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
-        orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
-
-        if (orderItems.FirstOrDefault(func!) is OrderItem orderItem)
-            return orderItem;
-
-        throw new NoFoundException("ORDER ITEM");
+        return GetAll(func).FirstOrDefault() ?? throw new NoFoundException("ORDER ITEM");
     }
 
     /// <summary>
@@ -99,7 +113,17 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
-       orderItems = XMLTools.LoadListFromXMLSerializer<OrderItem>(orderItemPath);
+        XElement elementRoot = XMLTools.LoadListFromXMLElement(orderItemPath);
+
+        List<OrderItem?> orderItems = (from item in elementRoot.Elements()
+                                       select (OrderItem?)new OrderItem
+                                       {
+                                           OrderItemID = int.Parse(item.Element("OrderItemID")!.Value),
+                                           OrderID = int.Parse(item.Element("OrderID")!.Value),
+                                           ProductID = int.Parse(item.Element("ProductID")!.Value),
+                                           Amount = int.Parse(item.Element("Amount")!.Value),
+                                           Price = double.Parse(item.Element("Price")!.Value)
+                                       }).ToList();
 
         if (func is null)
             return orderItems.Select(item => item);
