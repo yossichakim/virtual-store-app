@@ -5,11 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
+/// <summary>
+/// Access to the data of order items with the possibility of changes
+/// </summary>
 internal class DalOrderItem : IOrderItem
 {
+    /// <summary>
+    /// The main path of order items
+    /// </summary>
     private string orderItemPath = @"OrderItem";
+
+    /// <summary>
+    /// The main path of the config numbers
+    /// </summary>
     private string configIdPath = @"..\xml\ConfigNumbers.xml";
-    private string OrderItemID = @"OrderItemID";
+    /// <summary>
+    /// the path of order Item ID
+    /// </summary>
+    private string orderItemID = @"OrderItemID";
+
+    /// <summary>
+    /// Holds the data of order items
+    /// </summary>
+    private XElement orderItems;
 
     /// <summary>
     /// Adding order items to the list of order items
@@ -21,21 +39,25 @@ internal class DalOrderItem : IOrderItem
     {
 
         //initialize Running ID number
-        addOrderItem.OrderItemID = int.Parse(XElement.Load(configIdPath).Element(OrderItemID!)!.Value) + 1;
+        addOrderItem.OrderItemID = int.Parse(XElement.Load(configIdPath).Element(orderItemID!)!.Value) + 1;
 
-        XElement.Load(configIdPath).Element(OrderItemID!)!.SetValue(addOrderItem.OrderItemID);
+        XDocument configId = XDocument.Load(configIdPath);
 
-        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+        configId.Descendants(orderItemID).FirstOrDefault()!.Value = addOrderItem.OrderItemID.ToString();
 
-        XElement orderItems = new XElement("OrderItem", new XElement("OrderItemID", addOrderItem.OrderItemID),
+        configId.Save(configIdPath);
+
+        orderItems = XMLTools.LoadListFromXMLElement(orderItemPath);
+
+        XElement orderItem = new XElement("OrderItem", new XElement("OrderItemID", addOrderItem.OrderItemID),
                                                         new XElement("ProductID", addOrderItem.ProductID),
                                                         new XElement("OrderID", addOrderItem.OrderID),
                                                         new XElement("Price", addOrderItem.Price),
                                                         new XElement("Amount", addOrderItem.Amount));
 
-        element.Add(orderItems);
+        orderItems.Add(orderItem);
 
-        XMLTools.SaveListToXMLElement(element, orderItemPath);
+        XMLTools.SaveListToXMLElement(orderItems, orderItemPath);
 
         return addOrderItem.OrderItemID;
     }
@@ -48,17 +70,17 @@ internal class DalOrderItem : IOrderItem
     public void Delete(int orderItemID)
     {
 
-        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+        orderItems = XMLTools.LoadListFromXMLElement(orderItemPath);
 
-        if (!element.Elements().ToList().Exists(element => int.Parse(element.Element("OrderItemID")!.Value) == orderItemID))
+        if (!orderItems.Elements().ToList().Exists(element => int.Parse(element.Element("OrderItemID")!.Value) == orderItemID))
             throw new NoFoundException("ORDER ITEM");
 
-        XElement orderItemToDelete = (from item in element.Elements()
+        XElement orderItemToDelete = (from item in orderItems.Elements()
                                       where int.Parse(item.Element("OrderItemID")!.Value) == orderItemID
                                       select item).FirstOrDefault()!;
         orderItemToDelete.Remove();
 
-        XMLTools.SaveListToXMLElement(element, orderItemPath);
+        XMLTools.SaveListToXMLElement(orderItems, orderItemPath);
 
     }
 
@@ -71,17 +93,17 @@ internal class DalOrderItem : IOrderItem
     {
         Delete(updateOrderItem.OrderItemID);
 
-        XElement element = XMLTools.LoadListFromXMLElement(orderItemPath);
+        orderItems = XMLTools.LoadListFromXMLElement(orderItemPath);
 
-        XElement orderItems = new XElement("OrderItem", new XElement("ProductID", updateOrderItem.OrderItemID),
+        XElement orderItem = new XElement("OrderItem", new XElement("ProductID", updateOrderItem.OrderItemID),
                                                         new XElement("ProductID", updateOrderItem.ProductID),
                                                         new XElement("OrderID", updateOrderItem.OrderID),
                                                         new XElement("Price", updateOrderItem.Price),
                                                         new XElement("Amount", updateOrderItem.Amount));
 
-        element.Add(orderItems);
+        orderItems.Add(orderItem);
 
-        XMLTools.SaveListToXMLElement(element, orderItemPath);
+        XMLTools.SaveListToXMLElement(orderItems, orderItemPath);
 
     }
 
@@ -113,21 +135,21 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
-        XElement elementRoot = XMLTools.LoadListFromXMLElement(orderItemPath);
+        orderItems = XMLTools.LoadListFromXMLElement(orderItemPath);
 
-        List<OrderItem?> orderItems = (from item in elementRoot.Elements()
-                                       select (OrderItem?)new OrderItem
-                                       {
-                                           OrderItemID = int.Parse(item.Element("OrderItemID")!.Value),
-                                           OrderID = int.Parse(item.Element("OrderID")!.Value),
-                                           ProductID = int.Parse(item.Element("ProductID")!.Value),
-                                           Amount = int.Parse(item.Element("Amount")!.Value),
-                                           Price = double.Parse(item.Element("Price")!.Value)
-                                       }).ToList();
+        List<OrderItem?> orderItemsList = (from item in orderItems.Elements()
+                                           select (OrderItem?)new OrderItem
+                                           {
+                                               OrderItemID = int.Parse(item.Element("OrderItemID")!.Value),
+                                               OrderID = int.Parse(item.Element("OrderID")!.Value),
+                                               ProductID = int.Parse(item.Element("ProductID")!.Value),
+                                               Amount = int.Parse(item.Element("Amount")!.Value),
+                                               Price = double.Parse(item.Element("Price")!.Value)
+                                           }).ToList();
 
         if (func is null)
-            return orderItems.Select(item => item);
+            return orderItemsList.Select(item => item);
 
-        return orderItems.Where(func);
+        return orderItemsList.Where(func);
     }
 }

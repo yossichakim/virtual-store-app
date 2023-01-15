@@ -112,6 +112,6 @@ public partial class ProductList : Window
             string tag = (gridViewColumnHeader.Tag as string)!;
             ProductListview.Items.SortDescriptions.Clear();
             ProductListview.Items.SortDescriptions.Add(new SortDescription(tag, ListSortDirection.Ascending));
-        }   
+        }
     }
 }

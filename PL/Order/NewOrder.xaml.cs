@@ -64,7 +64,7 @@ public partial class NewOrder : Window
         InitializeComponent();
         Category = null;
         _cart = new();
-      
+
         ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart);
         ProductItemsCollectionView = CollectionViewSource.GetDefaultView(ProductItemLists);
 

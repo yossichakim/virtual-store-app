@@ -5,14 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using System.Xml;
 
+/// <summary>
+/// access to data of Order
+/// </summary>
 internal class DalOrder : IOrder
 {
+    /// <summary>
+    /// The main path of order
+    /// </summary>
     private string orderPath = @"Order";
+    /// <summary>
+    /// The main path of config numbers
+    /// </summary>
     private string configIdPath = @"..\xml\ConfigNumbers.xml";
+
+    /// <summary>
+    /// the path of order ID
+    /// </summary>
     private string? orderID = @"OrderID";
 
+    /// <summary>
+    /// List of order
+    /// </summary>
     List<Order?> orders;
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
@@ -29,7 +44,13 @@ internal class DalOrder : IOrder
 
         //initialize Running ID number
         addOrder.OrderID = int.Parse(XElement.Load(configIdPath).Element(orderID!)!.Value) + 1;
-        XElement.Load(configIdPath).Element(orderID!)!.SetValue(addOrder.OrderID);
+
+        XDocument configId = XDocument.Load(configIdPath);
+
+        configId.Descendants(orderID).FirstOrDefault()!.Value = addOrder.OrderID.ToString();
+
+        configId.Save(configIdPath);
+
         orders.Add(addOrder);
 
         XMLTools.SaveListToXMLSerializer(orders, orderPath);
@@ -49,7 +70,7 @@ internal class DalOrder : IOrder
         if (!orders.Exists(element => element?.OrderID == orderID))
             throw new NoFoundException("ORDER");
 
-         orders.RemoveAll(element => element?.OrderID == orderID);
+        orders.RemoveAll(element => element?.OrderID == orderID);
 
         XMLTools.SaveListToXMLSerializer(orders, orderPath);
 
@@ -110,7 +131,7 @@ internal class DalOrder : IOrder
         if (func is null)
             return orders.Select(item => item);
 
-         return orders.Where(func);
+        return orders.Where(func);
     }
 
 }

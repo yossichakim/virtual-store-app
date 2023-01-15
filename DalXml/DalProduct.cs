@@ -3,10 +3,21 @@ using DalApi;
 using DO;
 using System;
 
+/// <summary>
+/// Access to product data with the possibility of changes
+/// </summary>
 internal class DalProduct : IProduct
 {
+    /// <summary>
+    /// The main path of products
+    /// </summary>
     private string productPath = @"Product";
+
+    /// <summary>
+    /// List for the products
+    /// </summary>
     List<Product?> products;
+
     /// <summary>
     /// The function receives a new product and adds it
     /// </summary>
@@ -34,14 +45,14 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Delete(int productId)
     {
-       products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+        products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         if (!products.Exists(element => element?.ProductID == productId))
             throw new NoFoundException("PRODUCT");
 
         products.RemoveAll(element => element?.ProductID == productId);
 
-       XMLTools.SaveListToXMLSerializer(products, productPath);
+        XMLTools.SaveListToXMLSerializer(products, productPath);
 
     }
 
@@ -52,12 +63,12 @@ internal class DalProduct : IProduct
     /// <exception cref="NoFoundException"> if the product not exist </exception>
     public void Update(Product updateProduct)
     {
-       products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
+        products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
 
         Delete(updateProduct.ProductID);
         products.Add(updateProduct);
 
-       XMLTools.SaveListToXMLSerializer(products, productPath);
+        XMLTools.SaveListToXMLSerializer(products, productPath);
 
     }
 

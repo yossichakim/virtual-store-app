@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+/// <summary>
+/// Loading and saving data to XML files
+/// </summary>
 static class XMLTools
 {
     const string s_dir = @"..\xml\";

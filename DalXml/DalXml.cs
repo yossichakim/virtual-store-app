@@ -1,6 +1,9 @@
 ﻿namespace Dal;
 using DalApi;
 
+/// <summary>
+/// Access to XML data
+/// </summary>
 sealed internal class DalXml : IDal
 {
     private DalXml() { }

@@ -13,9 +13,9 @@ public partial class StatisticsOrders : Window
     /// </summary>
     private static BLApi.IBl? s_bl = BLApi.Factory.Get();
 
-   /// <summary>
-   /// constructor
-   /// </summary>
+    /// <summary>
+    /// constructor
+    /// </summary>
     public StatisticsOrders()
     {
         InitializeComponent();
