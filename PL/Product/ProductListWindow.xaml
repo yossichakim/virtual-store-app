@@ -42,7 +42,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="1" Content="FILTR BY CATEGORY" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="129,65,0,0" FontWeight="Bold" Foreground="AntiqueWhite" />
                     <ComboBox HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{x:Static local:ProductList.Categories}" SelectedItem="{Binding Category}" 
-               Grid.Column="1" Width="150" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" FontWeight="Bold" Foreground="#FF673AB7"  HorizontalContentAlignment="Center" >
+                   Grid.Column="1" Width="150" SelectionChanged="FilterProductsClick" Margin="258,63,0,0" FontWeight="Bold" Foreground="#FF673AB7"  HorizontalContentAlignment="Center" >
 
 
                     </ComboBox>
@@ -51,7 +51,7 @@
                 </Grid>
                 <ListView x:Name ="ProductListview" ItemsSource="{Binding Products}" Cursor="Hand" MouseDoubleClick="AccessUpdateProduct" Margin="0,67,0,0" Grid.Row="1" FontWeight="Bold" Foreground="AntiqueWhite">
                     <ListView.View >
-                        <GridView  >
+                        <GridView >
 
                             <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Width ="200" >
                                 <GridViewColumn.Header>

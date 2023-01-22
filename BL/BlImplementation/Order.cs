@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using System.Security.Cryptography;
+
+namespace BlImplementation;
 
 /// <summary>
 /// Order interface implementation class
@@ -169,6 +171,18 @@ internal class Order : BLApi.IOrder
                    Year = newGroup.Key,
                    CountOrderPerYear = newGroup.Count()
                };
+    }
+
+    public int? GetOldOrderId()
+    {
+
+        var orders = _dal?.Order.GetAll(order => order?.DeliveryDate is null)
+                     .Select(order => order.GetValueOrDefault());
+
+         if(orders?.Count() != 0 )
+            return orders?.MinBy(o => o.ShipDate is not null ? o.ShipDate : o.OrderDate).OrderID;
+
+        return null;
     }
 
     #region service function

@@ -46,4 +46,6 @@ public interface IOrder
     /// </summary>
     /// <returns></returns>
     public IEnumerable<StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy();
+
+    public int? GetOldOrderId();
 }

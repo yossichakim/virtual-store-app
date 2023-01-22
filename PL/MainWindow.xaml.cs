@@ -1,5 +1,6 @@
 ﻿namespace PL;
 using PL.admin;
+using PL.Customer;
 using System.Windows;
 
 
@@ -31,5 +32,15 @@ public partial class MainWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void CustomerAccsess(object sender, RoutedEventArgs e) => new Customer.CustomerWindow().Show();
+    private void CustomerAccsess(object sender, RoutedEventArgs e) => new CustomerWindow().Show();
+
+    private void SimulatorForOrders(object sender, RoutedEventArgs e)
+    {
+        if (_bl?.Order.GetOldOrderId() is null)
+        {
+            MessageBox.Show("all orders is delivered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        new SimulatorWindow().Show();
+    }
 }
