@@ -82,10 +82,7 @@ internal class Order : BLApi.IOrder
                 orderBo.Status = getStatus(orderDo);
                 return orderBo;
             }
-            else
-            {
-                throw new BO.ErrorUpdateException("shipped");
-            }
+            return orderBo;
         }
         catch (DO.NoFoundException ex)
         {
@@ -112,12 +109,8 @@ internal class Order : BLApi.IOrder
                 _dal.Order.Update(orderDo);
                 orderBo.DeliveryDate = orderDo.DeliveryDate;
                 orderBo.Status = getStatus(orderDo);
-                return orderBo;
             }
-            else
-            {
-                throw new BO.ErrorUpdateException("delivered");
-            }
+            return orderBo;
         }
         catch (DO.NoFoundException ex)
         {
@@ -173,9 +166,12 @@ internal class Order : BLApi.IOrder
                };
     }
 
+    /// <summary>
+    /// a function that find the oldest order
+    /// </summary>
+    /// <returns>return the oldest order that non ship or delivered</returns>
     public int? GetOldOrderId()
     {
-
         var orders = _dal?.Order.GetAll(order => order?.DeliveryDate is null)
                      .Select(order => order.GetValueOrDefault());
 
@@ -246,6 +242,4 @@ internal class Order : BLApi.IOrder
     }
 
     #endregion service function
-
-
 }
