@@ -27,7 +27,7 @@
             <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding StatusDate}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top"  RenderTransformOrigin="0.5,0.5"  Margin="515,142,0,0" />
             <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding NextStatus}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="300,217,0,0" />
             <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding ExecutionTime}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="546,217,0,0" />
-            <ProgressBar Value="{Binding ProgressBar, RelativeSource={RelativeSource AncestorType=Window}}" Foreground="Aquamarine" Background="Transparent"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="300" Margin="150" />
+            <ProgressBar Style="{StaticResource MaterialDesignLinearProgressBar}"   Value="{Binding ProgressBar, RelativeSource={RelativeSource AncestorType=Window}}" Foreground="Aquamarine" Background="Transparent"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="300" Margin="150" />
             <Button Content="Stop" HorizontalAlignment="Center" Margin="30" VerticalAlignment="Bottom" Click="Stop_Click" />
         </Grid>
     </Border>
