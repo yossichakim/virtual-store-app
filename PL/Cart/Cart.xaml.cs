@@ -2,6 +2,7 @@
 
 using PL.Order;
 using System.Windows;
+using System.Windows.Input;
 
 /// <summary>
 /// Interaction logic for Cart.xaml
@@ -47,9 +48,11 @@ public partial class Cart : Window
     /// <param name="e"></param>
     private void ItemsList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        if (IsMouseCaptureWithin)
+        if (IsMouseCaptureWithin && (BO.OrderItem)ItemsList.SelectedItem is not null)
+        {
             new ProductItem(CartProp!, ((BO.OrderItem)ItemsList.SelectedItem).ProductID, _productItemChange, false).Show();
-        this.Close();
+            this.Close();
+        }
     }
 
     /// <summary>
@@ -60,5 +63,15 @@ public partial class Cart : Window
     private void CheckOut_Click(object sender, RoutedEventArgs e)
     {
         new ClientDetails(CartProp!, () => Close(), _productItemChange).Show();
+    }
+
+    /// <summary>
+    /// Apply clicking only is the mouse on the selected item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ProductListview_MouseMove(object sender, MouseEventArgs e)
+    {
+        ItemsList.SelectedItem = null;
     }
 }

@@ -22,7 +22,7 @@
 
             <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding TotalPriceInCart}"  HorizontalAlignment="Left" Margin="229,179,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" />
 
-            <ListView ItemContainerStyle="{StaticResource StyleForListViewItem}" x:Name ="ItemsList" ItemsSource="{Binding ItemsList}" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
+            <ListView ItemContainerStyle="{StaticResource StyleForListViewItem}" x:Name ="ItemsList" ItemsSource="{Binding ItemsList}" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseMove="ProductListview_MouseMove" MouseDoubleClick="ItemsList_MouseDoubleClick">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource StyleForGridViewColumnHeader}">
                         <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155" />
