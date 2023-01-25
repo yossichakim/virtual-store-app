@@ -1,6 +1,5 @@
-﻿using System.Security.Cryptography;
-
-namespace BlImplementation;
+﻿namespace BlImplementation;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Order interface implementation class
@@ -13,6 +12,7 @@ internal class Order : BLApi.IOrder
     /// The function returns a list of all orders
     /// </summary>
     /// <returns>returns a list of all orders</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         return from order in _dal?.Order.GetAll()
@@ -31,6 +31,7 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns>returns the order</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetOrderDetails(int orderID)
     {
         if (orderID <= 0)
@@ -68,6 +69,7 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns>Returns an order with an updated shipping date</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order ShippingUpdate(int orderID)
     {
         try
@@ -100,6 +102,7 @@ internal class Order : BLApi.IOrder
     /// <returns>Returns an order with an updated delivery date</returns>
     /// <exception cref="BO.ErrorUpdateException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order DeliveryUpdate(int orderID)
     {
         try
@@ -131,6 +134,7 @@ internal class Order : BLApi.IOrder
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTrackingManger(int orderID)
     {
         BO.OrderTracking orderTracking = new();
@@ -158,6 +162,7 @@ internal class Order : BLApi.IOrder
     /// list of Statistics Orders By Year for manager
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy()
     {
         IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
@@ -173,6 +178,7 @@ internal class Order : BLApi.IOrder
                };
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? GetOldOrderId()
     {
 

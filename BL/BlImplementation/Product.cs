@@ -1,4 +1,5 @@
 ﻿namespace BlImplementation;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Implementation of product functions
@@ -14,6 +15,7 @@ internal class Product : BLApi.IProduct
     /// Returns a list of products - for manager
     /// </summary>
     /// <returns> IEnumerable<BO.ProductForList> </returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList?> GetProductList(Func<BO.ProductForList?, bool>? func = null)
     {
         var products = _dal?.Product.GetAll();
@@ -34,6 +36,7 @@ internal class Product : BLApi.IProduct
     /// <param name="func"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem?> GetProductListCostumer(BO.Cart cart, Func<BO.ProductItem?, bool>? func = null)
     {
         var products = _dal?.Product.GetAll();
@@ -49,6 +52,7 @@ internal class Product : BLApi.IProduct
     /// <returns></returns>
     /// <exception cref="BO.NoValidException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetProductManger(int productID)
     {
         if (productID <= 0)
@@ -83,6 +87,7 @@ internal class Product : BLApi.IProduct
     /// <returns></returns>
     /// <exception cref="BO.NoValidException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetProductCostumer(int productID, BO.Cart cart)
     {
         if (productID <= 0)
@@ -127,6 +132,7 @@ internal class Product : BLApi.IProduct
     /// <param name="productToAdd"></param>
     /// <exception cref="BO.NoValidException"></exception>
     /// <exception cref="BO.AddException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void AddProduct(BO.Product productToAdd)
     {
         if (productToAdd.ProductID <= 0 ||
@@ -168,6 +174,7 @@ internal class Product : BLApi.IProduct
     /// <param name="productID"></param>
     /// <exception cref="BO.ErrorDeleteException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void RemoveProduct(int productID)
     {
         if (_dal?.OrderItem.GetAll(item => item?.ProductID == productID) != null)
@@ -190,6 +197,7 @@ internal class Product : BLApi.IProduct
     /// <param name="productTOUpdate"></param>
     /// <exception cref="BO.NoValidException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateProduct(BO.Product productTOUpdate)
     {
         if (productTOUpdate.ProductID <= 0 ||

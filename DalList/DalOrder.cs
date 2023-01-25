@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal;
 
@@ -14,6 +16,7 @@ internal class DalOrder : IOrder
     /// <param name="addOrder"></param>
     /// <returns> Order ID number </returns>
     /// <exception cref="AddException"> if the array of orders are full </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order addOrder)
     {
         if (DataSource.orders.Exists(element => element?.OrderID == addOrder.OrderID))
@@ -31,6 +34,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int orderID)
     {
         if (!DataSource.orders.Exists(element => element?.OrderID == orderID))
@@ -44,6 +48,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="updateOrder"></param>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order updateOrder)
     {
         Delete(updateOrder.OrderID);
@@ -57,6 +62,7 @@ internal class DalOrder : IOrder
     /// <param name="orderID"></param>
     /// <returns> Returns the requested order </returns>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int orderID)
     {
         return Get(element => orderID == element?.OrderID);
@@ -69,6 +75,7 @@ internal class DalOrder : IOrder
     /// <param name="func"></param>
     /// <returns> Returns the requested order </returns>
     /// <exception cref="NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order?, bool>? func)
     {
         if (DataSource.orders.FirstOrDefault(func!) is Order order)
@@ -80,6 +87,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// <returns>  Returns the order list in condition </returns>
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
      => func is null ? DataSource.orders.Select(item => item) :
        DataSource.orders.Where(func);

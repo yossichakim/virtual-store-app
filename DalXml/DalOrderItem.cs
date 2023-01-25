@@ -4,6 +4,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Access to the data of order items with the possibility of changes
@@ -27,7 +28,7 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// Holds the data of order items
     /// </summary>
-    private XElement orderItems;
+    private XElement? orderItems;
 
     /// <summary>
     /// Adding order items to the list of order items
@@ -35,6 +36,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="addOrderItem"></param>
     /// <returns></returns>
     /// <exception cref="AddException"> if the array of orders items are full </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem addOrderItem)
     {
 
@@ -67,6 +69,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderItemID"></param>
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int orderItemID)
     {
 
@@ -89,6 +92,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="updateOrderItem"></param>
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem updateOrderItem)
     {
         Delete(updateOrderItem.OrderItemID);
@@ -113,6 +117,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderItem"></param>
     /// <returns> Returns the requested order item </returns>
     /// <exception cref="NoFoundException"> if the order item not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(int orderItem)
     {
         return Get(element => element?.OrderItemID == orderItem);
@@ -125,6 +130,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="func"></param>
     /// <returns> Returns the requested order item </returns>
     /// <exception cref="NotImplementedException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Func<OrderItem?, bool>? func)
     {
         return GetAll(func).FirstOrDefault() ?? throw new NoFoundException("ORDER ITEM");
@@ -133,6 +139,7 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// <returns> Returns the list of order items in condition </returns>
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
         orderItems = XMLTools.LoadListFromXMLElement(orderItemPath);
