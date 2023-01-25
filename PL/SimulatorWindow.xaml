@@ -7,20 +7,28 @@
         xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="PL.SimulatorWindow"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="SimulatorWindow" Height="450" Width="800">
-    <Grid DataContext="{Binding Order}">
-        <Label Content="Order ID:"  HorizontalAlignment="Left" Margin="76,52,0,0" VerticalAlignment="Top" Height="36" Width="86" FontSize="16" FontWeight="Bold"/>
-        <Label  Content="Status:" HorizontalAlignment="Left" Margin="222,141,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label  Content="Status Date:" HorizontalAlignment="Left" Margin="423,142,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label  Content="Next Status:" HorizontalAlignment="Left" Margin="222,217,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label  Content="Execution Time:" HorizontalAlignment="Left" Margin="424,217,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBox Text ="{Binding OrderID}" IsEnabled="False" HorizontalAlignment="Left" Margin="168,54,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="26"/>
-        <TextBlock Text="{Binding Clock, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left"  TextWrapping="Wrap"  Margin="633,60,0,0" VerticalAlignment="Top" Height="24" Width="113" FontWeight="Bold" FontSize="20"/>
-        <TextBlock Text="{Binding Status}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="284,145,0,0" Height="25" Width="96" RenderTransformOrigin="0.516,0.598"/>
-        <TextBlock Text="{Binding StatusDate}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Height="39" RenderTransformOrigin="0.5,0.5" Width="114" Margin="515,143,0,0"/>
-        <TextBlock Text="{Binding NextStatus}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="126" Margin="298,219,0,0"/>
-        <TextBlock Text="{Binding ExecutionTime}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="104" Margin="546,215,0,0"/>
-        <ProgressBar Value="{Binding ProgressBar, RelativeSource={RelativeSource AncestorType=Window}}" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Height="25" Width="300" Margin="0,305,0,0"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Margin="642,351,0,0" VerticalAlignment="Top" Click="Stop_Click"/>
-    </Grid>
+        Title="SimulatorWindow" Height="550" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource imageWindowBackGround}">
+    <Border Style="{StaticResource StyleForBorder}">
+
+        <Grid DataContext="{Binding Order}">
+            <Label Content="Simulator" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="35" FontFamily="Cooper Black" Foreground="AntiqueWhite" />
+
+            <Label Style="{StaticResource StyleForLabel}" Content="Order ID:"  HorizontalAlignment="Left" Margin="76,52,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" />
+            <Label Style="{StaticResource StyleForLabel}"  Content="Status:" HorizontalAlignment="Left" Margin="222,140,0,0" VerticalAlignment="Top" FontWeight="Bold" />
+            <Label Style="{StaticResource StyleForLabel}" Content="Status Date:" HorizontalAlignment="Left" Margin="423,142,0,0" VerticalAlignment="Top" FontWeight="Bold" />
+            <Label Style="{StaticResource StyleForLabel}" Content="Next Status:" HorizontalAlignment="Left" Margin="222,217,0,0" VerticalAlignment="Top" FontWeight="Bold" />
+            <Label Style="{StaticResource StyleForLabel}" Content="Execution Time:" HorizontalAlignment="Left" Margin="424,217,0,0" VerticalAlignment="Top" FontWeight="Bold" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text ="{Binding OrderID}" HorizontalAlignment="Left" Margin="168,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding Clock, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left"  TextWrapping="Wrap"  Margin="633,60,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding Status}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="284,140,0,0" RenderTransformOrigin="0.516,0.598" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding StatusDate}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top"  RenderTransformOrigin="0.5,0.5"  Margin="515,142,0,0" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding NextStatus}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="300,217,0,0" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding ExecutionTime}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Margin="546,217,0,0" />
+            <ProgressBar Value="{Binding ProgressBar, RelativeSource={RelativeSource AncestorType=Window}}" Foreground="Aquamarine" Background="Transparent"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="300" Margin="150" />
+            <Button Content="Stop" HorizontalAlignment="Center" Margin="30" VerticalAlignment="Bottom" Click="Stop_Click" />
+        </Grid>
+    </Border>
 </Window>

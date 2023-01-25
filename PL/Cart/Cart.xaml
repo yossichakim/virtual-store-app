@@ -6,27 +6,36 @@
         xmlns:local="clr-namespace:PL.Cart"
         DataContext="{Binding CartProp, RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
-        Title="Cart" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="281*" />
-            <RowDefinition Height="153*" />
-        </Grid.RowDefinitions>
-        <Label Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top" />
-        <TextBox  x:Name ="TotalPriceInCart" Text="{Binding TotalPriceInCart}" IsEnabled="False" HorizontalAlignment="Left" Margin="229,185,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <ListView x:Name ="ItemsList" ItemsSource="{Binding ItemsList}" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="155" />
-                    <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="155" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount" Width ="155" />
-                    <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="155" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Content="Items List In Cart" HorizontalAlignment="Left" Margin="320,217,0,0" VerticalAlignment="Top" Width="105" FontWeight="Bold" />
-        <Button x:Name ="CheckOut" Content="Check Out" HorizontalAlignment="Left" Margin="683,46,0,0" VerticalAlignment="Top" Click="CheckOut_Click" />
-        <Label Content="Cart" HorizontalAlignment="Left" Margin="79,26,0,0" VerticalAlignment="Top" Height="37" Width="108" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
-    </Grid>
+        Title="Cart" Height="550" Width="850"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource imageWindowBackGround}">
+
+    <Border Style="{StaticResource StyleForBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="281*" />
+                <RowDefinition Height="153*" />
+            </Grid.RowDefinitions>
+
+            <Label Style="{StaticResource StyleForLabel}" Content="Total Price In Cart:" HorizontalAlignment="Left" Margin="102,179,0,0" VerticalAlignment="Top" />
+
+            <TextBlock Style="{StaticResource StyleForTextBlock}" Text="{Binding TotalPriceInCart}"  HorizontalAlignment="Left" Margin="229,179,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" />
+
+            <ListView ItemContainerStyle="{StaticResource StyleForListViewItem}" x:Name ="ItemsList" ItemsSource="{Binding ItemsList}" Cursor="Hand" Margin="0,251,0,0" Grid.RowSpan="2" MouseDoubleClick="ItemsList_MouseDoubleClick">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource StyleForGridViewColumnHeader}">
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ID" Width ="155" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductName}" Header="Name" Width ="155" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ProductPrice}" Header="Price"   Width ="155" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount" Width ="155" />
+                        <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="155" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button x:Name ="CheckOut" Content="Check Out" HorizontalAlignment="Left" Margin="683,46,0,0" VerticalAlignment="Top" Click="CheckOut_Click" />
+            <Label Style="{StaticResource StyleForLabel}" Content="Cart" HorizontalAlignment="Center" Margin="79,26,0,0" VerticalAlignment="Top" Height="37" Width="108" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" />
+        </Grid>
+    </Border>
 </Window>

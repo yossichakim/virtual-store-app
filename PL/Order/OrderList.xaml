@@ -8,31 +8,60 @@
         ResizeMode="NoResize"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
-        Title="OrderList" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*" />
-            <RowDefinition Height="500*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+        Title="OrderList" Height="640" Width="850" Style="{StaticResource imageWindowBackGround}">
+
+    <Border Style="{StaticResource StyleForBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="500*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
           VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <ListView x:Name ="OrderListview" Cursor="Hand" ItemsSource="{Binding orderForList}" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" MouseMove="ProductItemListview_MouseMove" Margin="0,29,0,0"
+                  ItemContainerStyle="{StaticResource StyleForListViewItem}">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource StyleForGridViewColumnHeader}">
+                        <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Width ="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="OrderID" Click="SortByColmun">Order ID</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding CustomerName}" Width ="170">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="CustomerName" Click="SortByColmun">Customer Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding Status}"  Width ="170">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Status" Click="SortByColmun">Status</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}" Width ="170">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="AmountOfItems" Click="SortByColmun">Amount Of Items</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}"  Width ="150">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="TotalPrice" Click="SortByColmun">Total Price</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Content="Order List" HorizontalAlignment="Center" Margin="25,0,0,0" VerticalAlignment="Center" Width="208" Height="32" FontFamily="Cooper Black"
+               FontWeight="Bold" Foreground="AntiqueWhite" FontSize="25" />
         </Grid>
-        <ListView x:Name ="OrderListview" Cursor="Hand" ItemsSource="{Binding orderForList}" Grid.Row="1" MouseDoubleClick="AccessUpdateOrder" Margin="0,29,0,0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="Order ID" Width ="100" />
-                    <GridViewColumn DisplayMemberBinding="{Binding CustomerName}" Header="Customer Name" Width ="170" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status"   Width ="170" />
-                    <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}" Header="Amount Of Items" Width ="170" />
-                    <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Total Price" Width ="150" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Label Content="Order List" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center" Width="208" FontWeight="Bold" FontSize="20" Height="32" FontFamily="Cooper Black" />
-    </Grid>
+    </Border>
 </Window>

@@ -4,17 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
-        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="ClientDetails" Height="450" Width="400" Tag="mdi_child">
-    <Grid>
-        <Label Content="Client Details&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="35" Width="154" FontWeight="Bold" FontFamily="Cooper Black" FontSize="20" />
-        <Label Content="Enter Name:" HorizontalAlignment="Left" Margin="95,127,0,0" VerticalAlignment="Top" />
-        <Label Content="Enter Email:" HorizontalAlignment="Left" Margin="95,165,0,0" VerticalAlignment="Top" />
-        <Label Content="Enter address:" HorizontalAlignment="Left" Margin="95,203,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="Name" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="191,131,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="Email"  Text="{Binding CustomerEmail}" HorizontalAlignment="Left" Margin="191,168,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="Address"  Text="{Binding CustomerAddress}" HorizontalAlignment="Left" Margin="191,206,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <Button Content="To Add Order" HorizontalAlignment="Center" Margin="0,304,0,0" VerticalAlignment="Top" Height="44" Width="94" Click="ToAddOrder" FontWeight="Bold" FontFamily="Cooper Black" />
-    </Grid>
+        Title="ClientDetails" Height="450" Width="400" Tag="mdi_child"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource imageWindowBackGround}">
+
+    <Border Style="{StaticResource StyleForBorder}">
+
+        <Grid>
+            <Label Style="{StaticResource StyleForLabel}" Content="Client Details" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="35" Width="154" FontWeight="Bold" FontFamily="Cooper Black" FontSize="20" />
+            <Label Style="{StaticResource StyleForLabel}"  Content="Enter Name:" HorizontalAlignment="Left" Margin="95,127,0,0" VerticalAlignment="Top" />
+            <Label Style="{StaticResource StyleForLabel}"  Content="Enter Email:" HorizontalAlignment="Left" Margin="95,165,0,0" VerticalAlignment="Top" />
+            <Label Style="{StaticResource StyleForLabel}"  Content="Enter address:" HorizontalAlignment="Left" Margin="95,203,0,0" VerticalAlignment="Top" />
+            <TextBox Style="{StaticResource StyleForTextBox}" x:Name="Name" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="191,131,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+            <TextBox Style="{StaticResource StyleForTextBox}" x:Name="Email"  Text="{Binding CustomerEmail}" HorizontalAlignment="Left" Margin="191,168,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+            <TextBox Style="{StaticResource StyleForTextBox}" x:Name="Address"  Text="{Binding CustomerAddress}" HorizontalAlignment="Left" Margin="191,206,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+            <Button Content="Add Order" HorizontalAlignment="Center" Margin="50" VerticalAlignment="Bottom"  Click="ToAddOrder" />
+        </Grid>
+    </Border>
 </Window>

@@ -6,22 +6,28 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding OrderTrackingProp, RelativeSource={RelativeSource self}}"
-        Title="OrderTracking" Height="450" Width="800">
-    <Grid>
-        <Label Content="Order Tracking" HorizontalAlignment="Center" VerticalAlignment="Top" Width="176" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" Height="33" />
-        <Label Content="Order ID:" HorizontalAlignment="Left" Margin="213,130,0,0" VerticalAlignment="Top" FontWeight="Bold" />
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="213,161,0,0" VerticalAlignment="Top" FontWeight="Bold" />
-        <Label Content="Date and Status:" HorizontalAlignment="Left" Margin="213,191,0,0" VerticalAlignment="Top" FontWeight="Bold" />
-        <Button Content="Order Details" HorizontalAlignment="Left" Margin="213,311,0,0" VerticalAlignment="Top" Click="OrderDetails" />
-        <TextBlock x:Name="OrderID" HorizontalAlignment="Left" Margin="351,135,0,0" TextWrapping="Wrap" Text="{Binding OrderID}" VerticalAlignment="Top" />
-        <TextBlock x:Name="Status" HorizontalAlignment="Left" Margin="351,166,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" />
-        <ListView x:Name="DateAndStatusList" Margin="344,191,64,65" ItemsSource="{Binding DateAndStatus}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Item1}" Header="Date" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Item2}" Header="Status" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+        Title="OrderTracking" Height="550" Width="800"
+                WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource imageWindowBackGround}">
+    <Border Style="{StaticResource StyleForBorder}">
+
+        <Grid>
+            <Label Style="{StaticResource StyleForLabel}" Content="Order Tracking" HorizontalAlignment="Center" VerticalAlignment="Top" Width="176" FontWeight="Bold" FontSize="20" FontFamily="Cooper Black" Height="33"  />
+            <Label Style="{StaticResource StyleForLabel}" Content="Order ID:" HorizontalAlignment="Left"  VerticalAlignment="Top" FontWeight="Bold" Margin="320,107,0,0"  />
+            <Label Style="{StaticResource StyleForLabel}" Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="320,142,0,0" />
+
+            <Button Content="Order Details" HorizontalAlignment="Center" Margin="20" VerticalAlignment="Bottom" Click="OrderDetails" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" x:Name="OrderID"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding OrderID}" VerticalAlignment="Top" Margin="400,107,0,0" Width="52" />
+            <TextBlock Style="{StaticResource StyleForTextBlock}" x:Name="Status" TextWrapping="Wrap" Text="{Binding Status}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,142,0,0" />
+            <ListView HorizontalAlignment="Center" VerticalAlignment="Center" ItemContainerStyle="{StaticResource StyleForListViewItem}"  x:Name="DateAndStatusList" Margin="0,100,0,0" ItemsSource="{Binding DateAndStatus}">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource StyleForGridViewColumnHeader}">
+                        <GridViewColumn DisplayMemberBinding="{Binding Item1}" Width="200" Header="Date" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Item2}" Width="150"  Header="Status" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Border>
 </Window>

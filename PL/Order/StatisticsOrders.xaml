@@ -7,22 +7,27 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="StatisticsOrders" Height="450" Width="800">
-    <Grid>
+        Title="StatisticsOrders" Height="450" Width="800"
+        Style="{StaticResource imageWindowBackGround}">
+
+    <Border Style="{StaticResource StyleForBorder}">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200*" />
             <RowDefinition Height="500*" />
         </Grid.RowDefinitions>
 
-        <Label Content="Statistics Orders By Year" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0" />
+            <Label Content="Statistics Orders By Year" Foreground="AntiqueWhite" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" />
 
-        <ListView x:Name ="StatisticsOrdersByYear" HorizontalAlignment="Center" Grid.Row="1" Cursor="Hand" >
+        <ListView x:Name ="StatisticsOrdersByYear" HorizontalAlignment="Center" Grid.Row="1" Cursor="Hand"
+                  ItemContainerStyle="{StaticResource StyleForListViewItem}">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Year}"  Header="Year"/>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource StyleForGridViewColumnHeader}">
+                        <GridViewColumn DisplayMemberBinding="{Binding Year}"  Header="Year"/>
                     <GridViewColumn DisplayMemberBinding="{Binding CountOrderPerYear}" Header="Orders Per Year" Width="200"/>
                 </GridView>
             </ListView.View>
         </ListView>
     </Grid>
+    </Border>
 </Window>

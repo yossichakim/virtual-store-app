@@ -20,11 +20,68 @@
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
+            
+            
             <ObjectDataProvider x:Key="ProductCategory" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="bo:Category" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+
+            <Style TargetType="Window" x:Key="imageWindowBackGround">
+                
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="\image\background-image.jpg"></ImageBrush>
+                    </Setter.Value>
+                </Setter>
+              
+            </Style>
+
+            <Style x:Key="StyleForBorder" TargetType="Border">
+
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                            <GradientStop Color="#462Ad8" Offset="0"/>
+                            <GradientStop Color="#da34ae" Offset="0.5"/>
+                            <GradientStop Color="#8A16C1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Opacity" Value="0.95"></Setter>
+            </Style>
+
+            <Style x:Key="StyleForListViewItem" TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+
+            <Style x:Key="StyleForGridViewColumnHeader" TargetType="GridViewColumnHeader" BasedOn="{StaticResource MaterialDesignFlatAccentButton}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+
+            <Style x:Key="StyleForLabel" TargetType="Label" >
+                <Setter Property="Foreground" Value="AntiqueWhite"/>
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+
+            <Style x:Key="StyleForTextBox" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+
+            <Style x:Key="StyleForTextBlock" TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignTextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
+                <Setter Property="FontWeight" Value="Bold"></Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

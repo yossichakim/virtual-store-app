@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Customer"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
-    <Window.Background>
-        <ImageBrush ImageSource="\image\background-image.jpg" Stretch="Fill" />
-    </Window.Background>
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="CustomerWindow" Height="550" Width="800"
+        Style="{StaticResource imageWindowBackGround}">
+
     <Grid>
         <Label Content="Customer Access" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cooper Black" FontSize="50" Foreground="#DDAF9BF0" />
 
