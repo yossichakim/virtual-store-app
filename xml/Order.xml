@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <OrderID>100000</OrderID>
@@ -253,15 +253,6 @@
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
-    <OrderID>100028</OrderID>
-    <CustomerName>Wheeler Carmen</CustomerName>
-    <CustomerEmail>mpoplees@opensource.org</CustomerEmail>
-    <CustomerAddress>5299 Mayfield Crossing</CustomerAddress>
-    <OrderDate>2021-01-28T04:24:19</OrderDate>
-    <ShipDate>2021-02-07T04:24:19</ShipDate>
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <OrderID>100029</OrderID>
     <CustomerName>Tandy Loader</CustomerName>
     <CustomerEmail>rleindeckert@miibeian.gov.cn</CustomerEmail>
@@ -294,15 +285,6 @@
     <CustomerEmail>lrudledgew@nationalgeographic.com</CustomerEmail>
     <CustomerAddress>356 Anhalt Hill</CustomerAddress>
     <OrderDate>2022-02-06T15:53:36</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <OrderID>100033</OrderID>
-    <CustomerName>Cristin Stennes</CustomerName>
-    <CustomerEmail>mwallicex@psu.edu</CustomerEmail>
-    <CustomerAddress>0 Fairview Alley</CustomerAddress>
-    <OrderDate>2021-02-26T07:49:40</OrderDate>
     <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
@@ -358,6 +340,24 @@
     <CustomerAddress>6407 Knutson Drive</CustomerAddress>
     <OrderDate>2021-06-16T20:43:57</OrderDate>
     <ShipDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <OrderID>100028</OrderID>
+    <CustomerName>Wheeler Carmen</CustomerName>
+    <CustomerEmail>mpoplees@opensource.org</CustomerEmail>
+    <CustomerAddress>5299 Mayfield Crossing</CustomerAddress>
+    <OrderDate>2021-01-28T04:24:19</OrderDate>
+    <ShipDate>2021-02-07T04:24:19</ShipDate>
+    <DeliveryDate>2023-01-25T23:19:29.7742354+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <OrderID>100033</OrderID>
+    <CustomerName>Cristin Stennes</CustomerName>
+    <CustomerEmail>mwallicex@psu.edu</CustomerEmail>
+    <CustomerAddress>0 Fairview Alley</CustomerAddress>
+    <OrderDate>2021-02-26T07:49:40</OrderDate>
+    <ShipDate>2023-01-25T23:19:40.8275477+02:00</ShipDate>
     <DeliveryDate xsi:nil="true" />
   </Order>
 </ArrayOfOrder>
