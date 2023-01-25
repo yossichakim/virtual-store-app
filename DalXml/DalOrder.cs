@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// access to data of Order
@@ -28,13 +29,14 @@ internal class DalOrder : IOrder
     /// <summary>
     /// List of order
     /// </summary>
-    List<Order?> orders;
+    List<Order?>? orders;
     /// <summary>
     /// Receives an order as a parameter and adds it to the array of orders
     /// </summary>
     /// <param name="addOrder"></param>
     /// <returns> Order ID number </returns>
     /// <exception cref="AddException"> if the array of orders are full </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order addOrder)
     {
         orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
@@ -63,6 +65,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int orderID)
     {
         orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
@@ -81,6 +84,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="updateOrder"></param>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order updateOrder)
     {
         orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
@@ -99,6 +103,7 @@ internal class DalOrder : IOrder
     /// <param name="orderID"></param>
     /// <returns> Returns the requested order </returns>
     /// <exception cref="NoFoundException"> if the order not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int orderID)
     {
         return Get(element => orderID == element?.OrderID);
@@ -111,6 +116,7 @@ internal class DalOrder : IOrder
     /// <param name="func"></param>
     /// <returns> Returns the requested order </returns>
     /// <exception cref="NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order?, bool>? func)
     {
         orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);
@@ -124,6 +130,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// <returns>  Returns the order list in condition </returns>
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
     {
         orders = XMLTools.LoadListFromXMLSerializer<Order>(orderPath);

@@ -5,7 +5,7 @@ namespace BLApi;
 /// <summary>
 ///  factory of bl
 /// </summary>
-public class Factory
+public static class Factory
 {
     /// <summary>
     /// Access to the implementation of bl

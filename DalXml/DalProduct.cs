@@ -2,6 +2,7 @@
 using DalApi;
 using DO;
 using System;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Access to product data with the possibility of changes
@@ -16,7 +17,7 @@ internal class DalProduct : IProduct
     /// <summary>
     /// List for the products
     /// </summary>
-    List<Product?> products;
+    List<Product?>? products;
 
     /// <summary>
     /// The function receives a new product and adds it
@@ -24,6 +25,7 @@ internal class DalProduct : IProduct
     /// <param name="addProduct"></param>
     /// <returns> ID number of the added product </returns>
     /// <exception cref="AddException"> if the product id already exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product addProduct)
     {
         products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
@@ -43,6 +45,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <exception cref="NoFoundException"> if the product not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int productId)
     {
         products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
@@ -61,6 +64,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="updateProduct"></param>
     /// <exception cref="NoFoundException"> if the product not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product updateProduct)
     {
         products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
@@ -78,6 +82,7 @@ internal class DalProduct : IProduct
     /// <param name="productID"></param>
     /// <returns> returns the product object </returns>
     /// <exception cref="NoFoundException"> if the product not exist </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(int productID)
     {
         return Get(product => product?.ProductID == productID);
@@ -90,6 +95,7 @@ internal class DalProduct : IProduct
     /// <param name="func"></param>
     /// <returns> returns the product object </returns>
     /// <exception cref="NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Func<Product?, bool>? func)
     {
         products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);
@@ -103,6 +109,7 @@ internal class DalProduct : IProduct
     /// <summary>
     /// <returns> Returns the list of all products in condition </returns>
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
     {
         products = XMLTools.LoadListFromXMLSerializer<Product>(productPath);

@@ -1,5 +1,5 @@
 ﻿namespace BlImplementation;
-
+using System.Runtime.CompilerServices;
 using SeviceFunction;
 
 /// <summary>
@@ -17,6 +17,7 @@ internal class Cart : BLApi.ICart
     /// <returns>Returns a cart entity with a product added</returns>
     /// <exception cref="BO.NoValidException">If the quantity of the product is incorrect</exception>
     /// <exception cref="BO.NoFoundException">Product not found</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
         DO.Product product = new();
@@ -74,6 +75,7 @@ internal class Cart : BLApi.ICart
     /// <exception cref="BO.NoFoundException"></exception>
     /// <exception cref="BO.ErrorUpdateCartException"></exception>
     /// <exception cref="BO.AddException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void ConfirmedOrder(BO.Cart cart)
     {
         if (string.IsNullOrWhiteSpace(cart.CustomerName) ||
@@ -159,6 +161,7 @@ internal class Cart : BLApi.ICart
     /// <returns>Returns a cart entity with an updated product</returns
     /// <exception cref="BO.NoValidException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart UpdateAmount(BO.Cart cart, int productID, int newAmount)
     {
         try
