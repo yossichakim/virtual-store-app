@@ -48,7 +48,6 @@ public partial class ProductList : Window
         InitializeComponent();
         Category = null;
         Products = _bl!.Product.GetProductList()!;
-
     }
 
     /// <summary>
@@ -113,5 +112,15 @@ public partial class ProductList : Window
             ProductListview.Items.SortDescriptions.Clear();
             ProductListview.Items.SortDescriptions.Add(new SortDescription(tag, ListSortDirection.Ascending));
         }
+    }
+
+    /// <summary>
+    /// Apply clicking only is the mouse on the selected item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ProductListview_MouseMove(object sender, MouseEventArgs e)
+    {
+        ProductListview.SelectedItem = null;
     }
 }

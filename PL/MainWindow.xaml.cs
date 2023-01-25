@@ -34,11 +34,16 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void CustomerAccsess(object sender, RoutedEventArgs e) => new CustomerWindow().Show();
 
+    /// <summary>
+    /// simulator access
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void SimulatorForOrders(object sender, RoutedEventArgs e)
     {
         if (_bl?.Order.GetOldOrderId() is null)
         {
-            MessageBox.Show("all orders is delivered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("ALL ORDERS IS DELIVERED", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
         new SimulatorWindow().Show();

@@ -89,7 +89,10 @@ public partial class ProductItem : Window
     private void UpdateCart_Click(object sender, RoutedEventArgs e)
     {
         if (!int.TryParse(AmountInCart.Text, out int n))
+        {
             MessageBox.Show("ENTER A VALID AMOUNT", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
 
         try
         {
@@ -105,5 +108,15 @@ public partial class ProductItem : Window
         {
             MessageBox.Show(ex.Message + ex.InnerException, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
+
+    /// <summary>
+    /// for input only numbers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private new void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        e.Handled = ValidInput.ValidInputs.isValidNumber(e.Text);
     }
 }

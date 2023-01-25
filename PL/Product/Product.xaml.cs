@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 namespace PL.Product;
 
 /// <summary>
@@ -17,6 +18,7 @@ public partial class ProductView : Window
     public static readonly DependencyProperty ProductDep = DependencyProperty.Register(nameof(Product),
                                                                                        typeof(BO.Product),
                                                                                       typeof(ProductView));
+
     /// <summary>
     /// A product object
     /// </summary>
@@ -122,5 +124,25 @@ public partial class ProductView : Window
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// for input only numbers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private new void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        e.Handled = ValidInput.ValidInputs.isValidNumber(e.Text);
+    }
+
+    private void Price_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        if (e.Text == "." && !Price.Text.Contains('.'))
+        {
+            e.Handled = false;
+            return;
+        }
+        e.Handled = ValidInput.ValidInputs.isValidPrice(e.Text);
     }
 }

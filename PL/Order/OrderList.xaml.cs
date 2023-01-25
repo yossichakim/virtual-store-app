@@ -1,7 +1,9 @@
 ﻿namespace PL.Order;
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 /// <summary>
@@ -48,7 +50,35 @@ public partial class OrderList : Window
     /// <param name="e"></param>
     private void AccessUpdateOrder(object sender, MouseButtonEventArgs e)
     {
-        if (IsMouseCaptureWithin)
+        BO.OrderForList orderForList = (BO.OrderForList)OrderListview.SelectedItem;
+
+        if (IsMouseCaptureWithin && orderForList is not null)
             new Order(((BO.OrderForList)OrderListview.SelectedItem).OrderID, false, updateOrderList).Show();
+    }
+
+    /// <summary>
+    /// Sort the list by column
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SortByColmun(object sender, RoutedEventArgs e)
+    {
+        GridViewColumnHeader gridViewColumnHeader = (sender as GridViewColumnHeader)!;
+        if (gridViewColumnHeader is not null)
+        {
+            string tag = (gridViewColumnHeader.Tag as string)!;
+            OrderListview.Items.SortDescriptions.Clear();
+            OrderListview.Items.SortDescriptions.Add(new SortDescription(tag, ListSortDirection.Ascending));
+        }
+    }
+
+    /// <summary>
+    /// Apply clicking only is the mouse on the selected item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ProductItemListview_MouseMove(object sender, MouseEventArgs e)
+    {
+        OrderListview.SelectedItem = null;
     }
 }

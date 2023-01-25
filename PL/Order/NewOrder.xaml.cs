@@ -67,11 +67,10 @@ public partial class NewOrder : Window
 
         ProductItemLists = s_bl!.Product.GetProductListCostumer(_cart);
         ProductItemsCollectionView = CollectionViewSource.GetDefaultView(ProductItemLists);
-
     }
 
     /// <summary>
-    /// update product item 
+    /// update product item
     /// </summary>
     private void updateProductItems()
     {
@@ -82,12 +81,10 @@ public partial class NewOrder : Window
 
         ProductItemsCollectionView = CollectionViewSource.GetDefaultView(ProductItemLists);
 
-
         if (CheckBoxGrop.IsChecked == true)
             ProductItemsCollectionView.GroupDescriptions.Add(groupDescription);
         else
             ProductItemsCollectionView.GroupDescriptions.Remove(groupDescription);
-
     }
 
     /// <summary>
@@ -98,18 +95,20 @@ public partial class NewOrder : Window
     private void FilterCatgory_SelectionChanged(object sender, SelectionChangedEventArgs e) => updateProductItems();
 
     /// <summary>
-    /// access to product item window 
+    /// access to product item window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void ProductItemListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if (IsMouseCaptureWithin)
-            new ProductItem(_cart!, ((BO.ProductItem)ProductItemListview.SelectedItem).ProductID, updateProductItems).Show();
+        BO.ProductItem productItem = (BO.ProductItem)ProductItemListview.SelectedItem;
+
+        if (productItem is not null)
+            new ProductItem(_cart!, productItem.ProductID, updateProductItems).Show();
     }
 
     /// <summary>
-    /// access to cart window 
+    /// access to cart window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -147,5 +146,31 @@ public partial class NewOrder : Window
     private void UnCheckBox_Checked(object sender, RoutedEventArgs e)
     {
         ProductItemsCollectionView.GroupDescriptions.Remove(groupDescription);
+    }
+
+    /// <summary>
+    /// Sort the list by column
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SortByColmun(object sender, RoutedEventArgs e)
+    {
+        GridViewColumnHeader gridViewColumnHeader = (sender as GridViewColumnHeader)!;
+        if (gridViewColumnHeader is not null)
+        {
+            string tag = (gridViewColumnHeader.Tag as string)!;
+            ProductItemListview.Items.SortDescriptions.Clear();
+            ProductItemListview.Items.SortDescriptions.Add(new SortDescription(tag, ListSortDirection.Ascending));
+        }
+    }
+
+    /// <summary>
+    /// Apply clicking only is the mouse on the selected item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ProductItemListview_MouseMove(object sender, MouseEventArgs e)
+    {
+        ProductItemListview.SelectedItem = null;
     }
 }

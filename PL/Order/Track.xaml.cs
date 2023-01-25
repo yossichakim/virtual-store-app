@@ -55,7 +55,7 @@ public partial class Track : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void OrderID_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    private new void PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
         e.Handled = ValidInput.ValidInputs.isValidNumber(e.Text);
     }
