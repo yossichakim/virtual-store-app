@@ -46,7 +46,7 @@ public partial class SimulatorWindow : Window
     public static readonly DependencyProperty ProgressBarProperty =
         DependencyProperty.Register("ProgressBar", typeof(double), typeof(SimulatorWindow));
 
-    private int length;
+    private int length = 1;
 
     private int proportion;
 
