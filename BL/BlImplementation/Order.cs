@@ -1,29 +1,30 @@
 ﻿namespace BlImplementation;
-using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Order interface implementation class
 /// </summary>
 internal class Order : BLApi.IOrder
 {
-    private DalApi.IDal? _dal = DalApi.Factory.Get();
+    private DalApi.IDal _dal = DalApi.Factory.Get()!;
 
     /// <summary>
     /// The function returns a list of all orders
     /// </summary>
     /// <returns>returns a list of all orders</returns>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
-        return from order in _dal?.Order.GetAll()
-               select new BO.OrderForList
-               {
-                   OrderID = (int)order?.OrderID!,
-                   CustomerName = order?.CustomerName,
-                   AmountOfItems = (int)amountPriceOrder((DO.Order)order!).Item1!,
-                   TotalPrice = (double)amountPriceOrder((DO.Order)order!).Item2!,
-                   Status = getStatus((DO.Order)order!)
-               };
+        lock (_dal)
+        {
+            return from order in _dal?.Order.GetAll()
+                   select new BO.OrderForList
+                   {
+                       OrderID = (int)order?.OrderID!,
+                       CustomerName = order?.CustomerName,
+                       AmountOfItems = (int)amountPriceOrder((DO.Order)order!).Item1!,
+                       TotalPrice = (double)amountPriceOrder((DO.Order)order!).Item2!,
+                       Status = getStatus((DO.Order)order!)
+                   };
+        }
     }
 
     /// <summary>
@@ -31,36 +32,38 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns>returns the order</returns>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetOrderDetails(int orderID)
     {
-        if (orderID <= 0)
+        lock (_dal)
         {
-            throw new BO.NoValidException("order id");
-        }
-
-        try
-        {
-            DO.Order item = (DO.Order)_dal?.Order.Get(orderID)!;
-            (_, double? totalPrice) = amountPriceOrder(item);
-            BO.Order order = new()
+            if (orderID <= 0)
             {
-                OrderID = item.OrderID,
-                CustomerName = item.CustomerName,
-                CustomerEmail = item.CustomerEmail,
-                CustomerAddress = item.CustomerAddress,
-                OrderDate = item.OrderDate,
-                ShipDate = item.ShipDate,
-                DeliveryDate = item.DeliveryDate,
-                ItemsList = returnItemsList(item).ToList(),
-                Status = getStatus(item),
-                TotalPrice = (double)totalPrice!,
-            };
-            return order;
-        }
-        catch (DO.NoFoundException ex)
-        {
-            throw new BO.NoFoundException(ex);
+                throw new BO.NoValidException("order id");
+            }
+
+            try
+            {
+                DO.Order item = (DO.Order)_dal?.Order.Get(orderID)!;
+                (_, double? totalPrice) = amountPriceOrder(item);
+                BO.Order order = new()
+                {
+                    OrderID = item.OrderID,
+                    CustomerName = item.CustomerName,
+                    CustomerEmail = item.CustomerEmail,
+                    CustomerAddress = item.CustomerAddress,
+                    OrderDate = item.OrderDate,
+                    ShipDate = item.ShipDate,
+                    DeliveryDate = item.DeliveryDate,
+                    ItemsList = returnItemsList(item).ToList(),
+                    Status = getStatus(item),
+                    TotalPrice = (double)totalPrice!,
+                };
+                return order;
+            }
+            catch (DO.NoFoundException ex)
+            {
+                throw new BO.NoFoundException(ex);
+            }
         }
     }
 
@@ -69,26 +72,28 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns>Returns an order with an updated shipping date</returns>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order ShippingUpdate(int orderID)
     {
-        try
+        lock (_dal)
         {
-            DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
-            BO.Order orderBo = GetOrderDetails(orderID);
-            if (orderDo.ShipDate == null)
+            try
             {
-                orderDo.ShipDate = DateTime.Now;
-                _dal.Order.Update(orderDo);
-                orderBo.ShipDate = orderDo.ShipDate;
-                orderBo.Status = getStatus(orderDo);
+                DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
+                BO.Order orderBo = GetOrderDetails(orderID);
+                if (orderDo.ShipDate == null)
+                {
+                    orderDo.ShipDate = DateTime.Now;
+                    _dal.Order.Update(orderDo);
+                    orderBo.ShipDate = orderDo.ShipDate;
+                    orderBo.Status = getStatus(orderDo);
+                    return orderBo;
+                }
                 return orderBo;
             }
-            return orderBo;
-        }
-        catch (DO.NoFoundException ex)
-        {
-            throw new BO.NoFoundException(ex);
+            catch (DO.NoFoundException ex)
+            {
+                throw new BO.NoFoundException(ex);
+            }
         }
     }
 
@@ -99,25 +104,27 @@ internal class Order : BLApi.IOrder
     /// <returns>Returns an order with an updated delivery date</returns>
     /// <exception cref="BO.ErrorUpdateException"></exception>
     /// <exception cref="BO.NoFoundException"></exception>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order DeliveryUpdate(int orderID)
     {
-        try
+        lock (_dal)
         {
-            DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
-            BO.Order orderBo = GetOrderDetails(orderID);
-            if (orderDo.DeliveryDate == null)
+            try
             {
-                orderDo.DeliveryDate = DateTime.Now;
-                _dal.Order.Update(orderDo);
-                orderBo.DeliveryDate = orderDo.DeliveryDate;
-                orderBo.Status = getStatus(orderDo);
+                DO.Order orderDo = (DO.Order)_dal?.Order.Get(orderID)!;
+                BO.Order orderBo = GetOrderDetails(orderID);
+                if (orderDo.DeliveryDate == null)
+                {
+                    orderDo.DeliveryDate = DateTime.Now;
+                    _dal.Order.Update(orderDo);
+                    orderBo.DeliveryDate = orderDo.DeliveryDate;
+                    orderBo.Status = getStatus(orderDo);
+                }
+                return orderBo;
             }
-            return orderBo;
-        }
-        catch (DO.NoFoundException ex)
-        {
-            throw new BO.NoFoundException(ex);
+            catch (DO.NoFoundException ex)
+            {
+                throw new BO.NoFoundException(ex);
+            }
         }
     }
 
@@ -127,26 +134,28 @@ internal class Order : BLApi.IOrder
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="BO.NoFoundException"></exception>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTrackingManger(int orderID)
     {
-        BO.OrderTracking orderTracking = new();
-        try
+        lock (_dal)
         {
-            DO.Order order = (DO.Order)_dal?.Order.Get(orderID)!;
+            BO.OrderTracking orderTracking = new();
+            try
+            {
+                DO.Order order = (DO.Order)_dal?.Order.Get(orderID)!;
 
-            orderTracking.OrderID = orderID;
-            orderTracking.Status = getStatus(order);
-            orderTracking.DateAndStatus = new(){
+                orderTracking.OrderID = orderID;
+                orderTracking.Status = getStatus(order);
+                orderTracking.DateAndStatus = new(){
                 Tuple.Create(order.OrderDate, BO.OrderStatus.OrderConfirmed),
                 Tuple.Create(order.ShipDate, BO.OrderStatus.OrderSent),
                 Tuple.Create(order.DeliveryDate, BO.OrderStatus.OrderProvided)
             };
-            return orderTracking;
-        }
-        catch (DO.NoFoundException ex)
-        {
-            throw new BO.NoFoundException(ex);
+                return orderTracking;
+            }
+            catch (DO.NoFoundException ex)
+            {
+                throw new BO.NoFoundException(ex);
+            }
         }
     }
 
@@ -154,31 +163,36 @@ internal class Order : BLApi.IOrder
     /// list of Statistics Orders By Year for manager
     /// </summary>
     /// <returns></returns>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.StatisticsOrdersByYear> StatisticsOrdersByYearGroupBy()
     {
-        IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
+        lock (_dal)
+        {
+            IEnumerable<DO.Order?> orders = _dal?.Order.GetAll()!;
 
-        return from order in orders
-               let year = order?.OrderDate?.Year
-               group order by year into newGroup
-               orderby newGroup.Key
-               select new BO.StatisticsOrdersByYear
-               {
-                   Year = newGroup.Key,
-                   CountOrderPerYear = newGroup.Count()
-               };
+            return from order in orders
+                   let year = order?.OrderDate?.Year
+                   group order by year into newGroup
+                   orderby newGroup.Key
+                   select new BO.StatisticsOrdersByYear
+                   {
+                       Year = newGroup.Key,
+                       CountOrderPerYear = newGroup.Count()
+                   };
+        }
     }
 
     public int? GetOldOrderId()
     {
-        var orders = _dal?.Order.GetAll(order => order?.DeliveryDate is null)
-                     .Select(order => order.GetValueOrDefault());
+        lock (_dal)
+        {
+            var orders = _dal?.Order.GetAll(order => order?.DeliveryDate is null)
+                         .Select(order => order.GetValueOrDefault());
 
-         if(orders?.Count() != 0 )
-            return orders?.MinBy(o => o.ShipDate is not null ? o.ShipDate : o.OrderDate).OrderID;
+            if (orders?.Count() != 0)
+                return orders?.MinBy(o => o.ShipDate is not null ? o.ShipDate : o.OrderDate).OrderID;
 
-        return null;
+            return null;
+        }
     }
 
     #region service function
@@ -215,15 +229,18 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private IEnumerable<BO.OrderItem?> returnItemsList(DO.Order item)
     {
-        return from orderItem in _dal?.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID)!
-               select new BO.OrderItem
-               {
-                   ProductID = (int)orderItem?.ProductID!,
-                   Amount = (int)orderItem?.Amount!,
-                   ProductPrice = (double)orderItem?.Price!,
-                   TotalPrice = (int)orderItem?.Amount! * (double)orderItem?.Price!,
-                   ProductName = _dal?.Product.Get(product => product?.ProductID == orderItem?.ProductID).Name
-               };
+        lock (_dal)
+        {
+            return from orderItem in _dal?.OrderItem.GetAll(orderItem => orderItem?.OrderID == item.OrderID)!
+                   select new BO.OrderItem
+                   {
+                       ProductID = (int)orderItem?.ProductID!,
+                       Amount = (int)orderItem?.Amount!,
+                       ProductPrice = (double)orderItem?.Price!,
+                       TotalPrice = (int)orderItem?.Amount! * (double)orderItem?.Price!,
+                       ProductName = _dal?.Product.Get(product => product?.ProductID == orderItem?.ProductID).Name
+                   };
+        }
     }
 
     /// <summary>
@@ -233,12 +250,15 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private (int?, double?) amountPriceOrder(DO.Order item)
     {
-        List<DO.OrderItem?> items = _dal?.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList()!;
+        lock (_dal)
+        {
+            List<DO.OrderItem?> items = _dal?.OrderItem.GetAll(element => item.OrderID == element?.OrderID).ToList()!;
 
-        double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
-        int? amount = items.Count();
+            double? totalPrice = items.Sum(element => element?.Amount * element?.Price);
+            int? amount = items.Count();
 
-        return (amount, totalPrice);
+            return (amount, totalPrice);
+        }
     }
 
     #endregion service function
