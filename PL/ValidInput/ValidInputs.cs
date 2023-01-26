@@ -8,19 +8,6 @@ using System.Text.RegularExpressions;
 internal static class ValidInputs
 {
     /// <summary>
-    /// define valid Number
-    /// </summary>
-    private static Regex validNumber;
-
-    /// <summary>
-    /// constructor
-    /// </summary>
-    //static ValidInputs()
-    //{
-    //    validNumber = new Regex("^[0-9]+$");
-    //}
-
-    /// <summary>
     /// check if is valid number
     /// </summary>
     /// <param name="input"></param>
