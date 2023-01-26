@@ -3,8 +3,8 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 /// <summary>
 /// Access to the data of order items with the possibility of changes

@@ -1,7 +1,7 @@
 ﻿namespace Dal;
-using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// class for menage product
