@@ -1,9 +1,9 @@
 ﻿namespace PL;
 
-using System.ComponentModel;
-using System.Windows;
 using BO;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows;
 
 /// <summary>
 /// Interaction logic for SimulatorWindow.xaml

@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:validationRule="clr-namespace:PL.ValidInput"
         mc:Ignorable="d"
         DataContext="{Binding Product, RelativeSource={RelativeSource self}}"
         Title="Product" Height="450" Width="800"
@@ -17,7 +18,19 @@
             <Label Style="{StaticResource StyleForLabel}"  Content="Product Name:" HorizontalAlignment="Left" Margin="310,180,0,0" VerticalAlignment="Top" />
             <Label Style="{StaticResource StyleForLabel}"  Content="Price:" HorizontalAlignment="Left" Margin="310,234,0,0" VerticalAlignment="Top" />
             <Label Style="{StaticResource StyleForLabel}"  Content="Amount:" HorizontalAlignment="Left" Margin="310,295,0,0" VerticalAlignment="Top" />
-            <TextBox Style="{StaticResource StyleForTextBox}" InputScope="Number" PreviewTextInput="PreviewTextInput"  x:Name="Id" Text="{Binding ProductID}" HorizontalAlignment="Left" Margin="405,67,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+
+            <TextBox Style="{StaticResource StyleForTextBox}" InputScope="Number" PreviewTextInput="PreviewTextInput"  x:Name="Id"  HorizontalAlignment="Left" Margin="405,67,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120">
+                <TextBox.Text>
+                    <Binding Path="ProductID" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationRule:CastStringToIntValidationRule ErrorMessageEmpty="The id cannot be empty"
+                                                                          ErrorMessageMaxLength="The product id must have at least 6 digits"
+                                                                          MinLength="6" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
             <TextBox Style="{StaticResource StyleForTextBox}" x:Name="tbName" Text="{Binding ProductName}" HorizontalAlignment="Left" Margin="405,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
             <ComboBox ItemContainerStyle="{StaticResource MaterialDesignNavigationListBoxItem}"  HorizontalContentAlignment="Center" Foreground="AntiqueWhite" FontWeight="Bold" x:Name="Catgory" Text="{Binding Category}" ItemsSource="{Binding Source={StaticResource ProductCategory}}" HorizontalAlignment="Left" Margin="405,118,0,0" VerticalAlignment="Top" Width="120" />
             <TextBox Style="{StaticResource StyleForTextBox}" x:Name="Price" Text="{Binding ProductPrice}" PreviewTextInput="Price_PreviewTextInput" HorizontalAlignment="Left" Margin="405,242,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
