@@ -1,7 +1,33 @@
-# virtual-store-app
+# Virtual Store App
 
-Bonus List
+Desktop application for managing and simulating a simple virtual store, implemented as a C# Visual Studio solution. The project is organized into distinct layers for data access, business logic and presentation, with XML-based storage and a basic simulator component.
 
-1. stage 1: use in tryParse function
-2. stage 2: use in tryParse function
-3. stage 3: add icon to a window and to tasks bar
+---
+
+## Features
+
+- **Data Access Layer (DAL)**
+  - `DalList` – List-based repository implementation  
+  - `DalXml` – XML-backed repository with serialization/deserialization  
+  - `DalTest` – Unit tests for repository functionality  
+
+- **Business Logic & Initialization**
+  - `InitializeXML` – Helper to create or reset the XML data store  
+  - `PL` (Presentation Layer) – WinForms/WPF UI for browsing and editing store items  
+
+- **Simulator**
+  - `Simulator` – Console-style simulation of store operations  
+
+- **Extras**
+  - Input validation using `int.TryParse`  
+  - Custom window icon and taskbar integration  
+
+---
+
+## Tech Stack & Tools
+
+- **Language:** C# (.NET Framework)  
+- **IDE:** Visual Studio 2019/2022 (solution file included)  
+- **Data Storage:** XML files under `xml/`  
+- **Testing Framework:** MSTest (in `DalTest`)  
+- **Version Control:** Git (`.gitignore` provided)
